@@ -445,7 +445,7 @@ def save_methodology(output_path: Path, metadata_path: Optional[Path] = None) ->
 
 
 if __name__ == '__main__':
-    output = Path('../../web/markov/methodology.html')
+    output = Path('../../docs/markov/methodology.html')
     metadata = Path('../../output/markov/metadata.json')
     
     if len(sys.argv) > 1:

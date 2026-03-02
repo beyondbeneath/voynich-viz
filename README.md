@@ -36,7 +36,7 @@ voynich/
 │   ├── wordpos/                   # Word position pipeline
 │   ├── pagepos/                   # Page position pipeline
 │   └── requirements.txt
-└── web/
+└── docs/
     ├── index.html                 # Analysis landing page
     ├── markov/                    # Transition matrix visualization
     ├── ngram/                     # N-gram frequency visualization
@@ -86,7 +86,7 @@ python -m scripts.markov.main --input data/voynich-transcription.txt --output ou
 ## Run the web viewer
 
 ```bash
-cd web
+cd docs
 python -m http.server 8000
 ```
 
@@ -142,5 +142,5 @@ To add another analysis module:
 2. Import shared config from `common.config` (character sets, aggregations, etc.)
 3. Call `save_transcription_config()` after processing to update the shared config
 4. Write results to `output/<name>/`
-5. Build a viewer in `web/<name>/` that loads `transcription_config.json` on init
-6. Add a card/link in `web/index.html`
+5. Build a viewer in `docs/<name>/` that loads `transcription_config.json` on init
+6. Add a card/link in `docs/index.html`
