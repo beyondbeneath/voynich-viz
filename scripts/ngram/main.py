@@ -5,7 +5,7 @@ Main CLI entry point for Voynich manuscript n-gram analysis.
 Analyzes unigram, bigram, and trigram frequencies.
 
 Usage:
-    python -m scripts.ngram.main --input data/voynich-transcription.txt --output output/ngram/
+    python -m scripts.ngram.main --input data/voynich-transcription.txt --output docs/output/ngram/
 """
 
 import argparse
@@ -37,10 +37,10 @@ def create_parser() -> argparse.ArgumentParser:
         epilog="""
 Examples:
   # Full pipeline with default settings
-  python -m scripts.ngram.main --input data/voynich-transcription.txt --output output/ngram/
+  python -m scripts.ngram.main --input data/voynich-transcription.txt --output docs/output/ngram/
 
   # Use collapsed i/e mode
-  python -m scripts.ngram.main --input data/voynich-transcription.txt --output output/ngram/ --bigram-mode collapsed
+  python -m scripts.ngram.main --input data/voynich-transcription.txt --output docs/output/ngram/ --bigram-mode collapsed
         """
     )
     

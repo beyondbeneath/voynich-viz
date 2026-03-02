@@ -6,8 +6,8 @@
 
 const DataLoader = (function() {
   const cache = new Map();
-  const BASE_PATH = '../../output/pagepos/aggregated';
-  const CONFIG_PATH = '../../output/transcription_config.json';
+  const BASE_PATH = '../output/pagepos/aggregated';
+  const CONFIG_PATH = '../output/transcription_config.json';
   
   /**
    * Load transcription config and initialize Config module.

@@ -23,12 +23,6 @@ voynich/
 ├── data/
 │   ├── voynich-transcription.txt
 │   └── transcription-format.html
-├── output/
-│   ├── transcription_config.json  # Shared config for all visualizations
-│   ├── markov/                    # Markov transition output
-│   ├── ngram/                     # N-gram frequency output
-│   ├── wordpos/                   # Word position output
-│   └── pagepos/                   # Page position output
 ├── scripts/
 │   ├── common/                    # Shared parser, normalizer, config
 │   ├── markov/                    # Markov transition pipeline
@@ -36,8 +30,14 @@ voynich/
 │   ├── wordpos/                   # Word position pipeline
 │   ├── pagepos/                   # Page position pipeline
 │   └── requirements.txt
-└── docs/
+└── docs/                          # GitHub Pages root
     ├── index.html                 # Analysis landing page
+    ├── output/                    # Generated data (scripts write here)
+    │   ├── transcription_config.json
+    │   ├── markov/
+    │   ├── ngram/
+    │   ├── wordpos/
+    │   └── pagepos/
     ├── markov/                    # Transition matrix visualization
     ├── ngram/                     # N-gram frequency visualization
     ├── wordpos/                   # Word position visualization
@@ -58,16 +58,16 @@ Run from the repository root:
 
 ```bash
 # Markov: Full pipeline with default settings
-python -m scripts.markov.main --input data/voynich-transcription.txt --output output/markov/ -v
+python -m scripts.markov.main --input data/voynich-transcription.txt --output docs/output/markov/ -v
 
 # N-gram extraction (unigram/bigram/trigram frequencies)
-python -m scripts.ngram.main --input data/voynich-transcription.txt --output output/ngram/ -v
+python -m scripts.ngram.main --input data/voynich-transcription.txt --output docs/output/ngram/ -v
 
 # Word-position extraction (start/middle/end preferences)
-python -m scripts.wordpos.main --input data/voynich-transcription.txt --output output/wordpos/ -v
+python -m scripts.wordpos.main --input data/voynich-transcription.txt --output docs/output/wordpos/ -v
 
 # Page-position extraction (spatial distribution on page)
-python -m scripts.pagepos.main --input data/voynich-transcription.txt --output output/pagepos/ -v
+python -m scripts.pagepos.main --input data/voynich-transcription.txt --output docs/output/pagepos/ -v
 ```
 
 The page position analysis supports two normalization modes:
@@ -77,10 +77,10 @@ The page position analysis supports two normalization modes:
 ### Variants
 ```
 # Markov: 2) Collapsed i/e mode
-python -m scripts.markov.main --input data/voynich-transcription.txt --output output/markov/ --bigram-mode collapsed -v
+python -m scripts.markov.main --input data/voynich-transcription.txt --output docs/output/markov/ --bigram-mode collapsed -v
 
 # Markov: 3) Disable boundary tokens
-python -m scripts.markov.main --input data/voynich-transcription.txt --output output/markov/ --no-word-boundaries --no-line-boundaries -v
+python -m scripts.markov.main --input data/voynich-transcription.txt --output docs/output/markov/ --no-word-boundaries --no-line-boundaries -v
 ```
 
 ## Run the web viewer
@@ -96,14 +96,14 @@ Then open `http://localhost:8000`.
 
 Each analysis script generates:
 
-- `output/<method>/page_*.json` — Per-page analysis results
-- `output/<method>/aggregated/*.json` — Aggregated results by filters
-- `output/<method>/aggregated/manifest.json` — Available aggregations
-- `output/<method>/metadata.json` — Processing configuration
+- `docs/output/<method>/page_*.json` — Per-page analysis results
+- `docs/output/<method>/aggregated/*.json` — Aggregated results by filters
+- `docs/output/<method>/aggregated/manifest.json` — Available aggregations
+- `docs/output/<method>/metadata.json` — Processing configuration
 
 Additionally, all scripts output a shared config file:
 
-- `output/transcription_config.json` — Character ordering, display mappings, boundary tokens, and aggregation definitions used by all web visualizations
+- `docs/output/transcription_config.json` — Character ordering, display mappings, boundary tokens, and aggregation definitions used by all web visualizations
 
 ## Configuration architecture
 
@@ -115,7 +115,7 @@ The project uses a **single source of truth** pattern for transcription config:
    - Boundary token definitions
    - Aggregation filter definitions
 
-2. **On each run**, scripts output `output/transcription_config.json`
+2. **On each run**, scripts output `docs/output/transcription_config.json`
 
 3. **Web visualizations** load this JSON at startup, so changes to the Python config automatically propagate to all viewers after re-running the scripts
 
@@ -141,6 +141,6 @@ To add another analysis module:
 1. Create `scripts/<name>/` with a CLI entry point (`main.py`) and analysis modules
 2. Import shared config from `common.config` (character sets, aggregations, etc.)
 3. Call `save_transcription_config()` after processing to update the shared config
-4. Write results to `output/<name>/`
+4. Write results to `docs/output/<name>/`
 5. Build a viewer in `docs/<name>/` that loads `transcription_config.json` on init
 6. Add a card/link in `docs/index.html`

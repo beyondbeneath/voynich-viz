@@ -5,7 +5,7 @@ Main CLI entry point for Voynich manuscript word position analysis.
 Analyzes character preferences for word positions (start/middle/end).
 
 Usage:
-    python -m scripts.wordpos.main --input data/voynich-transcription.txt --output output/wordpos/
+    python -m scripts.wordpos.main --input data/voynich-transcription.txt --output docs/output/wordpos/
 """
 
 import argparse
@@ -37,10 +37,10 @@ def create_parser() -> argparse.ArgumentParser:
         epilog="""
 Examples:
   # Full pipeline with default settings
-  python -m scripts.wordpos.main --input data/voynich-transcription.txt --output output/wordpos/
+  python -m scripts.wordpos.main --input data/voynich-transcription.txt --output docs/output/wordpos/
 
   # Use collapsed i/e mode
-  python -m scripts.wordpos.main --input data/voynich-transcription.txt --output output/wordpos/ --bigram-mode collapsed
+  python -m scripts.wordpos.main --input data/voynich-transcription.txt --output docs/output/wordpos/ --bigram-mode collapsed
         """
     )
     

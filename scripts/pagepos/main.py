@@ -7,7 +7,7 @@ Supports both page-relative and manuscript-relative normalization.
 Generates multiple grid resolutions for visualization.
 
 Usage:
-    python -m scripts.pagepos.main --input data/voynich-transcription.txt --output output/pagepos/
+    python -m scripts.pagepos.main --input data/voynich-transcription.txt --output docs/output/pagepos/
 """
 
 import argparse
@@ -39,10 +39,10 @@ def create_parser() -> argparse.ArgumentParser:
         epilog="""
 Examples:
   # Full pipeline with default settings
-  python -m scripts.pagepos.main --input data/voynich-transcription.txt --output output/pagepos/
+  python -m scripts.pagepos.main --input data/voynich-transcription.txt --output docs/output/pagepos/
 
   # Use collapsed i/e mode
-  python -m scripts.pagepos.main --input data/voynich-transcription.txt --output output/pagepos/ --bigram-mode collapsed
+  python -m scripts.pagepos.main --input data/voynich-transcription.txt --output docs/output/pagepos/ --bigram-mode collapsed
 
 Grid Resolutions:
   The analysis generates multiple grid resolutions:

@@ -3,7 +3,7 @@
 Main CLI entry point for Voynich manuscript Markov transition analysis.
 
 Usage:
-    python -m markov.main --input data/voynich-transcription.txt --output output/markov/
+    python -m markov.main --input data/voynich-transcription.txt --output docs/output/markov/
     python -m markov.main --input ... --bigram-mode collapsed --no-boundaries
 """
 
@@ -37,13 +37,13 @@ def create_parser() -> argparse.ArgumentParser:
         epilog="""
 Examples:
   # Full pipeline with default settings
-  python -m markov.main --input data/voynich-transcription.txt --output output/markov/
+  python -m markov.main --input data/voynich-transcription.txt --output docs/output/markov/
 
   # Use collapsed i/e mode
-  python -m markov.main --input data/voynich-transcription.txt --output output/markov/ --bigram-mode collapsed
+  python -m markov.main --input data/voynich-transcription.txt --output docs/output/markov/ --bigram-mode collapsed
 
   # Disable boundary tokens
-  python -m markov.main --input data/voynich-transcription.txt --output output/markov/ --no-word-boundaries --no-line-boundaries
+  python -m markov.main --input data/voynich-transcription.txt --output docs/output/markov/ --no-word-boundaries --no-line-boundaries
         """
     )
     

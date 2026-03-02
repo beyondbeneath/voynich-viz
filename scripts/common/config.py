@@ -5,7 +5,7 @@ Contains character sets, bigram rules, section definitions, and other
 shared configurable parameters used across different analysis types.
 
 This is the SINGLE SOURCE OF TRUTH for transcription config.
-The web visualizations load this config from output/transcription_config.json.
+The web visualizations load this config from docs/output/transcription_config.json.
 """
 
 import json
@@ -321,7 +321,7 @@ def build_transcription_config(collapse_mode: CollapseMode = CollapseMode.DISTIN
 def save_transcription_config(output_dir: Path, 
                               collapse_mode: CollapseMode = CollapseMode.DISTINCT):
     """
-    Save transcription config to output/transcription_config.json.
+    Save transcription config to docs/output/transcription_config.json.
     
     Called by analysis scripts after processing to ensure viz has
     up-to-date config.
