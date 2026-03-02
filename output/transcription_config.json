@@ -1,0 +1,300 @@
+{
+  "collapse_mode": "distinct",
+  "char_order": [
+    "p",
+    "f",
+    "t",
+    "k",
+    "d",
+    "j",
+    "m",
+    "n",
+    "g",
+    "s",
+    "r",
+    "y",
+    "l",
+    "q",
+    "x",
+    "C",
+    "S",
+    "T",
+    "P",
+    "F",
+    "K",
+    "o",
+    "a",
+    "1",
+    "2",
+    "3",
+    "4",
+    "6",
+    "7",
+    "8",
+    "9"
+  ],
+  "char_order_with_boundaries": [
+    "p",
+    "f",
+    "t",
+    "k",
+    "d",
+    "j",
+    "m",
+    "n",
+    "g",
+    "s",
+    "r",
+    "y",
+    "l",
+    "q",
+    "x",
+    "C",
+    "S",
+    "T",
+    "P",
+    "F",
+    "K",
+    "o",
+    "a",
+    "1",
+    "2",
+    "3",
+    "4",
+    "6",
+    "7",
+    "8",
+    "9",
+    "^",
+    "$",
+    "^^",
+    "$$",
+    "^^^",
+    "$$$",
+    "^^^^",
+    "$$$$"
+  ],
+  "char_display": {
+    "C": "ch",
+    "S": "sh",
+    "T": "cth",
+    "P": "cph",
+    "F": "cfh",
+    "K": "ckh",
+    "1": "i",
+    "2": "ii",
+    "3": "iii",
+    "4": "iiii",
+    "6": "e",
+    "7": "ee",
+    "8": "eee",
+    "9": "eeee"
+  },
+  "boundary_tokens": {
+    "^": {
+      "name": "Word Start",
+      "short": "WORD\u25b8"
+    },
+    "$": {
+      "name": "Word End",
+      "short": "\u25c2WORD"
+    },
+    "^^": {
+      "name": "Line Start",
+      "short": "LINE\u25b8"
+    },
+    "$$": {
+      "name": "Line End",
+      "short": "\u25c2LINE"
+    },
+    "^^^": {
+      "name": "Paragraph Start",
+      "short": "PARA\u25b8"
+    },
+    "$$$": {
+      "name": "Paragraph End",
+      "short": "\u25c2PARA"
+    },
+    "^^^^": {
+      "name": "Page Start",
+      "short": "PAGE\u25b8"
+    },
+    "$$$$": {
+      "name": "Page End",
+      "short": "\u25c2PAGE"
+    }
+  },
+  "aggregations": {
+    "all": {
+      "description": "All pages",
+      "filter": {}
+    },
+    "language_a": {
+      "description": "Currier Language A",
+      "filter": {
+        "language": "A"
+      }
+    },
+    "language_b": {
+      "description": "Currier Language B",
+      "filter": {
+        "language": "B"
+      }
+    },
+    "hand_1": {
+      "description": "Hand 1",
+      "filter": {
+        "hand": "1"
+      }
+    },
+    "hand_2": {
+      "description": "Hand 2",
+      "filter": {
+        "hand": "2"
+      }
+    },
+    "hand_3": {
+      "description": "Hand 3",
+      "filter": {
+        "hand": "3"
+      }
+    },
+    "hand_4": {
+      "description": "Hand 4",
+      "filter": {
+        "hand": "4"
+      }
+    },
+    "hand_5": {
+      "description": "Hand 5",
+      "filter": {
+        "hand": "5"
+      }
+    },
+    "herbal": {
+      "description": "Herbal section",
+      "filter": {
+        "illustration": "H"
+      }
+    },
+    "zodiac": {
+      "description": "Zodiac section",
+      "filter": {
+        "illustration": "Z"
+      }
+    },
+    "biological": {
+      "description": "Biological section",
+      "filter": {
+        "illustration": "B"
+      }
+    },
+    "pharmaceutical": {
+      "description": "Pharmaceutical section",
+      "filter": {
+        "illustration": "P"
+      }
+    },
+    "astronomical": {
+      "description": "Astronomical section",
+      "filter": {
+        "illustration": "A"
+      }
+    },
+    "cosmological": {
+      "description": "Cosmological section",
+      "filter": {
+        "illustration": "C"
+      }
+    },
+    "text_only": {
+      "description": "Text only pages",
+      "filter": {
+        "illustration": "T"
+      }
+    },
+    "herbal_lang_a": {
+      "description": "Herbal section, Language A",
+      "filter": {
+        "illustration": "H",
+        "language": "A"
+      }
+    },
+    "herbal_lang_b": {
+      "description": "Herbal section, Language B",
+      "filter": {
+        "illustration": "H",
+        "language": "B"
+      }
+    },
+    "biological_lang_a": {
+      "description": "Biological section, Language A",
+      "filter": {
+        "illustration": "B",
+        "language": "A"
+      }
+    },
+    "biological_lang_b": {
+      "description": "Biological section, Language B",
+      "filter": {
+        "illustration": "B",
+        "language": "B"
+      }
+    },
+    "quire_13": {
+      "description": "Quire 13",
+      "filter": {
+        "quire": 13
+      }
+    },
+    "quire_20": {
+      "description": "Quire 20",
+      "filter": {
+        "quire": 20
+      }
+    }
+  },
+  "illustration_types": {
+    "T": "Text only",
+    "H": "Herbal",
+    "Z": "Zodiac",
+    "B": "Biological",
+    "P": "Pharmaceutical",
+    "A": "Astronomical",
+    "C": "Cosmological",
+    "S": "Stars"
+  },
+  "valid_chars": [
+    "1",
+    "n",
+    "6",
+    "s",
+    "r",
+    "P",
+    "a",
+    "8",
+    "f",
+    "K",
+    "o",
+    "l",
+    "x",
+    "4",
+    "S",
+    "g",
+    "9",
+    "2",
+    "T",
+    "F",
+    "j",
+    "t",
+    "3",
+    "C",
+    "d",
+    "y",
+    "q",
+    "p",
+    "m",
+    "7",
+    "k"
+  ]
+}

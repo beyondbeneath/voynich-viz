@@ -1,0 +1,130 @@
+{
+  "aggregations": [
+    {
+      "name": "all",
+      "description": "All pages",
+      "page_count": 226,
+      "file": "all.json"
+    },
+    {
+      "name": "language_a",
+      "description": "Currier Language A",
+      "page_count": 114,
+      "file": "language_a.json"
+    },
+    {
+      "name": "language_b",
+      "description": "Currier Language B",
+      "page_count": 83,
+      "file": "language_b.json"
+    },
+    {
+      "name": "hand_1",
+      "description": "Hand 1",
+      "page_count": 98,
+      "file": "hand_1.json"
+    },
+    {
+      "name": "hand_2",
+      "description": "Hand 2",
+      "page_count": 46,
+      "file": "hand_2.json"
+    },
+    {
+      "name": "hand_3",
+      "description": "Hand 3",
+      "page_count": 33,
+      "file": "hand_3.json"
+    },
+    {
+      "name": "hand_4",
+      "description": "Hand 4",
+      "page_count": 40,
+      "file": "hand_4.json"
+    },
+    {
+      "name": "hand_5",
+      "description": "Hand 5",
+      "page_count": 8,
+      "file": "hand_5.json"
+    },
+    {
+      "name": "herbal",
+      "description": "Herbal section",
+      "page_count": 129,
+      "file": "herbal.json"
+    },
+    {
+      "name": "zodiac",
+      "description": "Zodiac section",
+      "page_count": 12,
+      "file": "zodiac.json"
+    },
+    {
+      "name": "biological",
+      "description": "Biological section",
+      "page_count": 19,
+      "file": "biological.json"
+    },
+    {
+      "name": "pharmaceutical",
+      "description": "Pharmaceutical section",
+      "page_count": 16,
+      "file": "pharmaceutical.json"
+    },
+    {
+      "name": "astronomical",
+      "description": "Astronomical section",
+      "page_count": 8,
+      "file": "astronomical.json"
+    },
+    {
+      "name": "cosmological",
+      "description": "Cosmological section",
+      "page_count": 10,
+      "file": "cosmological.json"
+    },
+    {
+      "name": "text_only",
+      "description": "Text only pages",
+      "page_count": 7,
+      "file": "text_only.json"
+    },
+    {
+      "name": "herbal_lang_a",
+      "description": "Herbal section, Language A",
+      "page_count": 95,
+      "file": "herbal_lang_a.json"
+    },
+    {
+      "name": "herbal_lang_b",
+      "description": "Herbal section, Language B",
+      "page_count": 32,
+      "file": "herbal_lang_b.json"
+    },
+    {
+      "name": "biological_lang_a",
+      "description": "Biological section, Language A",
+      "page_count": 0,
+      "file": "biological_lang_a.json"
+    },
+    {
+      "name": "biological_lang_b",
+      "description": "Biological section, Language B",
+      "page_count": 19,
+      "file": "biological_lang_b.json"
+    },
+    {
+      "name": "quire_13",
+      "description": "Quire 13",
+      "page_count": 20,
+      "file": "quire_13.json"
+    },
+    {
+      "name": "quire_20",
+      "description": "Quire 20",
+      "page_count": 24,
+      "file": "quire_20.json"
+    }
+  ]
+}

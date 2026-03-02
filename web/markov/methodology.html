@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Methodology - Markov Transition Analysis</title>
+  <link rel="stylesheet" href="../common/css/base.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .methodology {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      line-height: 1.7;
+    }
+    .methodology h1 {
+      border-bottom: 2px solid var(--accent-color);
+      padding-bottom: 12px;
+      margin-bottom: 30px;
+    }
+    .methodology h2 {
+      color: var(--accent-color);
+      margin-top: 40px;
+      margin-bottom: 16px;
+    }
+    .methodology h3 {
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+    .methodology p {
+      margin-bottom: 16px;
+      color: var(--text-secondary);
+    }
+    .methodology ul {
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+    .methodology li {
+      margin-bottom: 8px;
+    }
+    .methodology code {
+      background: var(--bg-primary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Monaco', 'Consolas', monospace;
+    }
+    .methodology table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 14px;
+    }
+    .methodology th, .methodology td {
+      padding: 10px 12px;
+      text-align: left;
+      border: 1px solid var(--border-color);
+    }
+    .methodology th {
+      background: var(--bg-primary);
+      font-weight: 600;
+    }
+    .methodology tr:hover {
+      background: var(--bg-primary);
+    }
+    .methodology tr.group-header {
+      background: var(--bg-secondary);
+    }
+    .methodology tr.group-header:hover {
+      background: var(--bg-secondary);
+    }
+    .methodology tr.group-header td {
+      padding-top: 16px;
+      border-bottom: none;
+    }
+    .step-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--accent-color);
+      padding: 16px 20px;
+      margin: 16px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .step-box h4 {
+      margin: 0 0 8px;
+      color: var(--text-primary);
+    }
+    .step-box p {
+      margin: 0;
+      font-size: 14px;
+    }
+    .config-badge {
+      display: inline-block;
+      background: var(--accent-color);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-right: 8px;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+    .timestamp {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 600px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="methodology">
+    <a href="index.html" class="back-link">← Back to Transition Matrix</a>
+    
+    <h1>Processing Methodology</h1>
+    
+    <p>
+      This document explains how the Voynich manuscript transcription is processed
+      to generate character transition matrices. The processing pipeline transforms
+      raw transcription data into normalized character sequences, then counts
+      transitions between characters to reveal statistical patterns.
+    </p>
+
+    <h2>Current Configuration</h2>
+    <p>
+      <span class="config-badge">Collapse Mode: distinct</span>
+      <span class="config-badge">Boundaries: Word, Line, Paragraph, Page</span>
+      <span class="config-badge">Pages Processed: 226</span>
+    </p>
+
+    <h2>Pipeline Overview</h2>
+    
+    <div class="step-box">
+      <h4>Step 1: Parse Transcription</h4>
+      <p>
+        Load the IVTFF (Intermediate Voynich Transcription File Format) transcription
+        and extract page metadata including folio ID, Currier language (A/B), 
+        scribal hand (1-5), illustration type, and quire number.
+      </p>
+    </div>
+
+    <div class="step-box">
+      <h4>Step 2: Character Normalization</h4>
+      <p>
+        Transform raw transcription characters into a normalized form by collapsing
+        multi-character sequences (bigrams) into single tokens and handling repeated
+        i/e characters according to the configured mode.
+      </p>
+    </div>
+
+    <div class="step-box">
+      <h4>Step 3: Boundary Token Insertion</h4>
+      <p>
+        Insert special boundary tokens to mark word, line, paragraph, and page
+        boundaries. This allows analysis of character positions within structural units.
+      </p>
+    </div>
+
+    <div class="step-box">
+      <h4>Step 4: Transition Counting</h4>
+      <p>
+        For each page, count every character pair (bigram) that appears in sequence.
+        This produces a transition matrix showing how often each character follows
+        each other character.
+      </p>
+    </div>
+
+    <div class="step-box">
+      <h4>Step 5: Aggregation</h4>
+      <p>
+        Combine page-level transition counts into aggregated datasets by filtering
+        on metadata (language, hand, section type). Compute both raw counts and
+        row-normalized probabilities.
+      </p>
+    </div>
+
+    <h2>Character Substitutions</h2>
+    
+    <h3>Bigram Collapsing</h3>
+    <p>
+      Multi-character sequences in the EVA transcription alphabet are collapsed
+      into single tokens to simplify analysis. This is applied in order from
+      longest to shortest to handle overlapping patterns correctly.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Original</th><th></th><th>Normalized</th></tr>
+      </thead>
+      <tbody>
+          <tr><td><code>cth</code></td><td>→</td><td><code>T</code></td></tr>
+          <tr><td><code>cph</code></td><td>→</td><td><code>P</code></td></tr>
+          <tr><td><code>cfh</code></td><td>→</td><td><code>F</code></td></tr>
+          <tr><td><code>ckh</code></td><td>→</td><td><code>K</code></td></tr>
+          <tr><td><code>ch</code></td><td>→</td><td><code>C</code></td></tr>
+          <tr><td><code>sh</code></td><td>→</td><td><code>S</code></td></tr>
+      </tbody>
+    </table>
+
+    <h3>i/e Sequence Handling</h3>
+    <p>
+      The manuscript contains many repeated 'i' and 'e' characters. These are
+      mapped to distinct tokens based on their count. In "distinct" mode, each
+      length maps to a unique token. In "collapsed" mode, all lengths map to
+      a single token (I or E).
+    </p>
+    
+    <div class="two-col">
+      <div>
+        <h4>i-sequences (distinct mode)</h4>
+        <table>
+          <thead>
+            <tr><th>Original</th><th></th><th>Token</th></tr>
+          </thead>
+          <tbody>
+          <tr><td><code>i</code></td><td>→</td><td><code>1</code></td></tr>
+          <tr><td><code>ii</code></td><td>→</td><td><code>2</code></td></tr>
+          <tr><td><code>iii</code></td><td>→</td><td><code>3</code></td></tr>
+          <tr><td><code>iiii</code></td><td>→</td><td><code>4</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h4>e-sequences (distinct mode)</h4>
+        <table>
+          <thead>
+            <tr><th>Original</th><th></th><th>Token</th></tr>
+          </thead>
+          <tbody>
+          <tr><td><code>e</code></td><td>→</td><td><code>6</code></td></tr>
+          <tr><td><code>ee</code></td><td>→</td><td><code>7</code></td></tr>
+          <tr><td><code>eee</code></td><td>→</td><td><code>8</code></td></tr>
+          <tr><td><code>eeee</code></td><td>→</td><td><code>9</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h2>Boundary Tokens</h2>
+    <p>
+      Special tokens are inserted to mark structural boundaries in the text.
+      These allow analysis of which characters tend to appear at the start
+      or end of words, lines, paragraphs, and pages.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Token</th><th>Meaning</th></tr>
+      </thead>
+      <tbody>
+          <tr><td><code>^</code></td><td>Word Start</td></tr>
+          <tr><td><code>$</code></td><td>Word End</td></tr>
+          <tr><td><code>^^</code></td><td>Line Start</td></tr>
+          <tr><td><code>$$</code></td><td>Line End</td></tr>
+          <tr><td><code>^^^</code></td><td>Paragraph Start</td></tr>
+          <tr><td><code>$$$</code></td><td>Paragraph End</td></tr>
+          <tr><td><code>^^^^</code></td><td>Page Start</td></tr>
+          <tr><td><code>$$$$</code></td><td>Page End</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Aggregations</h2>
+    <p>
+      Page-level transition counts are aggregated into various subsets based on
+      metadata filters. This allows comparison between different sections,
+      scribal hands, or Currier languages.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Name</th><th>Description</th><th>Filter</th></tr>
+      </thead>
+      <tbody>
+          <tr class="group-header"><td colspan="3"><strong>All</strong></td></tr>
+          <tr><td><code>all</code></td><td>All pages</td><td>None (all pages)</td></tr>
+          <tr class="group-header"><td colspan="3"><strong>By Language</strong></td></tr>
+          <tr><td><code>language_a</code></td><td>Currier Language A</td><td>language=A</td></tr>
+          <tr><td><code>language_b</code></td><td>Currier Language B</td><td>language=B</td></tr>
+          <tr class="group-header"><td colspan="3"><strong>By Hand</strong></td></tr>
+          <tr><td><code>hand_1</code></td><td>Hand 1</td><td>hand=1</td></tr>
+          <tr><td><code>hand_2</code></td><td>Hand 2</td><td>hand=2</td></tr>
+          <tr><td><code>hand_3</code></td><td>Hand 3</td><td>hand=3</td></tr>
+          <tr><td><code>hand_4</code></td><td>Hand 4</td><td>hand=4</td></tr>
+          <tr><td><code>hand_5</code></td><td>Hand 5</td><td>hand=5</td></tr>
+          <tr class="group-header"><td colspan="3"><strong>By Illustration</strong></td></tr>
+          <tr><td><code>herbal</code></td><td>Herbal section</td><td>illustration=H</td></tr>
+          <tr><td><code>zodiac</code></td><td>Zodiac section</td><td>illustration=Z</td></tr>
+          <tr><td><code>biological</code></td><td>Biological section</td><td>illustration=B</td></tr>
+          <tr><td><code>pharmaceutical</code></td><td>Pharmaceutical section</td><td>illustration=P</td></tr>
+          <tr><td><code>astronomical</code></td><td>Astronomical section</td><td>illustration=A</td></tr>
+          <tr><td><code>cosmological</code></td><td>Cosmological section</td><td>illustration=C</td></tr>
+          <tr><td><code>text_only</code></td><td>Text only pages</td><td>illustration=T</td></tr>
+          <tr class="group-header"><td colspan="3"><strong>By Quire</strong></td></tr>
+          <tr><td><code>quire_13</code></td><td>Quire 13</td><td>quire=13</td></tr>
+          <tr><td><code>quire_20</code></td><td>Quire 20</td><td>quire=20</td></tr>
+          <tr class="group-header"><td colspan="3"><strong>Combined Filters</strong></td></tr>
+          <tr><td><code>herbal_lang_a</code></td><td>Herbal section, Language A</td><td>illustration=H, language=A</td></tr>
+          <tr><td><code>herbal_lang_b</code></td><td>Herbal section, Language B</td><td>illustration=H, language=B</td></tr>
+          <tr><td><code>biological_lang_a</code></td><td>Biological section, Language A</td><td>illustration=B, language=A</td></tr>
+          <tr><td><code>biological_lang_b</code></td><td>Biological section, Language B</td><td>illustration=B, language=B</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Illustration Types</h2>
+    <p>
+      Pages are classified by their illustration type, which often correlates
+      with section boundaries in the manuscript.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Code</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+          <tr><td><code>A</code></td><td>Astronomical</td></tr>
+          <tr><td><code>B</code></td><td>Biological</td></tr>
+          <tr><td><code>C</code></td><td>Cosmological</td></tr>
+          <tr><td><code>H</code></td><td>Herbal</td></tr>
+          <tr><td><code>P</code></td><td>Pharmaceutical</td></tr>
+          <tr><td><code>S</code></td><td>Stars</td></tr>
+          <tr><td><code>T</code></td><td>Text only</td></tr>
+          <tr><td><code>Z</code></td><td>Zodiac</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Output Format</h2>
+    <p>
+      The pipeline outputs JSON files containing:
+    </p>
+    <ul>
+      <li><strong>page_transitions.json</strong>: Per-page transition counts and metadata</li>
+      <li><strong>aggregated/*.json</strong>: Aggregated counts and probabilities for each filter</li>
+      <li><strong>metadata.json</strong>: Configuration and summary statistics</li>
+      <li><strong>methodology.html</strong>: This document</li>
+    </ul>
+
+    <h2>Reading the Transition Matrix</h2>
+    <p>
+      In the visualization, rows represent the <strong>source</strong> character
+      and columns represent the <strong>target</strong> character. Each cell shows
+      how likely (or how often) the target character follows the source character.
+    </p>
+    <p>
+      For example, a bright cell at row "k" and column "o" indicates that "o" 
+      frequently follows "k" in the text. Row-normalized probabilities sum to 1.0
+      across each row, showing the conditional probability P(target | source).
+    </p>
+
+    <p class="timestamp">
+      Generated: 2026-03-02 19:47:32
+    </p>
+  </div>
+</body>
+</html>

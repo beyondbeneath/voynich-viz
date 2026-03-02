@@ -1,0 +1,57 @@
+{
+  "config": {
+    "collapse_mode": "distinct",
+    "max_n": 3,
+    "min_count": 5
+  },
+  "total_pages": 226,
+  "total_words": 35018,
+  "total_chars": 146716,
+  "unique_unigrams": 31,
+  "unique_bigrams": 449,
+  "unique_trigrams": 2182,
+  "aggregations": [
+    "all",
+    "language_a",
+    "language_b",
+    "hand_1",
+    "hand_2",
+    "hand_3",
+    "hand_4",
+    "hand_5",
+    "herbal",
+    "zodiac",
+    "biological",
+    "pharmaceutical",
+    "astronomical",
+    "cosmological",
+    "text_only",
+    "herbal_lang_a",
+    "herbal_lang_b",
+    "biological_lang_a",
+    "biological_lang_b",
+    "quire_13",
+    "quire_20"
+  ],
+  "languages": [
+    "A",
+    "B"
+  ],
+  "hands": [
+    "1",
+    "4",
+    "2",
+    "5",
+    "3"
+  ],
+  "illustration_types": [
+    "S",
+    "Z",
+    "T",
+    "B",
+    "P",
+    "H",
+    "C",
+    "A"
+  ]
+}

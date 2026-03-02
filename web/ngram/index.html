@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>N-gram Analysis - Voynich Analysis</title>
+  <link rel="stylesheet" href="../common/css/base.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <h1>N-gram Analysis</h1>
+      <p class="subtitle">Bigram frequency heatmap and n-gram statistics</p>
+    </header>
+
+    <!-- Controls Panel -->
+    <div class="controls-panel">
+      <div class="control-group">
+        <label for="view-mode">Mode:</label>
+        <select id="view-mode">
+          <option value="single">Single</option>
+          <option value="compare">Compare</option>
+          <option value="diff">Diff (A − B)</option>
+        </select>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <label for="aggregation-select"><span id="aggregation-label">Aggregation</span>:</label>
+        <select id="aggregation-select">
+          <option value="all">Loading...</option>
+        </select>
+      </div>
+
+      <div class="control-group" id="aggregation-b-group" style="display: none;">
+        <label for="aggregation-select-b">B:</label>
+        <select id="aggregation-select-b">
+          <option value="all">Loading...</option>
+        </select>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <label for="ngram-type">Show:</label>
+        <select id="ngram-type">
+          <option value="bigram">Bigrams (2-char)</option>
+          <option value="unigram">Unigrams (1-char)</option>
+          <option value="trigram">Top Trigrams</option>
+        </select>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <label>Display:</label>
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="display-mode" value="frequencies" checked>
+            Frequencies
+          </label>
+          <label>
+            <input type="radio" name="display-mode" value="counts">
+            Counts
+          </label>
+        </div>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <label for="color-scale">Color:</label>
+        <select id="color-scale">
+          <option value="viridis" selected>Viridis</option>
+          <option value="heat">Heat</option>
+          <option value="blueRed">Blue-Red</option>
+          <option value="grayscale">Grayscale</option>
+        </select>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="voynich-font" checked>
+          Voynich font
+        </label>
+      </div>
+
+      <div class="control-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="log-scale">
+          Log scale
+        </label>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Visualization Area -->
+      <div class="viz-area" id="viz-area">
+        <div class="viz-container" id="viz-container-a">
+          <div class="viz-label" id="viz-label-a"></div>
+          <canvas id="viz-canvas"></canvas>
+        </div>
+        <div class="viz-container" id="viz-container-b" style="display: none;">
+          <div class="viz-label" id="viz-label-b"></div>
+          <canvas id="viz-canvas-b"></canvas>
+        </div>
+      </div>
+
+      <!-- Info Panel -->
+      <aside class="info-panel" id="info-panel">
+        <!-- Current Selection Info -->
+        <div class="info-card" id="info-card-single">
+          <h3>Current View</h3>
+          <div class="info-row">
+            <span class="label">Pages:</span>
+            <span class="value" id="page-count">-</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Words:</span>
+            <span class="value" id="word-count">-</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Filter:</span>
+            <span class="value" id="description">-</span>
+          </div>
+        </div>
+        
+        <!-- Compare/Diff mode info -->
+        <div class="info-card" id="info-card-compare" style="display: none;">
+          <h3>Comparison</h3>
+          <div class="info-subsection">
+            <strong>A:</strong> <span id="compare-desc-a">-</span>
+            <span class="info-pages">(<span id="compare-pages-a">-</span> pages)</span>
+          </div>
+          <div class="info-subsection">
+            <strong>B:</strong> <span id="compare-desc-b">-</span>
+            <span class="info-pages">(<span id="compare-pages-b">-</span> pages)</span>
+          </div>
+        </div>
+
+        <!-- Hover Info -->
+        <div class="info-card">
+          <h3>Details</h3>
+          <div id="hover-info">
+            <span class="placeholder">Hover over a cell to see details</span>
+          </div>
+        </div>
+
+        <!-- Top N-grams -->
+        <div class="info-card">
+          <h3>Top N-grams</h3>
+          <div id="top-ngrams">
+            <span class="placeholder">Loading...</span>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="info-card">
+          <h3>Legend</h3>
+          <div class="legend" id="legend-standard">
+            <h4>Frequency</h4>
+            <div class="legend-gradient" id="legend-gradient"></div>
+            <div class="legend-labels">
+              <span>0%</span>
+              <span>Low</span>
+              <span>Medium</span>
+              <span>High</span>
+              <span>Max</span>
+            </div>
+          </div>
+          <div class="legend" id="legend-diff" style="display: none;">
+            <h4>Difference (A − B)</h4>
+            <div class="legend-gradient" id="legend-gradient-diff"></div>
+            <div class="legend-labels">
+              <span>B higher</span>
+              <span>Same</span>
+              <span>A higher</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Help -->
+        <div class="info-card">
+          <h3>Reading the Matrix</h3>
+          <p style="font-size: 12px; color: var(--text-secondary); margin: 0;">
+            For bigrams: rows show the <strong>first</strong> character,
+            columns show the <strong>second</strong> character.
+            Cell color shows how frequently this character pair appears.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- Error Message -->
+  <div class="error-message" id="error-message"></div>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/heatmap.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

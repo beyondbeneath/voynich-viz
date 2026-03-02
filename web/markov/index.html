@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transition Matrix - Voynich Analysis</title>
+  <link rel="stylesheet" href="../common/css/base.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <h1>Transition Matrix</h1>
+      <p class="subtitle">Character transition probabilities visualized as a heatmap</p>
+    </header>
+
+    <!-- Controls Panel -->
+    <div class="controls-panel">
+      <div class="control-group">
+        <label for="view-mode">Mode:</label>
+        <select id="view-mode">
+          <option value="single">Single</option>
+          <option value="compare">Compare</option>
+          <option value="diff">Diff (A − B)</option>
+        </select>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <label for="aggregation-select"><span id="aggregation-label">Aggregation</span>:</label>
+        <select id="aggregation-select">
+          <option value="all">Loading...</option>
+        </select>
+      </div>
+
+      <div class="control-group" id="aggregation-b-group" style="display: none;">
+        <label for="aggregation-select-b">B:</label>
+        <select id="aggregation-select-b">
+          <option value="all">Loading...</option>
+        </select>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <label>Display:</label>
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="display-mode" value="probabilities" checked>
+            Probabilities
+          </label>
+          <label>
+            <input type="radio" name="display-mode" value="counts">
+            Counts
+          </label>
+        </div>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <label for="color-scale">Color:</label>
+        <select id="color-scale">
+          <option value="heat">Heat</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="log-scale">
+          Log scale
+        </label>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="voynich-font" checked>
+          Voynich font
+        </label>
+      </div>
+
+      <div class="control-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="show-boundaries" checked>
+          Show boundaries
+        </label>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <button class="export-btn" onclick="App.exportImage()">Export PNG</button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Heatmap Area -->
+      <div class="heatmap-area" id="heatmap-area">
+        <!-- Single/Diff mode: one canvas -->
+        <div class="heatmap-container" id="heatmap-container-a">
+          <div class="heatmap-label" id="heatmap-label-a"></div>
+          <canvas id="heatmap-canvas"></canvas>
+        </div>
+        <!-- Compare mode: second canvas -->
+        <div class="heatmap-container" id="heatmap-container-b" style="display: none;">
+          <div class="heatmap-label" id="heatmap-label-b"></div>
+          <canvas id="heatmap-canvas-b"></canvas>
+        </div>
+      </div>
+
+      <!-- Info Panel -->
+      <aside class="info-panel" id="info-panel">
+        <!-- Current Selection Info -->
+        <div class="info-card" id="info-card-single">
+          <h3>Current View</h3>
+          <div class="info-row">
+            <span class="label">Pages:</span>
+            <span class="value" id="page-count">-</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Filter:</span>
+            <span class="value" id="description">-</span>
+          </div>
+        </div>
+        
+        <!-- Compare/Diff mode info -->
+        <div class="info-card" id="info-card-compare" style="display: none;">
+          <h3>Comparison</h3>
+          <div class="info-subsection">
+            <strong>A:</strong> <span id="compare-desc-a">-</span>
+            <span class="info-pages">(<span id="compare-pages-a">-</span> pages)</span>
+          </div>
+          <div class="info-subsection">
+            <strong>B:</strong> <span id="compare-desc-b">-</span>
+            <span class="info-pages">(<span id="compare-pages-b">-</span> pages)</span>
+          </div>
+        </div>
+
+        <!-- Hover Info -->
+        <div class="info-card">
+          <h3>Cell Details</h3>
+          <div id="hover-info">
+            <span class="placeholder">Hover over a cell to see details</span>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="info-card">
+          <h3>Legend</h3>
+          <div class="legend" id="legend-standard">
+            <h4>Probability</h4>
+            <div class="legend-gradient" id="legend-gradient-standard"></div>
+            <div class="legend-labels">
+              <span>0%</span>
+              <span>Low</span>
+              <span>Medium</span>
+              <span>High</span>
+              <span>Max</span>
+            </div>
+          </div>
+          <div class="legend" id="legend-diff" style="display: none;">
+            <h4>Difference (A − B)</h4>
+            <div class="legend-gradient" id="legend-gradient-diff"></div>
+            <div class="legend-labels">
+              <span>B higher</span>
+              <span>Same</span>
+              <span>A higher</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Help -->
+        <div class="info-card">
+          <h3>Reading the Matrix</h3>
+          <p style="font-size: 12px; color: var(--text-secondary); margin: 0;">
+            Rows represent the <strong>source</strong> character,
+            columns represent the <strong>target</strong> character.
+            Cell color shows how likely the target follows the source.
+          </p>
+          <p style="font-size: 12px; color: var(--text-secondary); margin: 8px 0 0;">
+            Boundary markers (WORD▸, LINE▸, etc.) show transitions at 
+            word/line/paragraph/page boundaries.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- Error Message -->
+  <div class="error-message" id="error-message"></div>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/heatmap.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

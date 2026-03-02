@@ -1,0 +1,30 @@
+{
+  "unigrams": {
+    "counts": {},
+    "frequencies": {},
+    "total": 0,
+    "unique": 0
+  },
+  "bigrams": {
+    "counts": {},
+    "frequencies": {},
+    "total": 0,
+    "unique": 0
+  },
+  "trigrams": {
+    "counts": {},
+    "frequencies": {},
+    "total": 0,
+    "unique": 0
+  },
+  "total_chars": 0,
+  "total_words": 0,
+  "name": "zodiac",
+  "description": "Zodiac section",
+  "page_count": 12,
+  "bigram_matrix": {
+    "charset": [],
+    "counts": {},
+    "frequencies": {}
+  }
+}

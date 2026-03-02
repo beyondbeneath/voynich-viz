@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voynich: Analysis & Visualisation</title>
+  <link rel="stylesheet" href="common/css/base.css">
+  <style>
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .app-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      flex-shrink: 0;
+    }
+
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .site-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .site-title span {
+      color: var(--accent-color);
+    }
+
+    .analysis-selector {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .analysis-selector label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .analysis-selector select {
+      padding: 8px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      cursor: pointer;
+      min-width: 200px;
+    }
+
+    .analysis-selector select:hover {
+      border-color: var(--accent-color);
+    }
+
+    .analysis-selector select:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 2px rgba(74, 144, 217, 0.2);
+    }
+
+    .methodology-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .methodology-link:hover {
+      color: var(--accent-color);
+      background: var(--bg-primary);
+    }
+
+    .content-frame {
+      flex: 1;
+      border: none;
+      width: 100%;
+    }
+
+    /* Coming soon overlay for disabled options */
+    .analysis-selector option:disabled {
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-wrapper">
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <h1 class="site-title">Voynich: Analysis & Visualisation</h1>
+        
+        <div class="analysis-selector">
+          <label for="analysis-select">Analysis:</label>
+          <select id="analysis-select">
+            <option value="markov/index.html" selected>Markov Transition Matrix</option>
+            <option value="wordpos/index.html">Word Position</option>
+            <option value="ngram/index.html">N-gram Analysis</option>
+            <option value="pagepos/index.html">Page Position</option>
+          </select>
+        </div>
+
+        <a href="markov/methodology.html" target="_blank" class="methodology-link">View Processing Methodology ↗</a>
+      </div>
+
+    </header>
+
+    <iframe id="content-frame" class="content-frame" src="markov/index.html"></iframe>
+  </div>
+
+  <script>
+    const analysisSelect = document.getElementById('analysis-select');
+    const contentFrame = document.getElementById('content-frame');
+
+    analysisSelect.addEventListener('change', (e) => {
+      const value = e.target.value;
+      if (value) {
+        contentFrame.src = value;
+      }
+    });
+  </script>
+</body>
+</html>

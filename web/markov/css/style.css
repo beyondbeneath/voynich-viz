@@ -1,0 +1,517 @@
+/* Markov Transition Visualizer Styles */
+/* Note: base.css provides reset, variables, and common components */
+
+/* Font face for Voynich characters */
+@font-face {
+  font-family: 'Voynich';
+  src: url('../fonts/voynich.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Layout */
+.app-container {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header */
+.app-header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.app-header h1 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.app-header .subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.app-header .methodology-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.app-header .methodology-link:hover {
+  text-decoration: underline;
+}
+
+/* Controls panel */
+.controls-panel {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.control-group select {
+  padding: 6px 12px;
+  font-size: 13px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  min-width: 180px;
+  cursor: pointer;
+}
+
+.control-group select:hover {
+  border-color: var(--accent-color);
+}
+
+.control-group select:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(74, 144, 217, 0.2);
+}
+
+/* Radio group */
+.radio-group {
+  display: flex;
+  gap: 12px;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.radio-group input[type="radio"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Checkbox styling */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.checkbox-label input[type="checkbox"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Separator */
+.control-separator {
+  width: 1px;
+  height: 24px;
+  background: var(--border-color);
+}
+
+/* Main content area */
+.main-content {
+  display: flex;
+  gap: 20px;
+}
+
+/* Heatmap container */
+.heatmap-container {
+  flex: 1;
+  min-width: 0;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  overflow-x: auto;
+  overflow-y: visible;
+  position: relative;
+}
+
+#heatmap-canvas {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Info panel (sidebar) */
+.info-panel {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+.info-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.info-card h3 {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 13px;
+}
+
+.info-row .label {
+  color: var(--text-secondary);
+}
+
+.info-row .value {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* Hover info display */
+#hover-info {
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+#hover-info .placeholder {
+  color: var(--text-secondary);
+  font-style: italic;
+  font-size: 13px;
+}
+
+#hover-info .transition {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+
+#hover-info .char {
+  font-weight: 600;
+  padding: 4px 8px;
+  background: var(--bg-primary);
+  border-radius: 4px;
+  font-family: 'Voynich', monospace;
+  font-size: 18px;
+}
+
+#hover-info .char.boundary {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+#hover-info .arrow {
+  color: var(--text-secondary);
+}
+
+#hover-info .values {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+}
+
+#hover-info .probability {
+  font-weight: 600;
+  color: var(--accent-color);
+}
+
+#hover-info .count {
+  color: var(--text-secondary);
+}
+
+/* Loading overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+.loading-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--accent-color);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error message */
+.error-message {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--error-color);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.error-message.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Legend */
+.legend {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+}
+
+.legend h4 {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.legend-gradient {
+  height: 16px;
+  border-radius: 4px;
+  background: linear-gradient(to right, 
+    rgb(253, 231, 37), 
+    rgb(94, 201, 98), 
+    rgb(33, 145, 140), 
+    rgb(59, 82, 139), 
+    rgb(68, 1, 84)
+  );
+  margin-bottom: 4px;
+}
+
+.legend-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+/* Voynich font class */
+.voynich-text {
+  font-family: 'Voynich', monospace;
+}
+
+/* Export button */
+.export-btn {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--bg-secondary);
+  background: var(--accent-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.export-btn:hover {
+  background: var(--accent-hover);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1000px) {
+  .main-content {
+    flex-direction: column;
+  }
+  
+  .info-panel {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+  }
+  
+  .info-card {
+    flex: 1;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .controls-panel {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .control-separator {
+    display: none;
+  }
+  
+  .info-panel {
+    flex-direction: column;
+  }
+}
+
+/* ========================================
+   Compare/Diff Mode Styles
+   ======================================== */
+
+/* Heatmap area container */
+.heatmap-area {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: 20px;
+}
+
+/* Compare mode: side-by-side layout */
+.heatmap-area.compare-mode {
+  flex-direction: row;
+}
+
+.heatmap-area.compare-mode .heatmap-container {
+  flex: 1;
+  min-width: 400px;
+}
+
+/* Heatmap label (A/B indicator) */
+.heatmap-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--accent-color);
+}
+
+.heatmap-label:empty {
+  display: none;
+}
+
+/* Second canvas */
+#heatmap-canvas-b {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Compare info panel styling */
+.info-subsection {
+  padding: 8px 0;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.info-subsection:last-child {
+  border-bottom: none;
+}
+
+.info-subsection strong {
+  color: var(--accent-color);
+}
+
+.info-pages {
+  color: var(--text-secondary);
+  font-size: 12px;
+  margin-left: 8px;
+}
+
+/* Diff mode hover styling */
+#hover-info .diff-value {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+#hover-info .diff-positive {
+  color: #c0392b;
+}
+
+#hover-info .diff-negative {
+  color: #2980b9;
+}
+
+#hover-info .diff-neutral {
+  color: var(--text-secondary);
+}
+
+#hover-info .diff-detail {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* Mode selector styling */
+#view-mode {
+  font-weight: 500;
+  min-width: 120px;
+}
+
+/* Aggregation B selector */
+#aggregation-select-b {
+  min-width: 160px;
+}
+
+/* Legend tweaks for diff mode */
+#legend-diff .legend-labels {
+  justify-content: space-between;
+}
+
+/* Responsive adjustments for compare mode */
+@media (max-width: 1200px) {
+  .heatmap-area.compare-mode {
+    flex-direction: column;
+  }
+  
+  .heatmap-area.compare-mode .heatmap-container {
+    min-width: 0;
+  }
+}

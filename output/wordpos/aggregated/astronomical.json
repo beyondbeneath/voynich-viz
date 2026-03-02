@@ -1,0 +1,395 @@
+{
+  "charset": [
+    "1",
+    "2",
+    "3",
+    "6",
+    "7",
+    "8",
+    "C",
+    "F",
+    "K",
+    "P",
+    "S",
+    "T",
+    "a",
+    "d",
+    "f",
+    "g",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "y"
+  ],
+  "characters": {
+    "1": {
+      "start": 0,
+      "middle": 15,
+      "end": 0,
+      "only": 0,
+      "total": 15,
+      "ratios": {
+        "start": 0.0,
+        "middle": 1.0,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "2": {
+      "start": 1,
+      "middle": 33,
+      "end": 0,
+      "only": 0,
+      "total": 34,
+      "ratios": {
+        "start": 0.029411764705882353,
+        "middle": 0.9705882352941176,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "3": {
+      "start": 0,
+      "middle": 2,
+      "end": 0,
+      "only": 0,
+      "total": 2,
+      "ratios": {
+        "start": 0.0,
+        "middle": 1.0,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "6": {
+      "start": 4,
+      "middle": 79,
+      "end": 2,
+      "only": 0,
+      "total": 85,
+      "ratios": {
+        "start": 0.047058823529411764,
+        "middle": 0.9294117647058824,
+        "end": 0.023529411764705882,
+        "only": 0.0
+      }
+    },
+    "7": {
+      "start": 0,
+      "middle": 44,
+      "end": 0,
+      "only": 0,
+      "total": 44,
+      "ratios": {
+        "start": 0.0,
+        "middle": 1.0,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "8": {
+      "start": 0,
+      "middle": 3,
+      "end": 0,
+      "only": 0,
+      "total": 3,
+      "ratios": {
+        "start": 0.0,
+        "middle": 1.0,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "C": {
+      "start": 37,
+      "middle": 44,
+      "end": 0,
+      "only": 0,
+      "total": 81,
+      "ratios": {
+        "start": 0.4567901234567901,
+        "middle": 0.5432098765432098,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "F": {
+      "start": 0,
+      "middle": 1,
+      "end": 0,
+      "only": 0,
+      "total": 1,
+      "ratios": {
+        "start": 0.0,
+        "middle": 1.0,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "K": {
+      "start": 0,
+      "middle": 5,
+      "end": 0,
+      "only": 0,
+      "total": 5,
+      "ratios": {
+        "start": 0.0,
+        "middle": 1.0,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "P": {
+      "start": 1,
+      "middle": 0,
+      "end": 0,
+      "only": 0,
+      "total": 1,
+      "ratios": {
+        "start": 1.0,
+        "middle": 0.0,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "S": {
+      "start": 22,
+      "middle": 5,
+      "end": 0,
+      "only": 0,
+      "total": 27,
+      "ratios": {
+        "start": 0.8148148148148148,
+        "middle": 0.18518518518518517,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "T": {
+      "start": 2,
+      "middle": 5,
+      "end": 0,
+      "only": 0,
+      "total": 7,
+      "ratios": {
+        "start": 0.2857142857142857,
+        "middle": 0.7142857142857143,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "a": {
+      "start": 30,
+      "middle": 76,
+      "end": 1,
+      "only": 0,
+      "total": 107,
+      "ratios": {
+        "start": 0.2803738317757009,
+        "middle": 0.7102803738317757,
+        "end": 0.009345794392523364,
+        "only": 0.0
+      }
+    },
+    "d": {
+      "start": 31,
+      "middle": 52,
+      "end": 2,
+      "only": 0,
+      "total": 85,
+      "ratios": {
+        "start": 0.36470588235294116,
+        "middle": 0.611764705882353,
+        "end": 0.023529411764705882,
+        "only": 0.0
+      }
+    },
+    "f": {
+      "start": 0,
+      "middle": 3,
+      "end": 0,
+      "only": 0,
+      "total": 3,
+      "ratios": {
+        "start": 0.0,
+        "middle": 1.0,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "g": {
+      "start": 1,
+      "middle": 0,
+      "end": 2,
+      "only": 0,
+      "total": 3,
+      "ratios": {
+        "start": 0.3333333333333333,
+        "middle": 0.0,
+        "end": 0.6666666666666666,
+        "only": 0.0
+      }
+    },
+    "k": {
+      "start": 5,
+      "middle": 58,
+      "end": 0,
+      "only": 0,
+      "total": 63,
+      "ratios": {
+        "start": 0.07936507936507936,
+        "middle": 0.9206349206349206,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "l": {
+      "start": 0,
+      "middle": 21,
+      "end": 29,
+      "only": 0,
+      "total": 50,
+      "ratios": {
+        "start": 0.0,
+        "middle": 0.42,
+        "end": 0.58,
+        "only": 0.0
+      }
+    },
+    "m": {
+      "start": 0,
+      "middle": 1,
+      "end": 10,
+      "only": 0,
+      "total": 11,
+      "ratios": {
+        "start": 0.0,
+        "middle": 0.09090909090909091,
+        "end": 0.9090909090909091,
+        "only": 0.0
+      }
+    },
+    "n": {
+      "start": 0,
+      "middle": 0,
+      "end": 42,
+      "only": 0,
+      "total": 42,
+      "ratios": {
+        "start": 0.0,
+        "middle": 0.0,
+        "end": 1.0,
+        "only": 0.0
+      }
+    },
+    "o": {
+      "start": 59,
+      "middle": 130,
+      "end": 7,
+      "only": 3,
+      "total": 199,
+      "ratios": {
+        "start": 0.2964824120603015,
+        "middle": 0.6532663316582915,
+        "end": 0.035175879396984924,
+        "only": 0.01507537688442211
+      }
+    },
+    "p": {
+      "start": 1,
+      "middle": 10,
+      "end": 0,
+      "only": 0,
+      "total": 11,
+      "ratios": {
+        "start": 0.09090909090909091,
+        "middle": 0.9090909090909091,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "q": {
+      "start": 20,
+      "middle": 0,
+      "end": 0,
+      "only": 0,
+      "total": 20,
+      "ratios": {
+        "start": 1.0,
+        "middle": 0.0,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "r": {
+      "start": 2,
+      "middle": 10,
+      "end": 44,
+      "only": 1,
+      "total": 57,
+      "ratios": {
+        "start": 0.03508771929824561,
+        "middle": 0.17543859649122806,
+        "end": 0.7719298245614035,
+        "only": 0.017543859649122806
+      }
+    },
+    "s": {
+      "start": 17,
+      "middle": 7,
+      "end": 20,
+      "only": 5,
+      "total": 49,
+      "ratios": {
+        "start": 0.3469387755102041,
+        "middle": 0.14285714285714285,
+        "end": 0.40816326530612246,
+        "only": 0.10204081632653061
+      }
+    },
+    "t": {
+      "start": 6,
+      "middle": 25,
+      "end": 1,
+      "only": 0,
+      "total": 32,
+      "ratios": {
+        "start": 0.1875,
+        "middle": 0.78125,
+        "end": 0.03125,
+        "only": 0.0
+      }
+    },
+    "y": {
+      "start": 30,
+      "middle": 5,
+      "end": 109,
+      "only": 1,
+      "total": 145,
+      "ratios": {
+        "start": 0.20689655172413793,
+        "middle": 0.034482758620689655,
+        "end": 0.7517241379310344,
+        "only": 0.006896551724137931
+      }
+    }
+  },
+  "position_totals": {
+    "start": 269,
+    "middle": 634,
+    "end": 269,
+    "only": 10,
+    "total": 1182
+  },
+  "name": "astronomical",
+  "description": "Astronomical section",
+  "page_count": 8,
+  "word_count": 279
+}

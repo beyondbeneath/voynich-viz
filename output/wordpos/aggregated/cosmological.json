@@ -1,0 +1,395 @@
+{
+  "charset": [
+    "1",
+    "2",
+    "3",
+    "6",
+    "7",
+    "8",
+    "C",
+    "F",
+    "K",
+    "P",
+    "S",
+    "T",
+    "a",
+    "d",
+    "f",
+    "g",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "y"
+  ],
+  "characters": {
+    "1": {
+      "start": 0,
+      "middle": 33,
+      "end": 0,
+      "only": 0,
+      "total": 33,
+      "ratios": {
+        "start": 0.0,
+        "middle": 1.0,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "2": {
+      "start": 0,
+      "middle": 97,
+      "end": 0,
+      "only": 0,
+      "total": 97,
+      "ratios": {
+        "start": 0.0,
+        "middle": 1.0,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "3": {
+      "start": 0,
+      "middle": 3,
+      "end": 0,
+      "only": 0,
+      "total": 3,
+      "ratios": {
+        "start": 0.0,
+        "middle": 1.0,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "6": {
+      "start": 0,
+      "middle": 170,
+      "end": 3,
+      "only": 0,
+      "total": 173,
+      "ratios": {
+        "start": 0.0,
+        "middle": 0.9826589595375722,
+        "end": 0.017341040462427744,
+        "only": 0.0
+      }
+    },
+    "7": {
+      "start": 0,
+      "middle": 76,
+      "end": 0,
+      "only": 0,
+      "total": 76,
+      "ratios": {
+        "start": 0.0,
+        "middle": 1.0,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "8": {
+      "start": 0,
+      "middle": 11,
+      "end": 0,
+      "only": 0,
+      "total": 11,
+      "ratios": {
+        "start": 0.0,
+        "middle": 1.0,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "C": {
+      "start": 83,
+      "middle": 88,
+      "end": 0,
+      "only": 0,
+      "total": 171,
+      "ratios": {
+        "start": 0.4853801169590643,
+        "middle": 0.5146198830409356,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "F": {
+      "start": 1,
+      "middle": 1,
+      "end": 0,
+      "only": 0,
+      "total": 2,
+      "ratios": {
+        "start": 0.5,
+        "middle": 0.5,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "K": {
+      "start": 3,
+      "middle": 9,
+      "end": 0,
+      "only": 0,
+      "total": 12,
+      "ratios": {
+        "start": 0.25,
+        "middle": 0.75,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "P": {
+      "start": 1,
+      "middle": 0,
+      "end": 0,
+      "only": 0,
+      "total": 1,
+      "ratios": {
+        "start": 1.0,
+        "middle": 0.0,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "S": {
+      "start": 64,
+      "middle": 26,
+      "end": 0,
+      "only": 1,
+      "total": 91,
+      "ratios": {
+        "start": 0.7032967032967034,
+        "middle": 0.2857142857142857,
+        "end": 0.0,
+        "only": 0.01098901098901099
+      }
+    },
+    "T": {
+      "start": 4,
+      "middle": 6,
+      "end": 0,
+      "only": 0,
+      "total": 10,
+      "ratios": {
+        "start": 0.4,
+        "middle": 0.6,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "a": {
+      "start": 65,
+      "middle": 237,
+      "end": 1,
+      "only": 1,
+      "total": 304,
+      "ratios": {
+        "start": 0.2138157894736842,
+        "middle": 0.7796052631578947,
+        "end": 0.003289473684210526,
+        "only": 0.003289473684210526
+      }
+    },
+    "d": {
+      "start": 64,
+      "middle": 151,
+      "end": 6,
+      "only": 0,
+      "total": 221,
+      "ratios": {
+        "start": 0.2895927601809955,
+        "middle": 0.6832579185520362,
+        "end": 0.027149321266968326,
+        "only": 0.0
+      }
+    },
+    "f": {
+      "start": 1,
+      "middle": 3,
+      "end": 0,
+      "only": 0,
+      "total": 4,
+      "ratios": {
+        "start": 0.25,
+        "middle": 0.75,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "g": {
+      "start": 0,
+      "middle": 0,
+      "end": 4,
+      "only": 1,
+      "total": 5,
+      "ratios": {
+        "start": 0.0,
+        "middle": 0.0,
+        "end": 0.8,
+        "only": 0.2
+      }
+    },
+    "k": {
+      "start": 12,
+      "middle": 102,
+      "end": 0,
+      "only": 0,
+      "total": 114,
+      "ratios": {
+        "start": 0.10526315789473684,
+        "middle": 0.8947368421052632,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "l": {
+      "start": 6,
+      "middle": 56,
+      "end": 100,
+      "only": 0,
+      "total": 162,
+      "ratios": {
+        "start": 0.037037037037037035,
+        "middle": 0.345679012345679,
+        "end": 0.6172839506172839,
+        "only": 0.0
+      }
+    },
+    "m": {
+      "start": 0,
+      "middle": 0,
+      "end": 35,
+      "only": 0,
+      "total": 35,
+      "ratios": {
+        "start": 0.0,
+        "middle": 0.0,
+        "end": 1.0,
+        "only": 0.0
+      }
+    },
+    "n": {
+      "start": 0,
+      "middle": 2,
+      "end": 109,
+      "only": 0,
+      "total": 111,
+      "ratios": {
+        "start": 0.0,
+        "middle": 0.018018018018018018,
+        "end": 0.9819819819819819,
+        "only": 0.0
+      }
+    },
+    "o": {
+      "start": 135,
+      "middle": 232,
+      "end": 7,
+      "only": 0,
+      "total": 374,
+      "ratios": {
+        "start": 0.3609625668449198,
+        "middle": 0.6203208556149733,
+        "end": 0.01871657754010695,
+        "only": 0.0
+      }
+    },
+    "p": {
+      "start": 3,
+      "middle": 18,
+      "end": 1,
+      "only": 0,
+      "total": 22,
+      "ratios": {
+        "start": 0.13636363636363635,
+        "middle": 0.8181818181818182,
+        "end": 0.045454545454545456,
+        "only": 0.0
+      }
+    },
+    "q": {
+      "start": 83,
+      "middle": 2,
+      "end": 0,
+      "only": 0,
+      "total": 85,
+      "ratios": {
+        "start": 0.9764705882352941,
+        "middle": 0.023529411764705882,
+        "end": 0.0,
+        "only": 0.0
+      }
+    },
+    "r": {
+      "start": 5,
+      "middle": 18,
+      "end": 102,
+      "only": 1,
+      "total": 126,
+      "ratios": {
+        "start": 0.03968253968253968,
+        "middle": 0.14285714285714285,
+        "end": 0.8095238095238095,
+        "only": 0.007936507936507936
+      }
+    },
+    "s": {
+      "start": 24,
+      "middle": 2,
+      "end": 19,
+      "only": 5,
+      "total": 50,
+      "ratios": {
+        "start": 0.48,
+        "middle": 0.04,
+        "end": 0.38,
+        "only": 0.1
+      }
+    },
+    "t": {
+      "start": 30,
+      "middle": 112,
+      "end": 2,
+      "only": 0,
+      "total": 144,
+      "ratios": {
+        "start": 0.20833333333333334,
+        "middle": 0.7777777777777778,
+        "end": 0.013888888888888888,
+        "only": 0.0
+      }
+    },
+    "y": {
+      "start": 66,
+      "middle": 2,
+      "end": 261,
+      "only": 5,
+      "total": 334,
+      "ratios": {
+        "start": 0.19760479041916168,
+        "middle": 0.005988023952095809,
+        "end": 0.781437125748503,
+        "only": 0.014970059880239521
+      }
+    }
+  },
+  "position_totals": {
+    "start": 650,
+    "middle": 1457,
+    "end": 650,
+    "only": 14,
+    "total": 2771
+  },
+  "name": "cosmological",
+  "description": "Cosmological section",
+  "page_count": 10,
+  "word_count": 664
+}

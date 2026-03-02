@@ -1,0 +1,815 @@
+<H2 ID="newfmt">New transliteration file format: IVTFF</H2>
+
+<H3>Introduction</H3>
+
+<P>
+For the analysis of the various Voynich MS text transliterations, it is highly desirable that these 
+transliterations are contained in files with a well-defined (standardised) format. 
+Such files should be 'annotated', meaning that they include so-called metadata, which is not the 
+text itself, but information about the text. This metadata should indicate, for example, for each 
+particular piece of text on which folio or page it is located, and where it is on the page. 
+In earlier days, this location information was called the "<SPAN CLASS="forn">locus</SPAN>", 
+a term that I shall continue to use. 
+Additional relevant information about the pages or the text may be included. 
+Analysis software should be able to either interpret this information or to ignore it. 
+</P>
+
+<P>
+In the earliest days of the internet, when the transliteration by Currier was being extended, a 
+format was agreed for this new file. This format was extended in the course of the EVMT transliteration 
+by Gabriel Landini and myself. It was further modified by Jorge Stolfi, and used in this final version 
+in the main resource: the Stolfi-Landini interlinear file. 
+</P>
+
+<P>
+Unfortunately, the differences between the above three formats are quite significant, and the 
+v101 transliteration file uses yet another, completely different representation. It is not particularly 
+useful to describe any of these formats in more detail. 
+</P>
+
+<P>
+To achieve a new common format, the following steps have been undertaken in 2017:
+</P>
+
+<DIV>
+ <UL>
+  <LI>To make an inventory of the main existing transliteration files, and to identify all text locations 
+      (<SPAN CLASS="forn">loci</SPAN>) included in them.</LI>
+  <LI>To resolve all inconsistencies in the <SPAN CLASS="forn">locus</SPAN> definitions used by different 
+      transcribers</LI>
+  <LI>To identify and resolve all format issues, in particular clashes between the use of individual characters, 
+      on the one hand as annotation, and the other as elements of one of the transliteration alphabets.</LI>  
+ </UL>
+</DIV>
+
+<H4>Inventory of available transliteration files in 2017</H4>
+
+<P>
+Three nearly complete transliterations of the text exist, but how complete are they in reality? 
+To answer this question, I have compared all three with each other, and with the digital images of the MS. 
+This showed first of all that there are some inconsistencies in counting the different 
+<SPAN CLASS="forn">loci</SPAN>. The following table presents the total counts:
+</P>
+
+<TABLE>
+
+<TR>
+ <TH>Code</TH> <TH>Description</TH>
+ <TH>Locus count</TH> 
+</TR>
+
+<TR><TD>LZ</TD>
+  <TD>
+The Landini-Zandbergen transliteration (formerly: EVMT).
+  </TD>
+  <TD>
+ 5342
+ </TD></TR>
+
+<TR><TD>LSI</TD>
+  <TD>
+The Landini-Stolfi Interlinear file
+  </TD>
+  <TD>
+ 5362
+ </TD></TR>
+
+<TR><TD>GC</TD>
+  <TD>
+The v101 transliteration file by Glen Claston
+  </TD>
+  <TD>
+ 4486
+ </TD></TR>
+
+</TABLE>
+
+<P>
+It appeared that none of the transliterations was complete, and there are even some 
+<SPAN CLASS="forn">loci</SPAN> that are not included in any of them. Furthermore, there are several 
+inconsistencies between the definition of individual <SPAN CLASS="forn">loci</SPAN> in these files. 
+The much lower number in the GC file is due to the fact that GC grouped many individual labels together 
+under single <SPAN CLASS="forn">loci</SPAN>, which he gave long descriptive names. 
+The much smaller difference between the LZ and LSI files is related among others to the different 
+grouping of multi-word labels. These differences are addressed in more detail in the following, in 
+order to arrive at a common definition, where possible based on a majority, while also taking into 
+account the older transliteration efforts initiated by Friedman and Currier.
+</P>
+
+<H4>Locus adjustments</H4>
+
+<P>
+Following are the major inconsistencies between the definition of individual <SPAN CLASS="forn">loci</SPAN> 
+in the main transliteration files, and the way these can be resolved.
+</P>
+
+<DIV>
+<OL>
+
+<LI>
+As a first general rule, only text in the Voynichese script will be rendered in transliteration files. 
+All text in more or less cleartext writing in the MS using the Latin alphabet shall be contained in comments.
+</LI>
+
+<LI>
+As another general rule, no item spanning more than one line shall be contained in a single 
+<SPAN CLASS="forn">locus</SPAN>. Each line must have a separate <SPAN CLASS="forn">locus</SPAN> ID. 
+This mainly affected several sets of labels in the biological section, mainly in the LZ transliteration.
+</LI> 
+ 
+<LI>
+The co-called 'titles' (<A HREF="../writing.html#titles">for which see here</A>) have been transcribed 
+in some cases (FSG and LSI) as separate <SPAN CLASS="forn">loci</SPAN>, and in some cases (LZ, GC) combined 
+with the other part of the line. It was decided to make them separate loci, but also to include a code 
+in the <SPAN CLASS="forn">locus</SPAN> ID that would allow a user to recombine them if he preferred
+</LI>
+
+<LI>
+Some pages have text interrupted by large drawings, and the alignment of the text left and right of this 
+is so bad that one can come to different conclusions as to how the lines should be combined. 
+The most obvious case is given by the last 6 or 7 lines of the first paragraph on 
+<A HREF="../q05/index.html#f34r">f34r</A>.
+In LZ it was assumed that the continuation should be on the same height on the page, while LSI and GC 
+assumed oblique alignment. The majority vote was adopted, and it was decided to introduce a dedicated 
+comment that shows such a bad vertical alignment. 
+</LI>
+
+<LI>
+The most difficult page for <SPAN CLASS="forn">locus</SPAN> identification turned out to be
+<A HREF="../q13/index.html#f75v">f75v</A>,
+which has three separate issues, one of which (labels split over two lines) was already resolved. 
+Another issue is the set of detached individual characters after the first 5 lines of the text. It is not 
+even clear whether this should be 5 or 6 but it was decided to follow the majority and count these separate. 
+The same code in the locus ID as mentioned above (point 3) can be used by users to recombine these 
+<SPAN CLASS="forn">loci</SPAN> if desired. 
+The third issue is the set of words and line fragments surrounding the pool at the bottom of the page. 
+A majority solution could be adopted here.
+</LI>
+
+<LI>
+For several of the sequences of words or characters in the margins of the MS, different 
+<SPAN CLASS="forn">locus</SPAN> ordering would appear to be appropriate. A compromise between consistency 
+and accuracy was required. When the individual items were clearly aligned with the text (such as e.g.
+<A HREF="../q07/index.html#f49v">f49v</A>), 
+they were counted in horizontal order. Otherwise (e.g.
+<A HREF="../q08/index.html#f66r">f66r</A>), they should be counted vertically.
+</LI>
+
+<LI>
+There are some minor issues in counting labels in the pharmaceutical section.
+</LI>
+     
+</OL>
+</DIV>
+
+<H4>Locus types</H4>
+
+<P>
+In the oldest transliteration files (FSG, C-D), <SPAN CLASS="forn">loci</SPAN> were simply numbered 
+incrementally from 1, but these did not include transliterations of special items like labels, 
+circular text etc. In the frame of the EVMT activity, where these were all included, labels were 
+prefixed by L, circular and radial text by C and R, individual words that were not near a drawing 
+element by S and 'blocked' text (consecutive lines that were not part of the standard paragraphs) by B.
+</P>
+
+<P>
+This usage was extended by Stolfi in the LSI file, but unfortunately in quite an inconsistent manner, 
+due to the fact that there were various different people doing the transliteration. 
+Standard paragraph text was prefixed by P, but sometimes also P1, P2 etc if the different paragraphs 
+could be counted easily. Thus, the first line could be P.1, P1.1 or P.1.1 depending on the page. 
+Other codes were introduced, covering almost half the alphabet, and also some lower-case letters. 
+L sometimes meant "label" and sometimes "left". This issue still affects online tools that extract 
+text from the interlinear file.
+</P>
+
+<P>
+A new convention, more similar to EVMT, has therefore been introduced in 2017, where the locus type 
+is characterised by one of four main types (upper case characters), and a longer list of sub-types 
+(second character: lower-case character or number), as follows: 
+</P>
+
+<TABLE>
+
+<TR>
+ <TH>Main type</TH> <TH>Description</TH>
+</TR>
+
+<TR>
+ <TH> P </TH>
+ <TD>
+Text in paragraphs. The second character gives more details. The 'standard' paragraph text has type P0, 
+whereas the old 'blocked' locus type becomes Pb. Other types are introduced to identify (among others) 
+centred text, right-justified text, or titles.
+ </TD>
+</TR>
+
+<TR>
+ <TH> L </TH>
+ <TD>
+Labels. The second character specifies whether it is a label of a herb, zodiac element, nymph, etc. etc., 
+and it is L0 if this is not near any drawing element.
+ </TD>
+</TR>
+
+<TR>
+ <TH> C </TH>
+ <TD>
+Circular text. Cc for clockwise and Ca for anti-clockwise.
+ </TD>
+</TR>
+
+<TR>
+ <TH> R </TH>
+ <TD>
+Radial text. Ri for inward writing and Ro for outward writing.
+ </TD>
+</TR>
+
+</TABLE>
+
+<H4 ID="inv">The inventory</H4>
+
+<P>
+Based on the above rules, the total number of loci in the MS could be established. After adjusting the 
+<SPAN CLASS="forn">loci</SPAN> in each of the files according to the rules listed above, the completeness 
+of each transliteration file could be established, in terms of the number of <SPAN CLASS="forn">loci</SPAN> 
+covered. The analysis showed that the "LZ" transliteration, which benefited strongly from the work of 
+Theodore Petersen, was most complete. It lacked only:
+</P>
+
+<UL>
+ <LI>The few characters in script in the right margin of <A HREF="../q01/index.html#f1r">f1r</A> (3 are visible).
+     These have, however, been removed again (see below).</LI>
+ <LI>The short words under the paint of a leaf on <A HREF="../q01/index.html#f2r">f2r</A> (missing in all existing files).</LI> 
+ <LI>An entry in the left margin of <A HREF="../q02/index.html#f11v">f11v</A> (also missing in all existing files).</LI> 
+ <LI>The words in Voynichese script that are included in the top margin of <A HREF="../q03/index.html#f17r">f17r</A>, visible only under UV light (equally missing in all existing transliteration files).</LI>
+ <LI>The two Voynichese words on <A HREF="../q20/index.html#f116v">f116v</A>, which were only included in "LSI".</LI>
+</UL>
+
+<P>
+I decided to extract my own transliteration from the LZ combined effort, and this will be
+called ZL in the following.  The few <SPAN CLASS="forn">loci</SPAN> that were missing in LZ were added to this file. 
+I am continually updating it, and it is presently at stable issue 3b.
+</P>
+
+<P>
+In May 2025 it was pointed out to me that one locus (a label on f89v2), present in several of the 
+transliterations, is actually a word shining through from the other side of the folio. In transliteration
+files maintained by myself (namely 'ZL' and 'RF') this locus has been removed from the files.
+It has also been removed from all counts in the following, and it means a reduction of the total number of
+loci to 5388.
+</P>
+
+<P>
+For transliteration files from other authors, I decided that I should not remove this locus, but rather 
+mark it as 'invalid' in the file, using a dedicated code.
+</P>
+
+<P>
+Furthermore, as a result of recently available multi-spectral scans, more characters from the alphabet 
+tables on <A HREF="../q01/index.html#f1r">f1r</A> can now be discerned. 
+At the same time, they can now also be positively identified as later additions, 
+most probably by Johannes Marcus Marci
+<A HREF="#n08">(8)</A>.
+Three of these characters were included in the total locus count, and appeared only in files maintained by
+myself, so they could be removed, reducing the total number of loci to 5385
+<A HREF="#n9">(9)</A>.
+</P>
+
+<P>
+The counts in the following table reflect the status of the files after a considerable verification 
+exercise in 2019-2020, and the above-mentioned changes in 2025.
+</P>
+
+<TABLE>
+
+<TR>
+ <TH>Code</TH> <TH>Description</TH>
+ <TH>Locus count</TH> <TH>Percentage</TH>
+</TR>
+
+<TR><TD>FSG</TD>
+  <TD>
+The FSG transliteration.
+  </TD>
+  <TD>
+4060
+  </TD>
+  <TD>
+75.4
+  </TD>
+</TR>
+
+<TR><TD>C-D</TD>
+  <TD>
+The original transliteration of D'Imperio and Currier
+  </TD>
+  <TD>
+2196
+  </TD>
+  <TD>
+40.8
+  </TD>
+</TR>
+
+<TR><TD>Vnow</TD>
+  <TD>
+The updated version of this file, made during the earliest years of the Voynich MS mailing list. 
+  </TD>
+  <TD>
+2550
+  </TD>
+  <TD>
+47.4
+  </TD>
+</TR>
+
+<TR><TD>IT</TD>
+  <TD>
+The transliteration by Takeshi Takahashi included in the interlinear file.
+  </TD>
+  <TD>
+5215
+  </TD>
+  <TD> 96.8 </TD>
+</TR>
+
+<TR><TD>LSI</TD>
+  <TD>
+    The Landini-Stolfi Interlinear file
+  </TD>
+  <TD>
+5341
+  </TD>
+  <TD>
+99.2
+  </TD>
+</TR>
+
+<TR><TD>LZ</TD>
+  <TD>
+    The unpublished Landini-Zandbergen transliteration
+  </TD>
+  <TD>
+5382
+  </TD>
+  <TD>
+99.9
+  </TD>
+</TR>
+
+<TR><TD>GC</TD>
+  <TD>
+The v101 transliteration file.
+  </TD>
+  <TD>
+5367
+  </TD>
+  <TD>
+99.7
+  </TD>
+</TR>
+
+<TR><TD>ZL</TD>
+  <TD>
+The "Zandbergen" part of the LZ transliteration effort.
+  </TD>
+  <TD> 5385 </TD>
+  <TD>
+100
+  </TD>
+</TR>
+
+</TABLE>
+
+<H4>Format adjustments</H4>
+
+<P>
+The new format is based on minimal adjustments to the conventions used by Gabriel Landini and myself in the 
+frame of our transliteration efforts in 1998-1999, which also went into the format definition of the 
+interlinear file, where they can still be found (which is why these details are still presented here). 
+There were a number of issues to be resolved, mainly related to the character set of the v101 alphabet, 
+which was shown <A HREF="../transcr.html#v101">here</A>. 
+Problems existed with the following characters:
+</P>
+
+<TABLE>
+ <TR>
+  <TH>Char</TH>
+  <TH>Clash</TH>
+  <TH>Solution</TH>
+ </TR>
+
+ <TR>
+  <TD> ( </TD> <TD> This is a character in v101, so it cannot be used as a ligature marker</TD>
+ <TD> Use {&nbsp;} for ligature markers, and &lt;!&nbsp;&gt; for in-line comments.</TD>
+ </TR> 
+
+ <TR>
+  <TD> & </TD> <TD> This is a character in v101, so it cannot be used to represent high-ascii codes.</TD>
+  <TD> Use @ for high-ascii codes.</TD>
+ </TR> 
+
+ <TR>
+  <TD> * </TD> <TD> This is a character in v101, so it cannot be used to mark an illegible character.</TD>
+  <TD> Use ? for illegible characters.</TD>
+ </TR> 
+
+ <TR>
+  <TD> \ </TD> <TD> This is a character in v101, so it cannot be used to indicate line wrapping (continuation 
+       of a locus on the next line).</TD>
+  <TD> Use / for this purpose.</TD>
+ </TR> 
+
+ <TR>
+  <TD> | </TD> <TD> This is a character in v101, so it cannot be used to separate alternative options 
+       between [ ] brackets</TD>
+  <TD> Use : for this purpose.</TD>
+ </TR> 
+
+</TABLE>
+
+<H4 ID="ivtff">New file format</H4>
+
+<P>
+The result of this exercise was the definition of a new format, which I have called IVTFF 
+(Intermediate Voynich Transliteration File Format). The complete format description 
+(version 2.0.2 of July 2025) may be found 
+<A HREF="../software/ivtt/IVTFF_format.pdf">in this PDF document</A>
+The version nr refers to the document. 
+The file format is not significantly different from version 2.0.
+(Note that the earlier version 1.7 may still be found on the
+<A HREF="legacy.html">legacy page</A>).
+</P>
+
+<P>
+The table below summarises the most important conventions used for this format. 
+</P>
+
+<TABLE>
+
+ <TR>
+  <TH> # (hash) at start of line </TH>
+  <TD> The entire line is a comment. </TD>
+ </TR>
+  
+ <TR>
+  <TH> &lt;f ... &gt; </TH>
+  <TD> With the &lt; character in the first position of the line. This is a 
+       <SPAN CLASS="forn">locus</SPAN> indicator, 
+       and appears at the start of each text segment. It explains where this text is to be found. The format of 
+       <SPAN CLASS="forn">locus</SPAN> indicators is explained further below.</TD>
+ </TR>
+
+ <TR>
+  <TH> &lt;! ... &gt; </TH>
+  <TD> With the &lt; *NOT* in the first position of a line. All text between the delimeters is a comment. 
+       This may appear anywhere in a line. </TD>   
+ </TR>
+
+ <TR>
+  <TH> . </TH>
+  <TD> A word space (word separator). </TD>
+ </TR>
+  
+ <TR>
+  <TH> , </TH>
+  <TD> An uncertain word space. </TD>
+ </TR>
+  
+ <TR>
+  <TH> [ ... ] </TH>
+  <TD> Used for alternative or uncertain reading. [a:o] means it could be an a or an o, but it is not certain. 
+The options must be separated by a colon (:), and there can be more than two options, e.g. [r:s:d]. 
+If possible, the most likely option should be the first one. </TD>
+ </TR>
+  
+ <TR>
+  <TH> { ... } </TH>
+  <TD> A ligature of standard characters. Only used with the Eva and Frogguy alphabets</TD>
+ </TR>
+  
+ <TR>
+  <TH> @nnn; </TH>
+  <TD> A high-ascii code. nnn must be in the range 128 to 255</TD>
+ </TR>
+  
+ <TR>
+  <TH> &lt;-&gt; </TH>
+  <TD> A drawing intrusion in the text. This also implies a word space. If &lt;~&gt; is used instead
+       of &lt;-&gt; it means that the text left and right of the intrusion is not aligned vertically.</TD>
+ </TR>
+  
+ <TR>
+  <TH> &lt;%&gt; at start of line. </TH>
+  <TD> Start of a paragraph. </TD>
+ </TR>
+  
+ <TR>
+  <TH> &lt;$&gt; at end of line. </TH>
+  <TD> End of a paragraph. </TD>
+ </TR>
+  
+ <TR>
+  <TH> / at end of line </TH>
+  <TD> This <SPAN CLASS="forn">locus</SPAN> is continued on the following line in the file, 
+       which must have a / in the first position.</TD>
+ </TR>
+  
+ <TR>
+  <TH> ? </TH>
+  <TD> A single illegible character. </TD>
+ </TR>
+  
+ <TR>
+  <TH> ??? </TH>
+  <TD> An uncertain number of illegible characters. </TD>
+ </TR>
+  
+</TABLE>
+
+<P>
+For additional conventions and details, see the 
+<A HREF="../software/ivtt/IVTFF_format.pdf">format definition</A>.
+</P>
+
+<P>
+There are three types of <SPAN CLASS="forn">locus</SPAN> indicators:
+</P>
+
+<TABLE>
+
+ <TR>
+  <TH> &lt;f17r&gt; </TH>
+  <TD>
+A <SPAN CLASS="forn">locus</SPAN> indicator without a period means the start of a new page, 
+in this case f17r. There will be no Voynich MS text following this, but there may be a comment, 
+with metadata referring to the entire page.
+  </TD>
+ </TR>
+
+ <TR>
+  <TH> &lt;f17r.N,@Ab&gt; </TH>
+  <TD>
+This is the start of a piece of text of <SPAN CLASS="forn">locus</SPAN> type 'Ab'. 
+The value of N must increase monotonously, starting at 1, for each page. @ is a placeholder 
+for various different symbols, which is explained in the detailed format description. The locus 
+type Ab is listed in Table 10 below. 
+  </TD>
+ </TR>
+
+ <TR>
+  <TH> &lt;f17r.N,@Ab;T&gt; </TH>
+  <TD>
+Same as above, but identifiying the source of the transliteration (a person or a group) by the character T.
+  </TD>
+ </TR>
+
+</TABLE>
+
+<H4>Inventory of the transliterated text</H4>
+
+<P>
+All <SPAN CLASS="forn">loci</SPAN> have been classified into different types, which are identified by two 
+characters. Following is the distribution of the <SPAN CLASS="forn">loci</SPAN> over these types, for 
+the entire MS
+<A HREF="#n10">(10)</A>.
+</P>
+
+<TABLE CLASS="cen">
+ <TR>
+  <TH>Type</TH> <TH>Subtype</TH>
+  <TH>Meaning</TH> <TH>Count</TH>
+ </TR>
+ 
+ <TR>
+  <TD>P</TD> <TD> - </TD>
+  <TD>All running text in paragraphs</TD>
+  <TH>4130</TH>
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> P0 </TD>
+  <TD>Standard left-aligned text</TD>
+  <TD>3885</TD>
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> P1 </TD>
+  <TD>Lines indented significantly due to drawings or other text</TD>
+  <TD>72</TD>
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> Pb </TD>
+  <TD>Dislocated text in free-floating paragraphs</TD>
+  <TD>134</TD>
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> Pc </TD>
+  <TD>Centred lines in normal paragraphs</TD>
+  <TD>17</TD>
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> Pr </TD>
+  <TD>Right-justified lines in normal paragraphs</TD>
+  <TD>12</TD>
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> Pt </TD>
+  <TD>"Titles" in normal paragraph text (see
+<A HREF="../writing.html#titles">here</A>) </TD>
+  <TD>10</TD>
+ </TR>
+
+<TR> <TD COLSPAN=4> </TD> </TR>
+
+ <TR>
+  <TD>L</TD> <TD> - </TD>
+  <TD>All labels and dislocated words or characters</TD>
+  <TH>1029</TH>
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> L0 </TD>
+  <TD>Individual words or characters not near a drawing element</TD>
+  <TD>297</TD>
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> La </TD>
+  <TD>Labels of astronomical or cosmological elements which are not stars or zodiac labels</TD>
+  <TD>7</TD>
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> Lc </TD>
+  <TD>Labels of containers in the pharmaceutical section</TD>
+  <TD>40</TD>
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> Lf </TD>
+  <TD>Labels of herb fragments in the pharmaceutical section</TD>
+  <TD>194</TD>
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> Ln </TD>
+  <TD>Labels of nymphs in the biological/balneological section</TD>
+  <TD>63</TD>
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> Lp </TD>
+  <TD>Labels of full plants in the herbal section</TD>
+  <TD>3</TD>
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> Ls </TD>
+  <TD>Labels of stars</TD>
+  <TD>76</TD>
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> Lt </TD>
+  <TD>Labels of 'tubes and tubs' in the biological/balneological section</TD>
+  <TD>47</TD>
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> Lx </TD>
+  <TD>Individual pieces of marginal (external?) writing</TD>
+  <TD>3</TD>
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> Lz </TD>
+  <TD>Labels of zodiac elements</TD>
+  <TD>299</TD>
+ </TR>
+
+<TR> <TD COLSPAN=4> </TD> </TR>
+
+ <TR>
+  <TD>C</TD> <TD> - </TD>
+  <TD>All writing along circles</TD>
+  <TH>84</TH>
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> Ca </TD>
+  <TD>Anti-clockwise writing along circles</TD>
+  <TD>1</TD>
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> Cc </TD>
+  <TD>Clockwise writing along circles</TD>
+  <TD>83</TD>
+ </TR>
+
+<TR> <TD COLSPAN=4> </TD> </TR>
+
+ <TR>
+  <TD>R</TD> <TD> - </TD>
+  <TD>All writing along the radii of circles</TD>
+  <TH>142</TH> 
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> Ri </TD>
+  <TD>Inwards writing along the radii of circles</TD>
+  <TD>75</TD> 
+ </TR>
+
+ <TR>
+  <TD> - </TD> <TD> Ro </TD>
+  <TD>Outwards writing along the radii of circles</TD>
+  <TD>67</TD> 
+ </TR>
+
+<TR> <TD COLSPAN=4> </TD> </TR>
+
+ <TR>
+  <TH>Total</TH>   <TD> &nbsp; </TD>
+  <TD> &nbsp; </TD>
+  <TH>5385</TH>
+ </TR>
+
+</TABLE>
+
+<P>
+The following table summarises the coverage of these loci in each of the five main 
+transliteration files.
+</P>
+
+<TABLE CLASS="cen">
+ <TR>
+  <TH>Code</TH> <TH>P</TH> <TH>L</TH> <TH>C</TH> <TH>R</TH>
+  <TH>Total</TH>
+ </TR>
+ <TR>
+  <TH>FSG</TH> <TD>3962</TD> <TD>98</TD> <TD>0</TD> 
+  <TD>0</TD> <TD>4060</TD>
+ </TR>
+ <TR>
+  <TH>C-D</TH> <TD>2175</TD> <TD>21</TD> <TD>0</TD> 
+  <TD>0</TD> <TD>2196</TD>
+ </TR>
+ <TR>
+  <TH>IT</TH> <TD>4119</TD> <TD>883</TD> <TD>72</TD> 
+  <TD>142</TD> <TD>5216</TD>
+ </TR>
+ <TR>
+  <TH>GC</TH> <TD>4130</TD> <TD>1011</TD> <TD>84</TD> 
+  <TD>142</TD> <TD>5367</TD>
+ </TR>
+ <TR>
+  <TH>ZL</TH> <TD>4130</TD> <TD>1029</TD> <TD>84</TD> 
+  <TD>142</TD> <TD>5385</TD>
+ </TR>
+</TABLE>
+
+<H4>Page variables</H4>
+
+<P>
+An additional feature of the IVTFF format is the use of so-called page variables.
+Further above, the page start locus type was introduced. On these lines, no transliterated
+text is allowed, but there can be a dedicated comment setting page variables, which
+may look like this:  
+</P>
+
+<CODE>
+&lt;f1r&gt;    &lt;! $Q=1 $P=1 $I=T $L=A $C=1 $H=1 &gt;
+</CODE>
+
+<P>
+This dedicated comment sets a number of variables ($Q, $P etc.) to certain values
+for the whole page. This allows software to select or de-select pages based on these
+settings. An example of this is the transliteration file (pre-)processing tool
+"ivtt" which is introduced <A HREF="#ivtt">further below</A>, and which has this
+capability built in. 
+The meaning of the most important page variables is included in the table below. 
+A complete list with all possible values is given in the 
+<A HREF="../software/ivtt/IVTFF_format.pdf">IVTFF format definition</A>.
+</P>
+
+<TABLE>
+<TR>
+<TH>Variable</TH> <TH>Meaning</TH> <TH>Values</TH> </TR>
+<TR>
+<TD>$Q</TD><TD>Quire</TD> <TD> A (=1), B (=2), C (=3), .... T (=20) </TD></TR>
+<TR>
+<TD>$P</TD><TD>'Page in quire'</TD> <TD> A-X, in increasing order, depending on the quire</TD></TR>
+<TR>
+<TD>$I</TD><TD>Illustration type</TD> <TD> T =text-only, H =herbal, Z =zodiac, B =biological, 
+etc. etc.</TD></TR>
+<TR>
+<TD>$L</TD><TD>Currier language</TD> <TD> A or B </TD></TR>
+<TR>
+<TD>$H</TD><TD>Hand</TD> <TD> 1 - 5, according to Fagin Davis </TD></TR></TABLE>
