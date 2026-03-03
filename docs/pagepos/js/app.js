@@ -21,6 +21,67 @@ const App = (function() {
   
   let elements = {};
   
+  let isInitializing = true;
+  
+  /**
+   * Read state from URL hash parameters.
+   */
+  function readUrlState() {
+    const params = UrlState.parse();
+    const urlState = {};
+    
+    if (params.mode && ['single', 'compare', 'diff'].includes(params.mode)) {
+      urlState.viewMode = params.mode;
+    }
+    if (params.agg) {
+      urlState.aggregation = params.agg;
+    }
+    if (params.aggB) {
+      urlState.aggregationB = params.aggB;
+    }
+    if (params.res && ['coarse', 'fine'].includes(params.res)) {
+      urlState.resolution = params.res;
+    }
+    if (params.norm && ['page', 'manuscript'].includes(params.norm)) {
+      urlState.normalization = params.norm;
+    }
+    if (params.color) {
+      urlState.colorScale = params.color;
+    }
+    if (params.font !== undefined) {
+      urlState.useVoynichFont = UrlState.toBool(params.font, true);
+    }
+    if (params.char) {
+      urlState.selectedChar = params.char;
+    }
+    
+    return urlState;
+  }
+  
+  /**
+   * Update URL hash with current state.
+   */
+  function updateUrl() {
+    if (isInitializing) return;
+    
+    const params = {
+      mode: state.viewMode,
+      agg: state.currentAggregation,
+      res: state.resolution,
+      norm: state.normalization,
+      color: state.settings.colorScale,
+      font: UrlState.fromBool(state.settings.useVoynichFont),
+      char: state.selectedChar,
+    };
+    
+    if (state.viewMode !== 'single' && state.currentAggregationB) {
+      params.aggB = state.currentAggregationB;
+    }
+    
+    UrlState.update(params, true);
+    UrlState.notifyParent(params);
+  }
+  
   /**
    * Initialize the application.
    */
@@ -63,10 +124,33 @@ const App = (function() {
       legendGradientDiff: document.getElementById('legend-gradient-diff'),
     };
     
+    // Read URL state before setting up
+    const urlState = readUrlState();
+    
     Heatmap.init(elements.canvas, 'primary');
     Heatmap.init(elements.canvasB, 'secondary');
     
     setupEventListeners();
+    
+    // Apply URL state to settings
+    if (urlState.resolution && elements.resolutionSelect) {
+      state.resolution = urlState.resolution;
+      elements.resolutionSelect.value = urlState.resolution;
+    }
+    if (urlState.normalization && elements.normalizationSelect) {
+      state.normalization = urlState.normalization;
+      elements.normalizationSelect.value = urlState.normalization;
+    }
+    if (urlState.colorScale) {
+      state.settings.colorScale = urlState.colorScale;
+    }
+    if (urlState.useVoynichFont !== undefined) {
+      state.settings.useVoynichFont = urlState.useVoynichFont;
+      elements.voynichFont.checked = urlState.useVoynichFont;
+    }
+    if (urlState.selectedChar) {
+      state.selectedChar = urlState.selectedChar;
+    }
     
     state.settings.useVoynichFont = elements.voynichFont.checked;
     state.resolution = elements.resolutionSelect?.value || 'coarse';
@@ -80,7 +164,7 @@ const App = (function() {
       console.warn('Could not load Voynich font:', e);
     }
     
-    await loadManifest();
+    await loadManifest(urlState);
   }
   
   /**
@@ -88,21 +172,22 @@ const App = (function() {
    */
   function setupEventListeners() {
     elements.viewMode.addEventListener('change', (e) => {
-      setViewMode(e.target.value);
+      setViewMode(e.target.value, false);
     });
     
     elements.aggregationSelect.addEventListener('change', (e) => {
-      loadAggregation(e.target.value);
+      loadAggregation(e.target.value, false);
     });
     
     elements.aggregationSelectB.addEventListener('change', (e) => {
-      loadAggregationB(e.target.value);
+      loadAggregationB(e.target.value, false);
     });
     
     if (elements.resolutionSelect) {
       elements.resolutionSelect.addEventListener('change', (e) => {
         state.resolution = e.target.value;
         renderHeatmap();
+        updateUrl();
       });
     }
     
@@ -110,6 +195,7 @@ const App = (function() {
       elements.normalizationSelect.addEventListener('change', (e) => {
         state.normalization = e.target.value;
         renderHeatmap();
+        updateUrl();
       });
     }
     
@@ -117,19 +203,22 @@ const App = (function() {
       state.settings.useVoynichFont = e.target.checked;
       updateCharGrid();
       updateSelectedCharDisplay();
+      updateUrl();
     });
     
     elements.colorScale.addEventListener('change', (e) => {
       state.settings.colorScale = e.target.value;
       updateLegendGradient();
       renderHeatmap();
+      updateUrl();
     });
   }
   
   /**
    * Set view mode.
+   * @param {boolean} [skipUrlUpdate=false] - Skip URL update
    */
-  function setViewMode(mode) {
+  function setViewMode(mode, skipUrlUpdate = false) {
     state.viewMode = mode;
     
     const isCompareOrDiff = mode === 'compare' || mode === 'diff';
@@ -154,18 +243,23 @@ const App = (function() {
     
     if (isCompareOrDiff && !state.currentDataB) {
       const defaultB = state.currentAggregation === 'language_a' ? 'language_b' : 'language_a';
-      loadAggregationB(defaultB);
+      loadAggregationB(defaultB, skipUrlUpdate);
     } else {
       renderHeatmap();
     }
     
     updateInfoPanel();
+    
+    if (!skipUrlUpdate) {
+      updateUrl();
+    }
   }
   
   /**
    * Load manifest and initialize.
+   * @param {Object} [urlState] - State from URL to apply
    */
-  async function loadManifest() {
+  async function loadManifest(urlState = {}) {
     showLoading(true);
     
     try {
@@ -190,7 +284,7 @@ const App = (function() {
         selectB.appendChild(optionB);
       }
       
-      selectB.value = 'language_b';
+      selectB.value = urlState.aggregationB || 'language_b';
       
       // Populate resolution dropdown from manifest
       if (elements.resolutionSelect && state.manifest.grid_resolutions) {
@@ -235,7 +329,31 @@ const App = (function() {
       
       updateLegendGradient();
       
-      await loadAggregation(state.settings.aggregation);
+      // Load aggregation from URL state or default
+      const initialAggregation = urlState.aggregation || state.settings.aggregation;
+      await loadAggregation(initialAggregation, true);
+      
+      // Select char from URL state if provided
+      if (urlState.selectedChar && state.currentData) {
+        const charData = getCharacterData(state.currentData, urlState.selectedChar);
+        if (charData) {
+          selectChar(urlState.selectedChar, true);
+        }
+      }
+      
+      // Apply view mode from URL state
+      if (urlState.viewMode) {
+        elements.viewMode.value = urlState.viewMode;
+        setViewMode(urlState.viewMode, true);
+        
+        if (urlState.aggregationB && (urlState.viewMode === 'compare' || urlState.viewMode === 'diff')) {
+          await loadAggregationB(urlState.aggregationB, true);
+        }
+      }
+      
+      // Mark initialization complete and update URL
+      isInitializing = false;
+      updateUrl();
       
       requestAnimationFrame(() => {
         renderHeatmap();
@@ -243,6 +361,7 @@ const App = (function() {
       
     } catch (error) {
       showError(`Failed to load data: ${error.message}`);
+      isInitializing = false;
     } finally {
       showLoading(false);
     }
@@ -275,8 +394,9 @@ const App = (function() {
   
   /**
    * Load aggregation A.
+   * @param {boolean} [skipUrlUpdate=false] - Skip URL update
    */
-  async function loadAggregation(name) {
+  async function loadAggregation(name, skipUrlUpdate = false) {
     showLoading(true);
     
     try {
@@ -302,6 +422,10 @@ const App = (function() {
         elements.heatmapLabelA.textContent = 'A: ' + state.currentData.description;
       }
       
+      if (!skipUrlUpdate) {
+        updateUrl();
+      }
+      
     } catch (error) {
       showError(`Failed to load aggregation: ${error.message}`);
     } finally {
@@ -311,8 +435,9 @@ const App = (function() {
   
   /**
    * Load aggregation B.
+   * @param {boolean} [skipUrlUpdate=false] - Skip URL update
    */
-  async function loadAggregationB(name) {
+  async function loadAggregationB(name, skipUrlUpdate = false) {
     showLoading(true);
     
     try {
@@ -326,6 +451,10 @@ const App = (function() {
       
       if (state.viewMode === 'compare') {
         elements.heatmapLabelB.textContent = 'B: ' + state.currentDataB.description;
+      }
+      
+      if (!skipUrlUpdate) {
+        updateUrl();
       }
       
     } catch (error) {
@@ -358,15 +487,16 @@ const App = (function() {
         btn.classList.add('no-voynich');
       }
       
-      btn.addEventListener('click', () => selectChar(char));
+      btn.addEventListener('click', () => selectChar(char, false));
       elements.charGrid.appendChild(btn);
     }
   }
   
   /**
    * Select a character.
+   * @param {boolean} [skipUrlUpdate=false] - Skip URL update
    */
-  function selectChar(char) {
+  function selectChar(char, skipUrlUpdate = false) {
     state.selectedChar = char;
     
     // Update button states
@@ -379,6 +509,10 @@ const App = (function() {
     updateSelectedCharDisplay();
     updateInfoPanel();
     renderHeatmap();
+    
+    if (!skipUrlUpdate) {
+      updateUrl();
+    }
   }
   
   /**

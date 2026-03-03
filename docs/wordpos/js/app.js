@@ -17,6 +17,59 @@ const App = (function() {
   
   let elements = {};
   
+  let isInitializing = true;
+  
+  /**
+   * Read state from URL hash parameters.
+   */
+  function readUrlState() {
+    const params = UrlState.parse();
+    const urlState = {};
+    
+    if (params.mode && ['single', 'compare', 'diff'].includes(params.mode)) {
+      urlState.viewMode = params.mode;
+    }
+    if (params.agg) {
+      urlState.aggregation = params.agg;
+    }
+    if (params.aggB) {
+      urlState.aggregationB = params.aggB;
+    }
+    if (params.sort && ['start', 'position', 'total', 'middle', 'end', 'alpha'].includes(params.sort)) {
+      urlState.sortBy = params.sort;
+    }
+    if (params.font !== undefined) {
+      urlState.useVoynichFont = UrlState.toBool(params.font, true);
+    }
+    if (params.only !== undefined) {
+      urlState.showOnly = UrlState.toBool(params.only, true);
+    }
+    
+    return urlState;
+  }
+  
+  /**
+   * Update URL hash with current state.
+   */
+  function updateUrl() {
+    if (isInitializing) return;
+    
+    const params = {
+      mode: state.viewMode,
+      agg: state.currentAggregation,
+      sort: state.settings.sortBy,
+      font: UrlState.fromBool(state.settings.useVoynichFont),
+      only: UrlState.fromBool(state.settings.showOnly),
+    };
+    
+    if (state.viewMode !== 'single' && state.currentAggregationB) {
+      params.aggB = state.currentAggregationB;
+    }
+    
+    UrlState.update(params, true);
+    UrlState.notifyParent(params);
+  }
+  
   /**
    * Initialize the application.
    */
@@ -56,11 +109,29 @@ const App = (function() {
       legendOnlyItem: document.getElementById('legend-only-item'),
     };
     
+    // Read URL state before setting up
+    const urlState = readUrlState();
+    
     Chart.init(elements.canvas, 'primary');
     Chart.init(elements.canvasB, 'secondary');
     Chart.setHoverCallback(handleHover);
     
     setupEventListeners();
+    
+    // Apply URL state to settings
+    if (urlState.sortBy) {
+      state.settings.sortBy = urlState.sortBy;
+      elements.sortBy.value = urlState.sortBy;
+    }
+    if (urlState.useVoynichFont !== undefined) {
+      state.settings.useVoynichFont = urlState.useVoynichFont;
+      elements.voynichFont.checked = urlState.useVoynichFont;
+    }
+    if (urlState.showOnly !== undefined) {
+      state.settings.showOnly = urlState.showOnly;
+      elements.showOnly.checked = urlState.showOnly;
+      elements.legendOnlyItem.style.display = urlState.showOnly ? '' : 'none';
+    }
     
     state.settings.useVoynichFont = elements.voynichFont.checked;
     state.settings.showOnly = elements.showOnly.checked;
@@ -71,7 +142,7 @@ const App = (function() {
       console.warn('Could not load Voynich font:', e);
     }
     
-    await loadManifest();
+    await loadManifest(urlState);
   }
   
   /**
@@ -79,38 +150,42 @@ const App = (function() {
    */
   function setupEventListeners() {
     elements.viewMode.addEventListener('change', (e) => {
-      setViewMode(e.target.value);
+      setViewMode(e.target.value, false);
     });
     
     elements.aggregationSelect.addEventListener('change', (e) => {
-      loadAggregation(e.target.value);
+      loadAggregation(e.target.value, false);
     });
     
     elements.aggregationSelectB.addEventListener('change', (e) => {
-      loadAggregationB(e.target.value);
+      loadAggregationB(e.target.value, false);
     });
     
     elements.sortBy.addEventListener('change', (e) => {
       state.settings.sortBy = e.target.value;
       renderChart();
+      updateUrl();
     });
     
     elements.voynichFont.addEventListener('change', (e) => {
       state.settings.useVoynichFont = e.target.checked;
       renderChart();
+      updateUrl();
     });
     
     elements.showOnly.addEventListener('change', (e) => {
       state.settings.showOnly = e.target.checked;
       elements.legendOnlyItem.style.display = e.target.checked ? '' : 'none';
       renderChart();
+      updateUrl();
     });
   }
   
   /**
    * Set view mode.
+   * @param {boolean} [skipUrlUpdate=false] - Skip URL update
    */
-  function setViewMode(mode) {
+  function setViewMode(mode, skipUrlUpdate = false) {
     state.viewMode = mode;
     
     const isCompareOrDiff = mode === 'compare' || mode === 'diff';
@@ -137,18 +212,23 @@ const App = (function() {
     
     if (isCompareOrDiff && !state.currentDataB) {
       const defaultB = state.currentAggregation === 'language_a' ? 'language_b' : 'language_a';
-      loadAggregationB(defaultB);
+      loadAggregationB(defaultB, skipUrlUpdate);
     } else {
       renderChart();
     }
     
     updateInfoPanel();
+    
+    if (!skipUrlUpdate) {
+      updateUrl();
+    }
   }
   
   /**
    * Load the transcription config and manifest.
+   * @param {Object} [urlState] - State from URL to apply
    */
-  async function loadManifest() {
+  async function loadManifest(urlState = {}) {
     showLoading(true);
     
     try {
@@ -174,9 +254,25 @@ const App = (function() {
         selectB.appendChild(optionB);
       }
       
-      selectB.value = 'language_b';
+      selectB.value = urlState.aggregationB || 'language_b';
       
-      await loadAggregation(state.settings.aggregation);
+      // Load aggregation from URL state or default
+      const initialAggregation = urlState.aggregation || state.settings.aggregation;
+      await loadAggregation(initialAggregation, true);
+      
+      // Apply view mode from URL state
+      if (urlState.viewMode) {
+        elements.viewMode.value = urlState.viewMode;
+        setViewMode(urlState.viewMode, true);
+        
+        if (urlState.aggregationB && (urlState.viewMode === 'compare' || urlState.viewMode === 'diff')) {
+          await loadAggregationB(urlState.aggregationB, true);
+        }
+      }
+      
+      // Mark initialization complete and update URL
+      isInitializing = false;
+      updateUrl();
       
       requestAnimationFrame(() => {
         renderChart();
@@ -184,6 +280,7 @@ const App = (function() {
       
     } catch (error) {
       showError(`Failed to load data: ${error.message}`);
+      isInitializing = false;
     } finally {
       showLoading(false);
     }
@@ -191,8 +288,9 @@ const App = (function() {
   
   /**
    * Load aggregation A.
+   * @param {boolean} [skipUrlUpdate=false] - Skip URL update
    */
-  async function loadAggregation(name) {
+  async function loadAggregation(name, skipUrlUpdate = false) {
     showLoading(true);
     
     try {
@@ -212,6 +310,10 @@ const App = (function() {
         elements.chartLabelA.textContent = 'A: ' + state.currentData.description;
       }
       
+      if (!skipUrlUpdate) {
+        updateUrl();
+      }
+      
     } catch (error) {
       showError(`Failed to load aggregation: ${error.message}`);
     } finally {
@@ -221,8 +323,9 @@ const App = (function() {
   
   /**
    * Load aggregation B.
+   * @param {boolean} [skipUrlUpdate=false] - Skip URL update
    */
-  async function loadAggregationB(name) {
+  async function loadAggregationB(name, skipUrlUpdate = false) {
     showLoading(true);
     
     try {
@@ -240,6 +343,10 @@ const App = (function() {
       
       if (state.viewMode === 'compare') {
         elements.chartLabelB.textContent = 'B: ' + state.currentDataB.description;
+      }
+      
+      if (!skipUrlUpdate) {
+        updateUrl();
       }
       
     } catch (error) {

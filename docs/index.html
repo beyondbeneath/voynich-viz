@@ -129,16 +129,106 @@
     <iframe id="content-frame" class="content-frame" src="markov/index.html"></iframe>
   </div>
 
+  <script src="common/js/url-state.js"></script>
   <script>
     const analysisSelect = document.getElementById('analysis-select');
     const contentFrame = document.getElementById('content-frame');
-
+    
+    const ANALYSIS_MAP = {
+      'markov': 'markov/index.html',
+      'wordpos': 'wordpos/index.html',
+      'ngram': 'ngram/index.html',
+      'pagepos': 'pagepos/index.html',
+    };
+    
+    const PATH_TO_ANALYSIS = {
+      'markov/index.html': 'markov',
+      'wordpos/index.html': 'wordpos',
+      'ngram/index.html': 'ngram',
+      'pagepos/index.html': 'pagepos',
+    };
+    
+    let currentChildState = {};
+    let isUpdatingFromUrl = false;
+    
+    function getAnalysisFromUrl() {
+      const params = UrlState.parse();
+      return params.analysis || 'markov';
+    }
+    
+    function buildIframeSrc(analysisType, params) {
+      const basePath = ANALYSIS_MAP[analysisType] || ANALYSIS_MAP.markov;
+      
+      const childParams = { ...params };
+      delete childParams.analysis;
+      
+      const hash = UrlState.stringify(childParams);
+      return hash ? `${basePath}#${hash}` : basePath;
+    }
+    
+    function updateUrlFromState(analysisType, childState, replace = false) {
+      const params = {
+        analysis: analysisType,
+        ...childState
+      };
+      UrlState.update(params, replace);
+    }
+    
+    function initFromUrl() {
+      isUpdatingFromUrl = true;
+      
+      const params = UrlState.parse();
+      const analysisType = params.analysis || 'markov';
+      
+      const selectValue = ANALYSIS_MAP[analysisType];
+      if (selectValue) {
+        analysisSelect.value = selectValue;
+      }
+      
+      contentFrame.src = buildIframeSrc(analysisType, params);
+      
+      setTimeout(() => {
+        isUpdatingFromUrl = false;
+      }, 100);
+    }
+    
+    UrlState.onChildStateChange((state) => {
+      if (isUpdatingFromUrl) return;
+      
+      currentChildState = state;
+      const analysisType = PATH_TO_ANALYSIS[analysisSelect.value] || 'markov';
+      updateUrlFromState(analysisType, state, true);
+    });
+    
     analysisSelect.addEventListener('change', (e) => {
       const value = e.target.value;
       if (value) {
+        const analysisType = PATH_TO_ANALYSIS[value] || 'markov';
+        currentChildState = {};
+        updateUrlFromState(analysisType, {}, false);
         contentFrame.src = value;
       }
     });
+    
+    window.addEventListener('hashchange', () => {
+      const params = UrlState.parse();
+      const analysisType = params.analysis || 'markov';
+      const currentAnalysis = PATH_TO_ANALYSIS[analysisSelect.value] || 'markov';
+      
+      if (analysisType !== currentAnalysis) {
+        isUpdatingFromUrl = true;
+        const selectValue = ANALYSIS_MAP[analysisType];
+        if (selectValue) {
+          analysisSelect.value = selectValue;
+          contentFrame.src = buildIframeSrc(analysisType, params);
+        }
+        setTimeout(() => {
+          isUpdatingFromUrl = false;
+        }, 100);
+      }
+    });
+    
+    initFromUrl();
   </script>
 </body>
 </html>

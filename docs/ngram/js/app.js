@@ -17,6 +17,67 @@ const App = (function() {
   
   let elements = {};
   
+  let isInitializing = true;
+  
+  /**
+   * Read state from URL hash parameters.
+   */
+  function readUrlState() {
+    const params = UrlState.parse();
+    const urlState = {};
+    
+    if (params.mode && ['single', 'compare', 'diff'].includes(params.mode)) {
+      urlState.viewMode = params.mode;
+    }
+    if (params.agg) {
+      urlState.aggregation = params.agg;
+    }
+    if (params.aggB) {
+      urlState.aggregationB = params.aggB;
+    }
+    if (params.ngram && ['bigram', 'unigram', 'trigram'].includes(params.ngram)) {
+      urlState.ngramType = params.ngram;
+    }
+    if (params.display && ['frequencies', 'counts'].includes(params.display)) {
+      urlState.displayMode = params.display;
+    }
+    if (params.color) {
+      urlState.colorScale = params.color;
+    }
+    if (params.log !== undefined) {
+      urlState.useLogScale = UrlState.toBool(params.log);
+    }
+    if (params.font !== undefined) {
+      urlState.useVoynichFont = UrlState.toBool(params.font, true);
+    }
+    
+    return urlState;
+  }
+  
+  /**
+   * Update URL hash with current state.
+   */
+  function updateUrl() {
+    if (isInitializing) return;
+    
+    const params = {
+      mode: state.viewMode,
+      agg: state.currentAggregation,
+      ngram: state.settings.ngramType,
+      display: state.settings.displayMode,
+      color: state.settings.colorScale,
+      log: UrlState.fromBool(state.settings.useLogScale),
+      font: UrlState.fromBool(state.settings.useVoynichFont),
+    };
+    
+    if (state.viewMode !== 'single' && state.currentAggregationB) {
+      params.aggB = state.currentAggregationB;
+    }
+    
+    UrlState.update(params, true);
+    UrlState.notifyParent(params);
+  }
+  
   /**
    * Initialize the application.
    */
@@ -58,11 +119,38 @@ const App = (function() {
       legendGradientDiff: document.getElementById('legend-gradient-diff'),
     };
     
+    // Read URL state before setting up
+    const urlState = readUrlState();
+    
     Heatmap.init(elements.canvas, 'primary');
     Heatmap.init(elements.canvasB, 'secondary');
     Heatmap.setHoverCallback(handleHover);
     
     setupEventListeners();
+    
+    // Apply URL state to settings
+    if (urlState.ngramType) {
+      state.settings.ngramType = urlState.ngramType;
+      elements.ngramType.value = urlState.ngramType;
+    }
+    if (urlState.displayMode) {
+      state.settings.displayMode = urlState.displayMode;
+      elements.displayMode.forEach(radio => {
+        radio.checked = radio.value === urlState.displayMode;
+      });
+    }
+    if (urlState.colorScale) {
+      state.settings.colorScale = urlState.colorScale;
+      elements.colorScale.value = urlState.colorScale;
+    }
+    if (urlState.useLogScale !== undefined) {
+      state.settings.useLogScale = urlState.useLogScale;
+      elements.logScale.checked = urlState.useLogScale;
+    }
+    if (urlState.useVoynichFont !== undefined) {
+      state.settings.useVoynichFont = urlState.useVoynichFont;
+      elements.voynichFont.checked = urlState.useVoynichFont;
+    }
     
     state.settings.useVoynichFont = elements.voynichFont.checked;
     state.settings.useLogScale = elements.logScale.checked;
@@ -77,7 +165,7 @@ const App = (function() {
       console.warn('Could not load Voynich font:', e);
     }
     
-    await loadManifest();
+    await loadManifest(urlState);
   }
   
   /**
@@ -85,27 +173,29 @@ const App = (function() {
    */
   function setupEventListeners() {
     elements.viewMode.addEventListener('change', (e) => {
-      setViewMode(e.target.value);
+      setViewMode(e.target.value, false);
     });
     
     elements.aggregationSelect.addEventListener('change', (e) => {
-      loadAggregation(e.target.value);
+      loadAggregation(e.target.value, false);
     });
     
     elements.aggregationSelectB.addEventListener('change', (e) => {
-      loadAggregationB(e.target.value);
+      loadAggregationB(e.target.value, false);
     });
     
     elements.ngramType.addEventListener('change', (e) => {
       state.settings.ngramType = e.target.value;
       renderVisualization();
       updateTopNgrams();
+      updateUrl();
     });
     
     elements.displayMode.forEach(radio => {
       radio.addEventListener('change', (e) => {
         state.settings.displayMode = e.target.value;
         renderVisualization();
+        updateUrl();
       });
     });
     
@@ -113,24 +203,28 @@ const App = (function() {
       state.settings.useVoynichFont = e.target.checked;
       renderVisualization();
       updateTopNgrams();
+      updateUrl();
     });
     
     elements.logScale.addEventListener('change', (e) => {
       state.settings.useLogScale = e.target.checked;
       renderVisualization();
+      updateUrl();
     });
     
     elements.colorScale.addEventListener('change', (e) => {
       state.settings.colorScale = e.target.value;
       updateLegendGradient();
       renderVisualization();
+      updateUrl();
     });
   }
   
   /**
    * Set view mode.
+   * @param {boolean} [skipUrlUpdate=false] - Skip URL update
    */
-  function setViewMode(mode) {
+  function setViewMode(mode, skipUrlUpdate = false) {
     state.viewMode = mode;
     
     const isCompareOrDiff = mode === 'compare' || mode === 'diff';
@@ -157,18 +251,23 @@ const App = (function() {
     
     if (isCompareOrDiff && !state.currentDataB) {
       const defaultB = state.currentAggregation === 'language_a' ? 'language_b' : 'language_a';
-      loadAggregationB(defaultB);
+      loadAggregationB(defaultB, skipUrlUpdate);
     } else {
       renderVisualization();
     }
     
     updateInfoPanel();
+    
+    if (!skipUrlUpdate) {
+      updateUrl();
+    }
   }
   
   /**
    * Load the transcription config and manifest.
+   * @param {Object} [urlState] - State from URL to apply
    */
-  async function loadManifest() {
+  async function loadManifest(urlState = {}) {
     showLoading(true);
     
     try {
@@ -194,9 +293,25 @@ const App = (function() {
         selectB.appendChild(optionB);
       }
       
-      selectB.value = 'language_b';
+      selectB.value = urlState.aggregationB || 'language_b';
       
-      await loadAggregation(state.settings.aggregation);
+      // Load aggregation from URL state or default
+      const initialAggregation = urlState.aggregation || state.settings.aggregation;
+      await loadAggregation(initialAggregation, true);
+      
+      // Apply view mode from URL state
+      if (urlState.viewMode) {
+        elements.viewMode.value = urlState.viewMode;
+        setViewMode(urlState.viewMode, true);
+        
+        if (urlState.aggregationB && (urlState.viewMode === 'compare' || urlState.viewMode === 'diff')) {
+          await loadAggregationB(urlState.aggregationB, true);
+        }
+      }
+      
+      // Mark initialization complete and update URL
+      isInitializing = false;
+      updateUrl();
       
       requestAnimationFrame(() => {
         renderVisualization();
@@ -204,6 +319,7 @@ const App = (function() {
       
     } catch (error) {
       showError(`Failed to load data: ${error.message}`);
+      isInitializing = false;
     } finally {
       showLoading(false);
     }
@@ -211,8 +327,9 @@ const App = (function() {
   
   /**
    * Load aggregation A.
+   * @param {boolean} [skipUrlUpdate=false] - Skip URL update
    */
-  async function loadAggregation(name) {
+  async function loadAggregation(name, skipUrlUpdate = false) {
     showLoading(true);
     
     try {
@@ -233,6 +350,10 @@ const App = (function() {
         elements.vizLabelA.textContent = 'A: ' + state.currentData.description;
       }
       
+      if (!skipUrlUpdate) {
+        updateUrl();
+      }
+      
     } catch (error) {
       showError(`Failed to load aggregation: ${error.message}`);
     } finally {
@@ -242,8 +363,9 @@ const App = (function() {
   
   /**
    * Load aggregation B.
+   * @param {boolean} [skipUrlUpdate=false] - Skip URL update
    */
-  async function loadAggregationB(name) {
+  async function loadAggregationB(name, skipUrlUpdate = false) {
     showLoading(true);
     
     try {
@@ -261,6 +383,10 @@ const App = (function() {
       
       if (state.viewMode === 'compare') {
         elements.vizLabelB.textContent = 'B: ' + state.currentDataB.description;
+      }
+      
+      if (!skipUrlUpdate) {
+        updateUrl();
       }
       
     } catch (error) {

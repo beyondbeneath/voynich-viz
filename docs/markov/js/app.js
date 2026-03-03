@@ -21,6 +21,68 @@ const App = (function() {
   // DOM elements
   let elements = {};
   
+  // Flag to prevent URL update loops during initialization
+  let isInitializing = true;
+  
+  /**
+   * Read state from URL hash parameters.
+   */
+  function readUrlState() {
+    const params = UrlState.parse();
+    const urlState = {};
+    
+    if (params.mode && ['single', 'compare', 'diff'].includes(params.mode)) {
+      urlState.viewMode = params.mode;
+    }
+    if (params.agg) {
+      urlState.aggregation = params.agg;
+    }
+    if (params.aggB) {
+      urlState.aggregationB = params.aggB;
+    }
+    if (params.display && ['probabilities', 'counts'].includes(params.display)) {
+      urlState.displayMode = params.display;
+    }
+    if (params.color) {
+      urlState.colorScale = params.color;
+    }
+    if (params.log !== undefined) {
+      urlState.useLogScale = UrlState.toBool(params.log);
+    }
+    if (params.font !== undefined) {
+      urlState.useVoynichFont = UrlState.toBool(params.font, true);
+    }
+    if (params.bounds !== undefined) {
+      urlState.showBoundaries = UrlState.toBool(params.bounds, true);
+    }
+    
+    return urlState;
+  }
+  
+  /**
+   * Update URL hash with current state.
+   */
+  function updateUrl() {
+    if (isInitializing) return;
+    
+    const params = {
+      mode: state.viewMode,
+      agg: state.currentAggregation,
+      display: state.settings.displayMode,
+      color: state.settings.colorScale,
+      log: UrlState.fromBool(state.settings.useLogScale),
+      font: UrlState.fromBool(state.settings.useVoynichFont),
+      bounds: UrlState.fromBool(state.settings.showBoundaries),
+    };
+    
+    if (state.viewMode !== 'single' && state.currentAggregationB) {
+      params.aggB = state.currentAggregationB;
+    }
+    
+    UrlState.update(params, true);
+    UrlState.notifyParent(params);
+  }
+  
   /**
    * Initialize the application.
    */
@@ -62,6 +124,9 @@ const App = (function() {
       legendGradientDiff: document.getElementById('legend-gradient-diff'),
     };
     
+    // Read URL state before setting up
+    const urlState = readUrlState();
+    
     // Initialize heatmaps (primary and secondary for compare mode)
     Heatmap.init(elements.canvas, 'primary');
     Heatmap.init(elements.canvasB, 'secondary');
@@ -69,7 +134,30 @@ const App = (function() {
     // Set up event listeners
     setupEventListeners();
     
-    // Sync state with actual checkbox values
+    // Apply URL state to settings
+    if (urlState.displayMode) {
+      state.settings.displayMode = urlState.displayMode;
+      elements.displayMode.forEach(radio => {
+        radio.checked = radio.value === urlState.displayMode;
+      });
+    }
+    if (urlState.colorScale) {
+      state.settings.colorScale = urlState.colorScale;
+    }
+    if (urlState.useLogScale !== undefined) {
+      state.settings.useLogScale = urlState.useLogScale;
+      elements.logScale.checked = urlState.useLogScale;
+    }
+    if (urlState.useVoynichFont !== undefined) {
+      state.settings.useVoynichFont = urlState.useVoynichFont;
+      elements.voynichFont.checked = urlState.useVoynichFont;
+    }
+    if (urlState.showBoundaries !== undefined) {
+      state.settings.showBoundaries = urlState.showBoundaries;
+      elements.showBoundaries.checked = urlState.showBoundaries;
+    }
+    
+    // Sync state with actual checkbox values (for any not set by URL)
     state.settings.useVoynichFont = elements.voynichFont.checked;
     state.settings.showBoundaries = elements.showBoundaries.checked;
     state.settings.useLogScale = elements.logScale.checked;
@@ -84,8 +172,8 @@ const App = (function() {
       console.warn('Could not load Voynich font:', e);
     }
     
-    // Load manifest and initial data
-    await loadManifest();
+    // Load manifest and initial data (passing URL state)
+    await loadManifest(urlState);
   }
   
   /**
@@ -94,17 +182,17 @@ const App = (function() {
   function setupEventListeners() {
     // View mode selector
     elements.viewMode.addEventListener('change', (e) => {
-      setViewMode(e.target.value);
+      setViewMode(e.target.value, false);
     });
     
     // Aggregation selector (A)
     elements.aggregationSelect.addEventListener('change', (e) => {
-      loadAggregation(e.target.value);
+      loadAggregation(e.target.value, false);
     });
     
     // Aggregation selector (B)
     elements.aggregationSelectB.addEventListener('change', (e) => {
-      loadAggregationB(e.target.value);
+      loadAggregationB(e.target.value, false);
     });
     
     // Display mode radio buttons
@@ -112,6 +200,7 @@ const App = (function() {
       radio.addEventListener('change', (e) => {
         state.settings.displayMode = e.target.value;
         renderHeatmap();
+        updateUrl();
       });
     });
     
@@ -119,12 +208,14 @@ const App = (function() {
     elements.voynichFont.addEventListener('change', (e) => {
       state.settings.useVoynichFont = e.target.checked;
       renderHeatmap();
+      updateUrl();
     });
     
     // Show boundaries toggle
     elements.showBoundaries.addEventListener('change', (e) => {
       state.settings.showBoundaries = e.target.checked;
       renderHeatmap();
+      updateUrl();
     });
     
     // Color scale selector
@@ -132,20 +223,23 @@ const App = (function() {
       state.settings.colorScale = e.target.value;
       updateLegendGradient();
       renderHeatmap();
+      updateUrl();
     });
     
     // Log scale toggle
     elements.logScale.addEventListener('change', (e) => {
       state.settings.useLogScale = e.target.checked;
       renderHeatmap();
+      updateUrl();
     });
   }
   
   /**
    * Set the view mode and update UI accordingly.
    * @param {string} mode - 'single', 'compare', or 'diff'
+   * @param {boolean} [skipUrlUpdate=false] - Skip URL update (used during initialization)
    */
-  function setViewMode(mode) {
+  function setViewMode(mode, skipUrlUpdate = false) {
     state.viewMode = mode;
     
     const isCompareOrDiff = mode === 'compare' || mode === 'diff';
@@ -183,18 +277,23 @@ const App = (function() {
     // If switching to compare/diff mode and B not loaded, load default
     if (isCompareOrDiff && !state.currentDataB) {
       const defaultB = state.currentAggregation === 'language_a' ? 'language_b' : 'language_a';
-      loadAggregationB(defaultB);
+      loadAggregationB(defaultB, skipUrlUpdate);
     } else {
       renderHeatmap();
     }
     
     updateInfoPanel();
+    
+    if (!skipUrlUpdate) {
+      updateUrl();
+    }
   }
   
   /**
    * Load the transcription config and manifest file, then populate selectors.
+   * @param {Object} [urlState] - State from URL to apply
    */
-  async function loadManifest() {
+  async function loadManifest(urlState = {}) {
     showLoading(true);
     
     try {
@@ -223,7 +322,7 @@ const App = (function() {
       }
       
       // Set default for B to language_b (useful default for comparison)
-      selectB.value = 'language_b';
+      selectB.value = urlState.aggregationB || 'language_b';
       
       // Populate color scale dropdown
       const colorSelect = elements.colorScale;
@@ -241,8 +340,24 @@ const App = (function() {
       // Set initial legend gradient
       updateLegendGradient();
       
-      // Load default aggregation
-      await loadAggregation(state.settings.aggregation);
+      // Load aggregation from URL state or default
+      const initialAggregation = urlState.aggregation || state.settings.aggregation;
+      await loadAggregation(initialAggregation, true);
+      
+      // Apply view mode from URL state
+      if (urlState.viewMode) {
+        elements.viewMode.value = urlState.viewMode;
+        setViewMode(urlState.viewMode, true);
+        
+        // Load aggregation B if specified and in compare/diff mode
+        if (urlState.aggregationB && (urlState.viewMode === 'compare' || urlState.viewMode === 'diff')) {
+          await loadAggregationB(urlState.aggregationB, true);
+        }
+      }
+      
+      // Mark initialization complete and update URL
+      isInitializing = false;
+      updateUrl();
       
       // Re-render after a frame to ensure font is fully available
       requestAnimationFrame(() => {
@@ -251,6 +366,7 @@ const App = (function() {
       
     } catch (error) {
       showError(`Failed to load data: ${error.message}`);
+      isInitializing = false;
     } finally {
       showLoading(false);
     }
@@ -259,8 +375,9 @@ const App = (function() {
   /**
    * Load a specific aggregation (A).
    * @param {string} name - Aggregation name
+   * @param {boolean} [skipUrlUpdate=false] - Skip URL update
    */
-  async function loadAggregation(name) {
+  async function loadAggregation(name, skipUrlUpdate = false) {
     showLoading(true);
     
     try {
@@ -286,6 +403,10 @@ const App = (function() {
         elements.heatmapLabelA.textContent = 'A: ' + state.currentData.description;
       }
       
+      if (!skipUrlUpdate) {
+        updateUrl();
+      }
+      
     } catch (error) {
       showError(`Failed to load aggregation: ${error.message}`);
     } finally {
@@ -296,8 +417,9 @@ const App = (function() {
   /**
    * Load a specific aggregation (B) for compare/diff modes.
    * @param {string} name - Aggregation name
+   * @param {boolean} [skipUrlUpdate=false] - Skip URL update
    */
-  async function loadAggregationB(name) {
+  async function loadAggregationB(name, skipUrlUpdate = false) {
     showLoading(true);
     
     try {
@@ -321,6 +443,10 @@ const App = (function() {
       // Update heatmap label in compare mode
       if (state.viewMode === 'compare') {
         elements.heatmapLabelB.textContent = 'B: ' + state.currentDataB.description;
+      }
+      
+      if (!skipUrlUpdate) {
+        updateUrl();
       }
       
     } catch (error) {
