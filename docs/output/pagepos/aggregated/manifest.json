@@ -9,8 +9,9 @@
       "rows": 20
     },
     "raw": {
-      "cols": 50,
-      "rows": 100
+      "cols": 97,
+      "rows": 81,
+      "absolute": true
     }
   },
   "normalization_modes": {

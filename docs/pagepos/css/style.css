@@ -87,6 +87,27 @@
   box-shadow: 0 0 0 2px rgba(74, 144, 217, 0.2);
 }
 
+.control-group input[type="number"] {
+  padding: 6px 8px;
+  font-size: 13px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.control-group input[type="number"]:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(74, 144, 217, 0.2);
+}
+
+.control-group span {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
 /* Radio group */
 .radio-group {
   display: flex;
@@ -404,6 +425,12 @@
 #hover-info .cell-position .region {
   font-weight: 600;
   color: var(--text-primary);
+}
+
+#hover-info .cell-position .raw-position {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: monospace;
 }
 
 #hover-info .values {

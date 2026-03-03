@@ -20,13 +20,6 @@
         "sparse": true,
         "characters": {},
         "total_cells": {}
-      },
-      "raw": {
-        "grid_cols": 50,
-        "grid_rows": 100,
-        "sparse": true,
-        "characters": {},
-        "total_cells": {}
       }
     },
     "manuscript": {
@@ -45,9 +38,10 @@
         "total_cells": {}
       },
       "raw": {
-        "grid_cols": 50,
-        "grid_rows": 100,
+        "grid_cols": 97,
+        "grid_rows": 81,
         "sparse": true,
+        "absolute": true,
         "characters": {},
         "total_cells": {}
       }

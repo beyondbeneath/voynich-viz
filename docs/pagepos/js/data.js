@@ -142,9 +142,10 @@ const DataLoader = (function() {
     const charData = gridData.characters?.[char];
     const cols = gridData.grid_cols;
     const rows = gridData.grid_rows;
+    const isAbsolute = gridData.absolute || false;
     
     if (!charData) {
-      return emptyGridResult(cols, rows);
+      return emptyGridResult(cols, rows, isAbsolute);
     }
     
     const total = charData.total;
@@ -164,7 +165,14 @@ const DataLoader = (function() {
       row.map(cell => total > 0 ? cell / total : 0)
     );
     
-    return { grid, total, distribution, grid_cols: cols, grid_rows: rows };
+    return { 
+      grid, 
+      total, 
+      distribution, 
+      grid_cols: cols, 
+      grid_rows: rows,
+      absolute: gridData.absolute || false,
+    };
   }
   
   /**
@@ -200,19 +208,27 @@ const DataLoader = (function() {
       row.map(cell => total > 0 ? cell / total : 0)
     );
     
-    return { grid, total, distribution, grid_cols: cols, grid_rows: rows };
+    return { 
+      grid, 
+      total, 
+      distribution, 
+      grid_cols: cols, 
+      grid_rows: rows,
+      absolute: gridData.absolute || false,
+    };
   }
   
   /**
    * Create an empty grid result object.
    */
-  function emptyGridResult(cols, rows) {
+  function emptyGridResult(cols, rows, absolute = false) {
     return {
       grid: Array(rows).fill(null).map(() => Array(cols).fill(0)),
       total: 0,
       distribution: Array(rows).fill(null).map(() => Array(cols).fill(0)),
       grid_cols: cols,
       grid_rows: rows,
+      absolute,
     };
   }
   

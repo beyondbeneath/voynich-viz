@@ -72,23 +72,35 @@ const Heatmap = (function() {
     if (!instance) return;
     
     const { canvas, ctx } = instance;
-    const { grid, distribution, total, grid_cols, grid_rows } = gridData;
+    const { grid, distribution, total } = gridData;
+    let { grid_cols, grid_rows } = gridData;
     
     if (!grid || grid_rows === 0 || grid_cols === 0) return;
     
     const isRawMode = settings.resolution === 'raw';
     
-    // For raw mode, use smaller cells and apply blur
-    let cellSize = settings.cellSize || 40;
+    // Apply clipping for raw mode
+    let displayCols = grid_cols;
+    let displayRows = grid_rows;
     if (isRawMode) {
-      // Scale cell size for the high-res grid to fit in reasonable space
-      cellSize = Math.max(3, Math.min(8, 400 / grid_cols));
+      displayCols = Math.min(grid_cols, settings.clipChars || 50);
+      displayRows = Math.min(grid_rows, settings.clipLines || 50);
+    }
+    
+    // For raw mode, use smaller cells and apply blur
+    let cellWidth = settings.cellSize || 40;
+    let cellHeight = cellWidth;
+    
+    if (isRawMode) {
+      // Scale cell size based on clipped dimensions to fit in reasonable space
+      cellWidth = Math.max(4, Math.min(10, 500 / displayCols));
+      cellHeight = cellWidth * 1.5;  // Slight vertical stretch for page-like proportions
     }
     
     const padding = 10;
     
-    const width = grid_cols * cellSize + padding * 2;
-    const height = grid_rows * cellSize + padding * 2;
+    const width = displayCols * cellWidth + padding * 2;
+    const height = displayRows * cellHeight + padding * 2;
     
     // Set canvas size
     const dpr = window.devicePixelRatio || 1;
@@ -102,16 +114,17 @@ const Heatmap = (function() {
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, width, height);
     
-    // Apply blur for raw mode
+    // Apply blur for raw mode (on clipped region)
     let renderDistribution = distribution;
     if (isRawMode) {
-      renderDistribution = applyBlur(distribution, grid_rows, grid_cols);
+      renderDistribution = applyBlur(distribution, displayRows, displayCols);
     }
     
-    // Find max for normalization
+    // Find max for normalization (only in displayed region)
     let maxValue = 0;
-    for (const row of renderDistribution) {
-      for (const val of row) {
+    for (let r = 0; r < displayRows; r++) {
+      for (let c = 0; c < displayCols; c++) {
+        const val = renderDistribution[r]?.[c] || 0;
         if (val > maxValue) maxValue = val;
       }
     }
@@ -119,29 +132,29 @@ const Heatmap = (function() {
     // Store layout for hover detection
     const cells = [];
     
-    // Draw cells
-    for (let r = 0; r < grid_rows; r++) {
-      for (let c = 0; c < grid_cols; c++) {
+    // Draw cells (only up to clipped dimensions)
+    for (let r = 0; r < displayRows; r++) {
+      for (let c = 0; c < displayCols; c++) {
         const value = renderDistribution[r]?.[c] || 0;
         const normalized = maxValue > 0 ? value / maxValue : 0;
         
-        const x = padding + c * cellSize;
-        const y = padding + r * cellSize;
+        const x = padding + c * cellWidth;
+        const y = padding + r * cellHeight;
         
         // Fill cell
         ctx.fillStyle = Config.getColor(normalized, settings.colorScale);
-        ctx.fillRect(x, y, cellSize, cellSize);
+        ctx.fillRect(x, y, cellWidth, cellHeight);
         
         // Draw border (lighter for raw mode since cells are small)
-        if (!isRawMode || cellSize >= 6) {
+        if (!isRawMode || cellWidth >= 6) {
           ctx.strokeStyle = 'rgba(0,0,0,0.05)';
           ctx.lineWidth = 0.5;
-          ctx.strokeRect(x, y, cellSize, cellSize);
+          ctx.strokeRect(x, y, cellWidth, cellHeight);
         }
         
         // Store for hover (but use original distribution for accurate values)
         cells.push({
-          x, y, width: cellSize, height: cellSize,
+          x, y, width: cellWidth, height: cellHeight,
           row: r, col: c,
           count: grid[r]?.[c] || 0,
           distribution: distribution[r]?.[c] || 0,
@@ -152,13 +165,15 @@ const Heatmap = (function() {
     
     instance.layout = {
       cells,
-      rows: grid_rows,
-      cols: grid_cols,
-      cellSize,
+      rows: displayRows,
+      cols: displayCols,
+      cellWidth,
+      cellHeight,
       padding,
       total,
       settings,
       isRawMode,
+      isAbsolute: gridData.absolute || false,
     };
   }
   
@@ -173,21 +188,33 @@ const Heatmap = (function() {
     if (!instance) return;
     
     const { canvas, ctx } = instance;
-    const { diffGrid, maxAbsDiff, gridA, gridB, grid_cols, grid_rows } = diffData;
+    const { diffGrid, maxAbsDiff, gridA, gridB } = diffData;
+    let { grid_cols, grid_rows } = diffData;
     
     if (!diffGrid || grid_rows === 0 || grid_cols === 0) return;
     
     const isRawMode = settings.resolution === 'raw';
     
-    let cellSize = settings.cellSize || 40;
+    // Apply clipping for raw mode
+    let displayCols = grid_cols;
+    let displayRows = grid_rows;
     if (isRawMode) {
-      cellSize = Math.max(3, Math.min(8, 400 / grid_cols));
+      displayCols = Math.min(grid_cols, settings.clipChars || 50);
+      displayRows = Math.min(grid_rows, settings.clipLines || 50);
+    }
+    
+    let cellWidth = settings.cellSize || 40;
+    let cellHeight = cellWidth;
+    
+    if (isRawMode) {
+      cellWidth = Math.max(4, Math.min(10, 500 / displayCols));
+      cellHeight = cellWidth * 1.5;  // Slight vertical stretch for page-like proportions
     }
     
     const padding = 10;
     
-    const width = grid_cols * cellSize + padding * 2;
-    const height = grid_rows * cellSize + padding * 2;
+    const width = displayCols * cellWidth + padding * 2;
+    const height = displayRows * cellHeight + padding * 2;
     
     const dpr = window.devicePixelRatio || 1;
     canvas.width = width * dpr;
@@ -199,41 +226,42 @@ const Heatmap = (function() {
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, width, height);
     
-    // Apply blur for raw mode
+    // Apply blur for raw mode (on clipped region)
     let renderDiffGrid = diffGrid;
     if (isRawMode) {
-      renderDiffGrid = applyBlur(diffGrid, grid_rows, grid_cols);
+      renderDiffGrid = applyBlur(diffGrid, displayRows, displayCols);
     }
     
-    // Find max abs diff after blur
+    // Find max abs diff after blur (only in displayed region)
     let maxVal = 0;
-    for (const row of renderDiffGrid) {
-      for (const val of row) {
-        if (Math.abs(val) > maxVal) maxVal = Math.abs(val);
+    for (let r = 0; r < displayRows; r++) {
+      for (let c = 0; c < displayCols; c++) {
+        const val = Math.abs(renderDiffGrid[r]?.[c] || 0);
+        if (val > maxVal) maxVal = val;
       }
     }
     
     const cells = [];
     
-    for (let r = 0; r < grid_rows; r++) {
-      for (let c = 0; c < grid_cols; c++) {
+    for (let r = 0; r < displayRows; r++) {
+      for (let c = 0; c < displayCols; c++) {
         const diff = renderDiffGrid[r]?.[c] || 0;
         const normalizedDiff = maxVal > 0 ? diff / maxVal : 0;
         
-        const x = padding + c * cellSize;
-        const y = padding + r * cellSize;
+        const x = padding + c * cellWidth;
+        const y = padding + r * cellHeight;
         
         ctx.fillStyle = Config.getDiffColor(normalizedDiff);
-        ctx.fillRect(x, y, cellSize, cellSize);
+        ctx.fillRect(x, y, cellWidth, cellHeight);
         
-        if (!isRawMode || cellSize >= 6) {
+        if (!isRawMode || cellWidth >= 6) {
           ctx.strokeStyle = 'rgba(0,0,0,0.05)';
           ctx.lineWidth = 0.5;
-          ctx.strokeRect(x, y, cellSize, cellSize);
+          ctx.strokeRect(x, y, cellWidth, cellHeight);
         }
         
         cells.push({
-          x, y, width: cellSize, height: cellSize,
+          x, y, width: cellWidth, height: cellHeight,
           row: r, col: c,
           diff: diffGrid[r]?.[c] || 0,  // Use original for hover
           normalizedDiff,
@@ -247,13 +275,15 @@ const Heatmap = (function() {
     
     instance.layout = {
       cells,
-      rows: grid_rows,
-      cols: grid_cols,
-      cellSize,
+      rows: displayRows,
+      cols: displayCols,
+      cellWidth,
+      cellHeight,
       padding,
       settings,
       isDiff: true,
       isRawMode,
+      isAbsolute: diffData.gridA?.absolute || false,
     };
   }
   
@@ -292,6 +322,9 @@ const Heatmap = (function() {
             countB: cell.countB,
             isDiff: true,
             isRawMode,
+            isAbsolute: instance.layout.isAbsolute,
+            lineNum: isRawMode && instance.layout.isAbsolute ? cell.row + 1 : null,
+            charPos: isRawMode && instance.layout.isAbsolute ? cell.col : null,
           };
         } else {
           hoverInfo = {
@@ -302,6 +335,9 @@ const Heatmap = (function() {
             distribution: cell.distribution,
             total: instance.layout.total,
             isRawMode,
+            isAbsolute: instance.layout.isAbsolute,
+            lineNum: isRawMode && instance.layout.isAbsolute ? cell.row + 1 : null,
+            charPos: isRawMode && instance.layout.isAbsolute ? cell.col : null,
           };
         }
         break;

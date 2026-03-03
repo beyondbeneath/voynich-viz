@@ -17,7 +17,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from common.parser import Page
 from .analyzer import (
-    RawPositions, 
+    RawPositions,
+    AbsolutePositions,
     MultiModePositions, 
     GRID_RESOLUTIONS,
     NORMALIZATION_MODES,
@@ -33,13 +34,14 @@ class AggregationResult:
     char_count: int
     page_positions: RawPositions  # Page-relative normalization
     manuscript_positions: RawPositions  # Manuscript-relative normalization
+    absolute_positions: AbsolutePositions = field(default_factory=AbsolutePositions)  # Raw absolute positions
     
-    def to_dict(self) -> dict:
+    def to_dict(self, global_stats: dict = None) -> dict:
         """Convert to JSON-serializable dict with both normalization modes."""
         page_data = self.page_positions.to_dict_with_grids()
         manuscript_data = self.manuscript_positions.to_dict_with_grids()
         
-        return {
+        result = {
             'name': self.name,
             'description': self.description,
             'page_count': self.page_count,
@@ -51,6 +53,15 @@ class AggregationResult:
                 'manuscript': manuscript_data['grids'],
             }
         }
+        
+        # Add raw/absolute grid if global_stats provided
+        if global_stats:
+            max_char_idx = global_stats.get('max_line_width', 100)
+            max_line_num = global_stats.get('max_line_num', 100)
+            abs_data = self.absolute_positions.to_dict_with_grid(max_char_idx, max_line_num)
+            result['normalization_modes']['manuscript']['raw'] = abs_data['grids']['raw']
+        
+        return result
 
 
 PageFilter = Callable[[Page], bool]
@@ -132,6 +143,7 @@ def aggregate_pages(
     
     merged_page = RawPositions()
     merged_manuscript = RawPositions()
+    merged_absolute = AbsolutePositions()
     total_chars = 0
     
     for page in matching_pages:
@@ -139,6 +151,7 @@ def aggregate_pages(
             pp = page_positions[page.folio]
             merged_page.merge(pp.page_normalized)
             merged_manuscript.merge(pp.manuscript_normalized)
+            merged_absolute.merge(pp.absolute_positions)
             total_chars += pp.char_count
     
     return AggregationResult(
@@ -148,6 +161,7 @@ def aggregate_pages(
         char_count=total_chars,
         page_positions=merged_page,
         manuscript_positions=merged_manuscript,
+        absolute_positions=merged_absolute,
     )
 
 
@@ -169,11 +183,11 @@ def run_all_aggregations(
     return results
 
 
-def save_aggregation(result: AggregationResult, output_path: Path):
+def save_aggregation(result: AggregationResult, output_path: Path, global_stats: dict = None):
     """Save an aggregation result to JSON file."""
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, 'w', encoding='utf-8') as f:
-        json.dump(result.to_dict(), f, indent=2)
+        json.dump(result.to_dict(global_stats), f, indent=2)
 
 
 def save_all_aggregations(
@@ -185,14 +199,24 @@ def save_all_aggregations(
     output_dir.mkdir(parents=True, exist_ok=True)
     
     for name, result in results.items():
-        save_aggregation(result, output_dir / f"{name}.json")
+        save_aggregation(result, output_dir / f"{name}.json", global_stats)
     
     # Include grid resolution and normalization mode info in manifest
+    # Build grid resolutions, handling 'raw' which uses actual dimensions
+    grid_resolutions = {}
+    for name, dims in GRID_RESOLUTIONS.items():
+        if dims is None:  # 'raw' uses actual dimensions from global_stats
+            grid_resolutions[name] = {
+                'cols': global_stats['max_line_width'],
+                'rows': global_stats['max_line_num'],
+                'absolute': True,  # Flag indicating absolute coordinates
+            }
+        else:
+            cols, rows = dims
+            grid_resolutions[name] = {'cols': cols, 'rows': rows}
+    
     manifest = {
-        'grid_resolutions': {
-            name: {'cols': cols, 'rows': rows}
-            for name, (cols, rows) in GRID_RESOLUTIONS.items()
-        },
+        'grid_resolutions': grid_resolutions,
         'normalization_modes': {
             'page': {
                 'name': 'Page-relative',
@@ -228,14 +252,24 @@ def save_page_positions(
     """Save all page position counts to a single JSON file."""
     output_path.parent.mkdir(parents=True, exist_ok=True)
     
+    # Build grid resolutions, handling 'raw' which uses actual dimensions
+    grid_resolutions = {}
+    for name, dims in GRID_RESOLUTIONS.items():
+        if dims is None and global_stats:  # 'raw' uses actual dimensions
+            grid_resolutions[name] = {
+                'cols': global_stats['max_line_width'],
+                'rows': global_stats['max_line_num'],
+                'absolute': True,
+            }
+        elif dims is not None:
+            cols, rows = dims
+            grid_resolutions[name] = {'cols': cols, 'rows': rows}
+    
     data = {
-        'grid_resolutions': {
-            name: {'cols': cols, 'rows': rows}
-            for name, (cols, rows) in GRID_RESOLUTIONS.items()
-        },
+        'grid_resolutions': grid_resolutions,
         'normalization_modes': NORMALIZATION_MODES,
         'global_stats': global_stats or {},
-        'pages': [pp.to_dict() for pp in page_positions.values()],
+        'pages': [pp.to_dict(global_stats) for pp in page_positions.values()],
         'config': config or {},
     }
     

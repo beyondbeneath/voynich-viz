@@ -14,6 +14,8 @@ const App = (function() {
     selectedChar: null,
     resolution: 'coarse',
     normalization: 'page',
+    clipLines: 50,    // Max lines to show in raw mode
+    clipChars: 50,    // Max chars to show in raw mode
     settings: { ...Config.DEFAULTS },
     loading: false,
     error: null,
@@ -39,7 +41,7 @@ const App = (function() {
     if (params.aggB) {
       urlState.aggregationB = params.aggB;
     }
-    if (params.res && ['coarse', 'fine'].includes(params.res)) {
+    if (params.res && ['coarse', 'fine', 'raw'].includes(params.res)) {
       urlState.resolution = params.res;
     }
     if (params.norm && ['page', 'manuscript'].includes(params.norm)) {
@@ -122,6 +124,10 @@ const App = (function() {
       legendDiff: document.getElementById('legend-diff'),
       legendGradientStandard: document.getElementById('legend-gradient-standard'),
       legendGradientDiff: document.getElementById('legend-gradient-diff'),
+      clipControls: document.getElementById('clip-controls'),
+      clipSeparator: document.getElementById('clip-separator'),
+      clipLines: document.getElementById('clip-lines'),
+      clipChars: document.getElementById('clip-chars'),
     };
     
     // Read URL state before setting up
@@ -132,14 +138,12 @@ const App = (function() {
     
     setupEventListeners();
     
-    // Apply URL state to settings
-    if (urlState.resolution && elements.resolutionSelect) {
+    // Apply URL state to settings (but don't read back from dropdowns yet - they get populated from manifest)
+    if (urlState.resolution) {
       state.resolution = urlState.resolution;
-      elements.resolutionSelect.value = urlState.resolution;
     }
-    if (urlState.normalization && elements.normalizationSelect) {
+    if (urlState.normalization) {
       state.normalization = urlState.normalization;
-      elements.normalizationSelect.value = urlState.normalization;
     }
     if (urlState.colorScale) {
       state.settings.colorScale = urlState.colorScale;
@@ -153,9 +157,6 @@ const App = (function() {
     }
     
     state.settings.useVoynichFont = elements.voynichFont.checked;
-    state.resolution = elements.resolutionSelect?.value || 'coarse';
-    state.normalization = elements.normalizationSelect?.value || 'page';
-    
     updateDiffLegendGradient();
     
     try {
@@ -186,6 +187,7 @@ const App = (function() {
     if (elements.resolutionSelect) {
       elements.resolutionSelect.addEventListener('change', (e) => {
         state.resolution = e.target.value;
+        updateNormalizationForResolution();
         renderHeatmap();
         updateUrl();
       });
@@ -212,6 +214,20 @@ const App = (function() {
       renderHeatmap();
       updateUrl();
     });
+    
+    // Clip controls for raw mode
+    if (elements.clipLines) {
+      elements.clipLines.addEventListener('change', (e) => {
+        state.clipLines = parseInt(e.target.value, 10) || 50;
+        renderHeatmap();
+      });
+    }
+    if (elements.clipChars) {
+      elements.clipChars.addEventListener('change', (e) => {
+        state.clipChars = parseInt(e.target.value, 10) || 50;
+        renderHeatmap();
+      });
+    }
   }
   
   /**
@@ -298,6 +314,9 @@ const App = (function() {
           }
           elements.resolutionSelect.appendChild(option);
         }
+        // Update state from dropdown (in case URL state wasn't valid) and show/hide clip controls
+        state.resolution = elements.resolutionSelect.value;
+        updateNormalizationForResolution();
       }
       
       // Populate normalization dropdown from manifest
@@ -409,12 +428,12 @@ const App = (function() {
       // Select default character if not set or invalid
       if (!state.selectedChar || !getCharacterData(state.currentData, state.selectedChar)) {
         const chars = Config.sortCharacters(state.currentData.charset || []);
-        state.selectedChar = chars.includes('o') ? 'o' : chars[0];
+        const defaultChar = chars.includes('o') ? 'o' : chars[0];
+        selectChar(defaultChar, true);
+      } else {
+        // Re-select current char to ensure button is highlighted
+        selectChar(state.selectedChar, true);
       }
-      
-      updateSelectedCharDisplay();
-      updateInfoPanel();
-      renderHeatmap();
       
       elements.aggregationSelect.value = name;
       
@@ -542,6 +561,8 @@ const App = (function() {
       viewMode: state.viewMode,
       resolution: state.resolution,
       normalization: state.normalization,
+      clipLines: state.clipLines,
+      clipChars: state.clipChars,
       onHover: handleHover,
     };
     
@@ -594,6 +615,22 @@ const App = (function() {
     }
     
     let valueHtml = '';
+    let positionHtml = '';
+    
+    // For raw mode with absolute coordinates, show line number and char position
+    if (info.isRawMode && info.isAbsolute && info.lineNum !== null) {
+      positionHtml = `
+        <span class="cell-position">
+          <span class="raw-position">Line ${info.lineNum}, Char ${info.charPos}</span>
+        </span>
+      `;
+    } else {
+      positionHtml = `
+        <span class="cell-position">
+          <span class="region">${info.region}</span>
+        </span>
+      `;
+    }
     
     if (info.isDiff) {
       const diffPercent = (info.diff * 100).toFixed(2);
@@ -616,9 +653,7 @@ const App = (function() {
     }
     
     elements.hoverInfo.innerHTML = `
-      <span class="cell-position">
-        <span class="region">${info.region}</span>
-      </span>
+      ${positionHtml}
       ${valueHtml}
     `;
   }
@@ -644,6 +679,39 @@ const App = (function() {
       if (state.currentDataB) {
         elements.compareDescB.textContent = state.currentDataB.description;
         elements.comparePagesB.textContent = state.currentDataB.page_count;
+      }
+    }
+  }
+  
+  /**
+   * Update normalization options based on resolution.
+   * Raw mode only supports manuscript-relative (absolute coordinates).
+   */
+  function updateNormalizationForResolution() {
+    if (!elements.normalizationSelect) return;
+    
+    const isRawMode = state.resolution === 'raw';
+    
+    if (isRawMode) {
+      // Force manuscript-relative for raw mode
+      state.normalization = 'manuscript';
+      elements.normalizationSelect.value = 'manuscript';
+      elements.normalizationSelect.disabled = true;
+      elements.normalizationSelect.title = 'Raw mode uses absolute coordinates (manuscript-relative only)';
+      
+      // Show clip controls
+      if (elements.clipControls) {
+        elements.clipControls.style.display = 'flex';
+        elements.clipSeparator.style.display = 'block';
+      }
+    } else {
+      elements.normalizationSelect.disabled = false;
+      elements.normalizationSelect.title = '';
+      
+      // Hide clip controls
+      if (elements.clipControls) {
+        elements.clipControls.style.display = 'none';
+        elements.clipSeparator.style.display = 'none';
       }
     }
   }

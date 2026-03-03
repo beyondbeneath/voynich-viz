@@ -12,8 +12,9 @@
       "rows": 20
     },
     "raw": {
-      "cols": 50,
-      "rows": 100
+      "cols": 97,
+      "rows": 81,
+      "absolute": true
     }
   },
   "normalization_modes": [
@@ -55,19 +56,19 @@
   ],
   "hands": [
     "1",
-    "4",
     "2",
     "3",
-    "5"
+    "5",
+    "4"
   ],
   "illustration_types": [
-    "S",
-    "H",
-    "T",
-    "C",
     "B",
-    "P",
+    "C",
     "A",
-    "Z"
+    "P",
+    "S",
+    "T",
+    "Z",
+    "H"
   ]
 }

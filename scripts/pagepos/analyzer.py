@@ -30,10 +30,11 @@ from common.normalizer import (
 )
 
 # Grid resolution presets
+# 'raw' is special - dimensions are set dynamically to actual max values
 GRID_RESOLUTIONS = {
     'coarse': (5, 10),    # 5 cols x 10 rows
     'fine': (10, 20),     # 10 cols x 20 rows
-    'raw': (50, 100),     # 50 cols x 100 rows - high resolution for "raw" view
+    'raw': None,          # Dynamic: actual char positions x line numbers (set at runtime)
 }
 
 # Normalization modes
@@ -85,11 +86,15 @@ class RawPositions:
         """
         Convert to JSON-serializable dict with multiple grid resolutions.
         Uses sparse format (only non-zero cells) to reduce file size.
+        Note: 'raw' resolution is handled separately via AbsolutePositions.
         """
         charset = self.get_charset()
         
         grids = {}
-        for res_name, (cols, rows) in GRID_RESOLUTIONS.items():
+        for res_name, res_dims in GRID_RESOLUTIONS.items():
+            if res_dims is None:  # Skip 'raw' - handled separately
+                continue
+            cols, rows = res_dims
             char_grids = self.quantize_to_sparse_grid(cols, rows)
             grids[res_name] = {
                 'grid_cols': cols,
@@ -121,6 +126,88 @@ class RawPositions:
         return total
 
 
+@dataclass
+class AbsolutePositions:
+    """
+    Absolute (non-normalized) character positions.
+    Stores positions as (char_idx, line_num) tuples for direct grid mapping.
+    """
+    positions: dict[str, list[tuple[int, int]]] = field(default_factory=lambda: defaultdict(list))
+    char_totals: Counter = field(default_factory=Counter)
+    
+    def add_position(self, char: str, char_idx: int, line_num: int):
+        """Add an absolute position for a character."""
+        self.positions[char].append((char_idx, line_num))
+        self.char_totals[char] += 1
+    
+    def merge(self, other: 'AbsolutePositions'):
+        """Merge another AbsolutePositions into this one."""
+        for char, pos_list in other.positions.items():
+            self.positions[char].extend(pos_list)
+        self.char_totals.update(other.char_totals)
+    
+    def get_charset(self) -> list[str]:
+        """Get sorted list of all characters."""
+        return sorted(self.char_totals.keys())
+    
+    def to_sparse_grid(self, max_char_idx: int, max_line_num: int) -> dict[str, dict[str, int]]:
+        """
+        Convert absolute positions to sparse grid format.
+        Grid coordinates: col = char_idx, row = line_num - 1 (0-indexed).
+        """
+        result = {}
+        
+        for char, pos_list in self.positions.items():
+            sparse = {}
+            
+            for char_idx, line_num in pos_list:
+                col = min(char_idx, max_char_idx - 1)
+                row = min(line_num - 1, max_line_num - 1)  # Convert to 0-indexed
+                key = f"{col},{row}"
+                sparse[key] = sparse.get(key, 0) + 1
+            
+            result[char] = sparse
+        
+        return result
+    
+    def to_dict_with_grid(self, max_char_idx: int, max_line_num: int) -> dict:
+        """
+        Convert to JSON-serializable dict for raw/absolute mode.
+        """
+        charset = self.get_charset()
+        char_grids = self.to_sparse_grid(max_char_idx, max_line_num)
+        
+        return {
+            'charset': charset,
+            'total_chars': sum(self.char_totals.values()),
+            'grids': {
+                'raw': {
+                    'grid_cols': max_char_idx,
+                    'grid_rows': max_line_num,
+                    'sparse': True,
+                    'absolute': True,  # Flag indicating absolute coordinates
+                    'characters': {
+                        char: {
+                            'cells': char_grids.get(char, {}),
+                            'total': self.char_totals[char],
+                        }
+                        for char in charset
+                    },
+                    'total_cells': self._compute_total_sparse_grid(char_grids, charset),
+                }
+            }
+        }
+    
+    def _compute_total_sparse_grid(self, char_grids: dict, charset: list[str]) -> dict[str, int]:
+        """Compute total sparse grid by summing all character grids."""
+        total = {}
+        for char in charset:
+            if char in char_grids:
+                for key, count in char_grids[char].items():
+                    total[key] = total.get(key, 0) + count
+        return total
+
+
 @dataclass 
 class PageCharPositions:
     """Raw character positions for a single page (before normalization)."""
@@ -131,6 +218,19 @@ class PageCharPositions:
     min_line_num: int = 0
     max_line_width: int = 0
     metadata: dict = field(default_factory=dict)
+
+
+def extract_absolute_positions(page_positions: PageCharPositions) -> AbsolutePositions:
+    """
+    Extract absolute (non-normalized) positions from PageCharPositions.
+    Used for raw mode where we want actual line numbers and char positions.
+    """
+    result = AbsolutePositions()
+    
+    for char, line_num, char_idx, line_width in page_positions.positions:
+        result.add_position(char, char_idx, line_num)
+    
+    return result
 
 
 def extract_page_positions(
@@ -248,17 +348,18 @@ class MultiModePositions:
     folio: str
     page_normalized: RawPositions = field(default_factory=RawPositions)
     manuscript_normalized: RawPositions = field(default_factory=RawPositions)
+    absolute_positions: AbsolutePositions = field(default_factory=AbsolutePositions)
     line_count: int = 0
     max_line_width: int = 0
     char_count: int = 0
     metadata: dict = field(default_factory=dict)
     
-    def to_dict(self) -> dict:
+    def to_dict(self, global_stats: dict = None) -> dict:
         """Convert to JSON-serializable dict with both normalization modes."""
         page_data = self.page_normalized.to_dict_with_grids()
         manuscript_data = self.manuscript_normalized.to_dict_with_grids()
         
-        return {
+        result = {
             'folio': self.folio,
             'line_count': self.line_count,
             'max_line_width': self.max_line_width,
@@ -271,6 +372,15 @@ class MultiModePositions:
                 'manuscript': manuscript_data['grids'],
             }
         }
+        
+        # Add raw/absolute grid if global_stats provided
+        if global_stats:
+            max_char_idx = global_stats.get('max_line_width', 100)
+            max_line_num = global_stats.get('max_line_num', 100)
+            abs_data = self.absolute_positions.to_dict_with_grid(max_char_idx, max_line_num)
+            result['normalization_modes']['manuscript']['raw'] = abs_data['grids']['raw']
+        
+        return result
 
 
 def analyze_all_pages(
@@ -278,7 +388,7 @@ def analyze_all_pages(
     collapse_mode: CollapseMode = CollapseMode.DISTINCT,
 ) -> tuple[dict[str, MultiModePositions], dict]:
     """
-    Analyze all pages with both normalization modes.
+    Analyze all pages with both normalization modes plus absolute positions.
     
     Returns:
         Tuple of (page_positions dict, global_stats dict)
@@ -297,7 +407,7 @@ def analyze_all_pages(
         if pp.max_line_width > global_max_line_width:
             global_max_line_width = pp.max_line_width
     
-    # Second pass: normalize with both modes
+    # Second pass: normalize with both modes + extract absolute positions
     result = {}
     for folio, pp in raw_page_data.items():
         page_norm = normalize_positions(pp, mode='page')
@@ -307,11 +417,13 @@ def analyze_all_pages(
             global_max_line_num=global_max_line_num,
             global_max_line_width=global_max_line_width,
         )
+        absolute_pos = extract_absolute_positions(pp)
         
         result[folio] = MultiModePositions(
             folio=folio,
             page_normalized=page_norm,
             manuscript_normalized=manuscript_norm,
+            absolute_positions=absolute_pos,
             line_count=pp.line_count,
             max_line_width=pp.max_line_width,
             char_count=len(pp.positions),

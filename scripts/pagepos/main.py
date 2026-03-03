@@ -108,8 +108,12 @@ def main():
         print(f"Configuration:")
         print(f"  Bigram mode: {args.bigram_mode}")
         print(f"  Grid resolutions:")
-        for name, (cols, rows) in GRID_RESOLUTIONS.items():
-            print(f"    {name}: {cols}x{rows}")
+        for name, dims in GRID_RESOLUTIONS.items():
+            if dims is None:
+                print(f"    {name}: (absolute - uses actual line/char positions)")
+            else:
+                cols, rows = dims
+                print(f"    {name}: {cols}x{rows}")
         print(f"  Normalization modes: {', '.join(NORMALIZATION_MODES)}")
     
     if args.verbose:
@@ -166,12 +170,22 @@ def main():
     
     save_all_aggregations(results, aggregated_dir, global_stats)
     
+    # Build grid resolutions dict, handling 'raw' which uses actual dimensions
+    grid_resolutions = {}
+    for name, dims in GRID_RESOLUTIONS.items():
+        if dims is None:  # 'raw' uses actual dimensions
+            grid_resolutions[name] = {
+                'cols': global_stats['max_line_width'],
+                'rows': global_stats['max_line_num'],
+                'absolute': True,
+            }
+        else:
+            cols, rows = dims
+            grid_resolutions[name] = {'cols': cols, 'rows': rows}
+    
     metadata = {
         'config': config.to_dict(),
-        'grid_resolutions': {
-            name: {'cols': cols, 'rows': rows}
-            for name, (cols, rows) in GRID_RESOLUTIONS.items()
-        },
+        'grid_resolutions': grid_resolutions,
         'normalization_modes': NORMALIZATION_MODES,
         'global_stats': global_stats,
         'total_pages': len(pages),
