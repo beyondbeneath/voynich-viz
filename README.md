@@ -1,6 +1,96 @@
 # Voynich: Analysis & Visualization
 
-A suite of Python analysis tools and web-based visualizations for exploring the Voynich manuscript transcription.
+* [https://beyondbeneath.github.io/voynich-viz/](https://beyondbeneath.github.io/voynich-viz/)
+
+| Compare transition probabillities of tokens in A vs B | Compare token position preferences within pages of A vs B |
+| :---| :--- |
+| <img src="examples/markov.gif" height=300px> | <img src="examples/pagepos.gif" height=300px>  |
+
+A suite of Python analysis tools and web-based visualizations for exploring the Voynich manuscript transcription. This is not a solution or proposed solution, rather a tool to preprocess, extract and visualise data & relationships. All results are available to view per-language, per-hand, and per-illustration style section (among others). While there is a huge amount of amazing statistical work and visualisations published elsewhere on the web, this was largely designed to combat remarks to such analyses like "but what if you preprocessed tokens X and Y to form one token, since they always appear together", or "statistics for the whole manuscript are skewed by language A and B", or "I'd start by limiting your analysis to a more homogenous region like Q13, Q20".
+
+This visualisation therefore allows us to visualise different features - for the whole manuscript, or a subset - and additionally look at "side by side" comparisons, and even a "diff" to highlight specific differences. The visualisation for the defauly preprocessing is available at:
+
+* [https://beyondbeneath.github.io/voynich-viz/](https://beyondbeneath.github.io/voynich-viz/)
+
+To introduce your own preprocessing, would require cloning the repo, changing some configuration, and re-running the outputs.
+
+## Available visualisations
+
+There are four main analyses presented:
+
+1. Markov transition matrix
+   * exaine the probability of transition from token A -> token B
+   * includes probability transitions for word, line, paragraph and page boundaries
+2. Word position preferenc
+   * which tokens appear at the begining/middle/end of words
+3. N-gram analysis
+   * what are the common n-grams (1-grams, 2-grams, or 3-grams)?
+4. Page position
+   * do tokens preferentially appear at certain positions on a page?
+   * provided at multiple granularities to reduce noise
+   * provided at both page-scaled and manuscript scaled positions
+
+Examples:
+
+| Type | Task | Screenshot |
+| :---| :--- | :--- |
+| Markov | Examine transition probabilities across the whole manuscript | <img src="examples/markov1.png" height=200px> |
+| Markov | As above, but include word/line/paragraph/page boundaries | <img src="examples/markov2-boundaries.png" height=200px> |
+| Markov | Compare transition probabilities for Currier A vs B, side by side | <img src="examples/markov3-compare.png" height=200px> |
+| Markov | Compare transition probabilities for Currier A vs B, as a diff | <img src="examples/markov4-diff.png" height=200px> |
+| Page position | Compare the position preferences of a specific token on a page for A vs B | <img src="examples/pagepos-compare.png" height=200px> |
+| Page position | Use a coarser grid to examine the page position preferences | <img src="examples/pagepos-compare-lowres.png" height=200px> |
+| N-gram | Look at the most common tokens (1-grams) for Currier A | <img src="examples/ngram-tokens.png" height=200px> |
+| N-gram | Compare most common tokens (1-grams) for Hand 1 vs Hand 2 | <img src="examples/ngram-tokens-diff.png" height=200px> |
+| N-gram | Look for divergence in bigram proportions for Hand 1 vs Hand 2 | <img src="examples/ngram-bigrams-diff.png" height=200px> |
+| Word position | See overall word order preference for tokens across whole manuscript | <img src="examples/wordposition.png" height=200px> |
+
+## Groupings
+
+The following aggregations are available:
+
+* Entire manuscript (no aggregation)
+* By language
+  * Currier A, Currier B
+* By hand
+  * 1,2,3,4,5
+* By Illustration
+  * herbal,zodiac,biological,pharmaceutical,astronomical,cosmological,text_only
+* By Quire
+  * Quire 13, Quire 20
+* Combined Filters
+  * Herbal section, Language A
+  * Herbal section, Language B
+  * Biological section, Language A
+  * Biological section, Language B
+
+
+## Preprocessing details
+
+The basic (default; included) configuration applies the following preprocessing:
+
+Treat the following groups as single tokens (collapse them):
+
+* cth
+* cph
+* cfh
+* ckh
+* ch
+* sh
+* i, ii, iii, iiii
+* e, ee, eee, eeee
+
+Further, we only process paragraph text (marked as 'P').
+
+To modify these rules, and view the results, requires cloning the repo and modifying the code. In future releases I may try and ship this with multuple preconfigured prepocessings available, as desired by the community.
+
+## Credits and acknowlegements
+
+* General work inspired by writings by [Nick Pelling](https://ciphermysteries.com/), [Rene Zandbergen](https://voynich.nu/), [Patrick Feaster](https://griffonagedotcom.wordpress.com/2020/08/24/ruminations-on-the-voynich-manuscript/), [Sean Palmer](http://inamidst.com/voynich/stacks), [Emma May Smith](https://agnosticvoynich.wordpress.com/), Marco Ponzi, and others
+* Relies on the Zandbergen-Landini transcription (described [here](https://voynich.nu/transcr.html) and [here](https://voynich.nu/extra/sp_transcr.html)), [v3.b](https://voynich.nu/data/ZL3b-n.txt) - referenced internally as `data/voynich-transcription.txt`
+* Code written with Claude (mostly `opus-4.5-thinking`) via Cursor AI
+
+# More details (auto-generated)
 
 ## What this project does
 
@@ -46,10 +136,10 @@ voynich/
 
 ## Install
 
-Run from the repository root:
+Clone the repository:
 
 ```bash
-pip install -r scripts/requirements.txt
+git clone https://github.com/beyondbeneath/voynich-viz/
 ```
 
 ## Reproduce data extraction
@@ -120,19 +210,6 @@ The project uses a **single source of truth** pattern for transcription config:
 3. **Web visualizations** load this JSON at startup, so changes to the Python config automatically propagate to all viewers after re-running the scripts
 
 This means you can modify character ordering, add new aggregations, or change display mappings in one place (`scripts/common/config.py`), re-run the analysis, and all visualizations update automatically.
-
-## Visual placeholders
-
-<!-- Placeholder: replace with actual images/screenshots when available -->
-
-![Transition matrix placeholder](docs/images/transition-matrix-placeholder.png)
-_Transition matrix heatmap (single dataset view)._
-
-![Comparison view placeholder](docs/images/comparison-placeholder.png)
-_Comparison view between two selected subsets._
-
-![Diff view placeholder](docs/images/diff-placeholder.png)
-_Diff view highlighting transition deltas._
 
 ## Add a new analysis type
 
