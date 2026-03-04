@@ -24,21 +24,50 @@ const Heatmap = (function() {
   }
   
   /**
+   * Generate a Gaussian kernel of the specified size.
+   * @param {number} size - Kernel size (must be odd: 3, 5, 7, etc.)
+   * @returns {Array} 2D kernel array, normalized to sum to 1
+   */
+  function generateGaussianKernel(size) {
+    const kernel = [];
+    const sigma = size / 2.5;  // Wider spread for more visible blur
+    const center = Math.floor(size / 2);
+    let sum = 0;
+    
+    for (let y = 0; y < size; y++) {
+      const row = [];
+      for (let x = 0; x < size; x++) {
+        const dx = x - center;
+        const dy = y - center;
+        const value = Math.exp(-(dx * dx + dy * dy) / (2 * sigma * sigma));
+        row.push(value);
+        sum += value;
+      }
+      kernel.push(row);
+    }
+    
+    // Normalize
+    for (let y = 0; y < size; y++) {
+      for (let x = 0; x < size; x++) {
+        kernel[y][x] /= sum;
+      }
+    }
+    
+    return kernel;
+  }
+  
+  /**
    * Apply gaussian-like blur to a grid by spreading values to neighbors.
    * @param {Array} distribution - 2D array of values
    * @param {number} rows - Number of rows
    * @param {number} cols - Number of columns
+   * @param {number} [kernelSize=3] - Size of the blur kernel (3, 5, 7, etc.)
    * @returns {Array} Blurred distribution
    */
-  function applyBlur(distribution, rows, cols) {
+  function applyBlur(distribution, rows, cols, kernelSize = 3) {
     const blurred = Array(rows).fill().map(() => Array(cols).fill(0));
-    
-    // 3x3 gaussian-like kernel (normalized)
-    const kernel = [
-      [0.05, 0.1, 0.05],
-      [0.1,  0.4, 0.1],
-      [0.05, 0.1, 0.05],
-    ];
+    const kernel = generateGaussianKernel(kernelSize);
+    const offset = Math.floor(kernelSize / 2);
     
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
@@ -46,12 +75,12 @@ const Heatmap = (function() {
         if (val === 0) continue;
         
         // Spread value to neighbors using kernel
-        for (let kr = -1; kr <= 1; kr++) {
-          for (let kc = -1; kc <= 1; kc++) {
+        for (let kr = -offset; kr <= offset; kr++) {
+          for (let kc = -offset; kc <= offset; kc++) {
             const nr = r + kr;
             const nc = c + kc;
             if (nr >= 0 && nr < rows && nc >= 0 && nc < cols) {
-              blurred[nr][nc] += val * kernel[kr + 1][kc + 1];
+              blurred[nr][nc] += val * kernel[kr + offset][kc + offset];
             }
           }
         }
@@ -117,7 +146,8 @@ const Heatmap = (function() {
     // Apply blur for raw mode (on clipped region)
     let renderDistribution = distribution;
     if (isRawMode) {
-      renderDistribution = applyBlur(distribution, displayRows, displayCols);
+      const blurSize = settings.blurSize || 3;
+      renderDistribution = applyBlur(distribution, displayRows, displayCols, blurSize);
     }
     
     // Find max for normalization (only in displayed region)
@@ -229,7 +259,8 @@ const Heatmap = (function() {
     // Apply blur for raw mode (on clipped region)
     let renderDiffGrid = diffGrid;
     if (isRawMode) {
-      renderDiffGrid = applyBlur(diffGrid, displayRows, displayCols);
+      const blurSize = settings.blurSize || 3;
+      renderDiffGrid = applyBlur(diffGrid, displayRows, displayCols, blurSize);
     }
     
     // Find max abs diff after blur (only in displayed region)

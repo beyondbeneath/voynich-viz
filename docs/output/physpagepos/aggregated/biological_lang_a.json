@@ -1,0 +1,53 @@
+{
+  "name": "biological_lang_a",
+  "description": "Biological section, Language A",
+  "page_count": 0,
+  "char_count": 0,
+  "charset": [],
+  "total_chars": 0,
+  "normalization_modes": {
+    "page": {
+      "coarse": {
+        "grid_cols": 10,
+        "grid_rows": 15,
+        "sparse": true,
+        "characters": {},
+        "total_cells": {}
+      },
+      "fine": {
+        "grid_cols": 20,
+        "grid_rows": 30,
+        "sparse": true,
+        "characters": {},
+        "total_cells": {}
+      }
+    },
+    "manuscript": {
+      "coarse": {
+        "grid_cols": 10,
+        "grid_rows": 15,
+        "sparse": true,
+        "characters": {},
+        "total_cells": {}
+      },
+      "fine": {
+        "grid_cols": 20,
+        "grid_rows": 30,
+        "sparse": true,
+        "characters": {},
+        "total_cells": {}
+      },
+      "raw": {
+        "grid_cols": 100,
+        "grid_rows": 150,
+        "sparse": true,
+        "absolute": true,
+        "max_x": 1819,
+        "max_y": 1500,
+        "characters": {},
+        "total_cells": {}
+      }
+    }
+  },
+  "pages": []
+}

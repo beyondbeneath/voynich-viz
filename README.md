@@ -16,7 +16,7 @@ To introduce your own preprocessing, would require cloning the repo, changing so
 
 ## Available visualisations
 
-There are four main analyses presented:
+There are five main analyses presented:
 
 1. Markov transition matrix
    * exaine the probability of transition from token A -> token B
@@ -29,6 +29,10 @@ There are four main analyses presented:
    * do tokens preferentially appear at certain positions on a page?
    * provided at multiple granularities to reduce noise
    * provided at both page-scaled and manuscript scaled positions
+5. Page position (physical)
+   * similar to above, but uses actual pixel coordinates from word bounding boxes
+   * character positions are interpolated within word bounds
+   * provides a more accurate spatial representation than line/char indices
 
 Examples:
 
@@ -93,6 +97,7 @@ To modify these rules, and view the results, requires cloning the repo and modif
 
 * General work inspired by writings by [Nick Pelling](https://ciphermysteries.com/), [Rene Zandbergen](https://voynich.nu/), [Patrick Feaster](https://griffonagedotcom.wordpress.com/2020/08/24/ruminations-on-the-voynich-manuscript/), [Sean Palmer](http://inamidst.com/voynich/stacks), [Emma May Smith](https://agnosticvoynich.wordpress.com/), Marco Ponzi, and others
 * Relies on the Zandbergen-Landini transcription (described [here](https://voynich.nu/transcr.html) and [here](https://voynich.nu/extra/sp_transcr.html)), [v3.b](https://voynich.nu/data/ZL3b-n.txt) - referenced internally as `data/voynich-transcription.txt`
+* Physical page position relies on the data powering [Voynichese.com](voynichese.com), namely the [XML files](https://www.voynichese.com/1/data/folio/voynichese_data.zip) ([source](https://github.com/voynichese/voynichese/blob/wiki/About.md) on Github).
 * Code written with Claude (mostly `opus-4.5-thinking`) via Cursor AI
 
 # More details (auto-generated)
@@ -108,6 +113,7 @@ This repository provides multiple analysis pipelines over the Voynich transcript
    - **N-gram**: Unigram, bigram, and trigram frequency analysis
    - **Word Position**: Character preferences for word start/middle/end positions
    - **Page Position**: Spatial distribution of characters on the page (left/right, top/bottom)
+   - **Physical Page Position**: Spatial distribution using actual pixel coordinates from word bounding boxes
 4. **Aggregate** results by filters (language, hand, section, and combinations)
 5. **Visualize** in the browser with compare and diff modes
 
@@ -117,6 +123,7 @@ This repository provides multiple analysis pipelines over the Voynich transcript
 voynich/
 ├── data/
 │   ├── voynich-transcription.txt
+│   ├── voynichese.zip             # Physical word positions (XML per folio)
 │   └── transcription-format.html
 ├── scripts/
 │   ├── common/                    # Shared parser, normalizer, config
@@ -124,6 +131,7 @@ voynich/
 │   ├── ngram/                     # N-gram analysis pipeline
 │   ├── wordpos/                   # Word position pipeline
 │   ├── pagepos/                   # Page position pipeline
+│   ├── physpagepos/               # Physical page position pipeline
 │   └── requirements.txt
 └── docs/                          # GitHub Pages root
     ├── index.html                 # Analysis landing page
@@ -132,11 +140,13 @@ voynich/
     │   ├── markov/
     │   ├── ngram/
     │   ├── wordpos/
-    │   └── pagepos/
+    │   ├── pagepos/
+    │   └── physpagepos/
     ├── markov/                    # Transition matrix visualization
     ├── ngram/                     # N-gram frequency visualization
     ├── wordpos/                   # Word position visualization
-    └── pagepos/                   # Page position visualization
+    ├── pagepos/                   # Page position visualization
+    └── physpagepos/               # Physical page position visualization
 ```
 
 ## Install
@@ -163,11 +173,16 @@ python -m scripts.wordpos.main --input data/voynich-transcription.txt --output d
 
 # Page-position extraction (spatial distribution on page)
 python -m scripts.pagepos.main --input data/voynich-transcription.txt --output docs/output/pagepos/ -v
+
+# Physical page-position extraction (using actual pixel coordinates from word bounding boxes)
+python -m scripts.physpagepos.main --xml-source data/voynichese.zip --transcription data/voynich-transcription.txt --output docs/output/physpagepos/ -v
 ```
 
 The page position analysis supports two normalization modes:
 - **Page-relative**: Positions normalized within each page (a 2-line page has lines at 0% and 100%)
 - **Manuscript-relative**: Positions normalized to global max (81 lines, 97 chars/line observed)
+
+The physical page position analysis uses word bounding boxes from the Voynichese XML files, interpolating character positions within each word. This provides more accurate spatial positioning than line/character indices.
 
 ### Variants
 ```

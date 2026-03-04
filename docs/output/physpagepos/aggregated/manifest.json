@@ -1,0 +1,182 @@
+{
+  "grid_resolutions": {
+    "coarse": {
+      "cols": 10,
+      "rows": 15
+    },
+    "fine": {
+      "cols": 20,
+      "rows": 30
+    },
+    "raw": {
+      "cols": 100,
+      "rows": 150,
+      "absolute": true,
+      "max_x": 1819,
+      "max_y": 1500
+    }
+  },
+  "normalization_modes": {
+    "page": {
+      "name": "Page-relative",
+      "description": "Positions normalized within each page (0-1 range per page)"
+    },
+    "manuscript": {
+      "name": "Manuscript-relative",
+      "description": "Positions normalized to global max (max 1819x1500 pixels)"
+    }
+  },
+  "global_stats": {
+    "max_width": 1819,
+    "max_height": 1500
+  },
+  "aggregations": [
+    {
+      "name": "all",
+      "description": "All pages",
+      "page_count": 223,
+      "char_count": 159871,
+      "file": "all.json"
+    },
+    {
+      "name": "language_a",
+      "description": "Currier Language A",
+      "page_count": 112,
+      "char_count": 43953,
+      "file": "language_a.json"
+    },
+    {
+      "name": "language_b",
+      "description": "Currier Language B",
+      "page_count": 83,
+      "char_count": 102171,
+      "file": "language_b.json"
+    },
+    {
+      "name": "hand_1",
+      "description": "Hand 1",
+      "page_count": 98,
+      "char_count": 34376,
+      "file": "hand_1.json"
+    },
+    {
+      "name": "hand_2",
+      "description": "Hand 2",
+      "page_count": 46,
+      "char_count": 41908,
+      "file": "hand_2.json"
+    },
+    {
+      "name": "hand_3",
+      "description": "Hand 3",
+      "page_count": 32,
+      "char_count": 57437,
+      "file": "hand_3.json"
+    },
+    {
+      "name": "hand_4",
+      "description": "Hand 4",
+      "page_count": 38,
+      "char_count": 19844,
+      "file": "hand_4.json"
+    },
+    {
+      "name": "hand_5",
+      "description": "Hand 5",
+      "page_count": 8,
+      "char_count": 4260,
+      "file": "hand_5.json"
+    },
+    {
+      "name": "herbal",
+      "description": "Herbal section",
+      "page_count": 129,
+      "char_count": 45213,
+      "file": "herbal.json"
+    },
+    {
+      "name": "zodiac",
+      "description": "Zodiac section",
+      "page_count": 12,
+      "char_count": 6070,
+      "file": "zodiac.json"
+    },
+    {
+      "name": "biological",
+      "description": "Biological section",
+      "page_count": 19,
+      "char_count": 27605,
+      "file": "biological.json"
+    },
+    {
+      "name": "pharmaceutical",
+      "description": "Pharmaceutical section",
+      "page_count": 14,
+      "char_count": 9263,
+      "file": "pharmaceutical.json"
+    },
+    {
+      "name": "astronomical",
+      "description": "Astronomical section",
+      "page_count": 8,
+      "char_count": 3873,
+      "file": "astronomical.json"
+    },
+    {
+      "name": "cosmological",
+      "description": "Cosmological section",
+      "page_count": 10,
+      "char_count": 6758,
+      "file": "cosmological.json"
+    },
+    {
+      "name": "text_only",
+      "description": "Text only pages",
+      "page_count": 6,
+      "char_count": 9740,
+      "file": "text_only.json"
+    },
+    {
+      "name": "herbal_lang_a",
+      "description": "Herbal section, Language A",
+      "page_count": 95,
+      "char_count": 30614,
+      "file": "herbal_lang_a.json"
+    },
+    {
+      "name": "herbal_lang_b",
+      "description": "Herbal section, Language B",
+      "page_count": 32,
+      "char_count": 14412,
+      "file": "herbal_lang_b.json"
+    },
+    {
+      "name": "biological_lang_a",
+      "description": "Biological section, Language A",
+      "page_count": 0,
+      "char_count": 0,
+      "file": "biological_lang_a.json"
+    },
+    {
+      "name": "biological_lang_b",
+      "description": "Biological section, Language B",
+      "page_count": 19,
+      "char_count": 27605,
+      "file": "biological_lang_b.json"
+    },
+    {
+      "name": "quire_13",
+      "description": "Quire 13",
+      "page_count": 20,
+      "char_count": 29916,
+      "file": "quire_13.json"
+    },
+    {
+      "name": "quire_20",
+      "description": "Quire 20",
+      "page_count": 23,
+      "char_count": 48056,
+      "file": "quire_20.json"
+    }
+  ]
+}

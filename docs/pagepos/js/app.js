@@ -16,6 +16,7 @@ const App = (function() {
     normalization: 'page',
     clipLines: 50,    // Max lines to show in raw mode
     clipChars: 50,    // Max chars to show in raw mode
+    blurSize: 3,      // Blur kernel size for raw mode (3, 5, 7, etc.)
     settings: { ...Config.DEFAULTS },
     loading: false,
     error: null,
@@ -128,6 +129,8 @@ const App = (function() {
       clipSeparator: document.getElementById('clip-separator'),
       clipLines: document.getElementById('clip-lines'),
       clipChars: document.getElementById('clip-chars'),
+      blurControls: document.getElementById('blur-controls'),
+      blurSize: document.getElementById('blur-size'),
       pagesPanelSingle: document.getElementById('pages-panel-single'),
       pagesPanelCompare: document.getElementById('pages-panel-compare'),
     };
@@ -227,6 +230,12 @@ const App = (function() {
     if (elements.clipChars) {
       elements.clipChars.addEventListener('change', (e) => {
         state.clipChars = parseInt(e.target.value, 10) || 50;
+        renderHeatmap();
+      });
+    }
+    if (elements.blurSize) {
+      elements.blurSize.addEventListener('change', (e) => {
+        state.blurSize = parseInt(e.target.value, 10) || 3;
         renderHeatmap();
       });
     }
@@ -565,6 +574,7 @@ const App = (function() {
       normalization: state.normalization,
       clipLines: state.clipLines,
       clipChars: state.clipChars,
+      blurSize: state.blurSize,
       onHover: handleHover,
     };
     
@@ -711,19 +721,25 @@ const App = (function() {
       elements.normalizationSelect.disabled = true;
       elements.normalizationSelect.title = 'Raw mode uses absolute coordinates (manuscript-relative only)';
       
-      // Show clip controls
+      // Show clip controls and blur controls
       if (elements.clipControls) {
         elements.clipControls.style.display = 'flex';
         elements.clipSeparator.style.display = 'block';
+      }
+      if (elements.blurControls) {
+        elements.blurControls.style.display = 'flex';
       }
     } else {
       elements.normalizationSelect.disabled = false;
       elements.normalizationSelect.title = '';
       
-      // Hide clip controls
+      // Hide clip controls and blur controls
       if (elements.clipControls) {
         elements.clipControls.style.display = 'none';
         elements.clipSeparator.style.display = 'none';
+      }
+      if (elements.blurControls) {
+        elements.blurControls.style.display = 'none';
       }
     }
   }
