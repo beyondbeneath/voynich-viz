@@ -228,7 +228,7 @@ def main():
     if web_dir.exists():
         if args.verbose:
             print(f"\nGenerating methodology document...")
-        save_methodology(methodology_path, metadata_path)
+        save_methodology(methodology_path, metadata_path, page_transitions_path)
         if args.verbose:
             print(f"  Saved to {methodology_path}")
     

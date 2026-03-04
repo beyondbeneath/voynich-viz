@@ -124,6 +124,173 @@
         grid-template-columns: 1fr;
       }
     }
+    
+    /* Expandable folio details */
+    .expand-cell {
+      white-space: nowrap;
+    }
+    .expand-btn {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 11px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      margin-right: 8px;
+      padding: 0;
+      line-height: 18px;
+    }
+    .expand-btn:hover {
+      background: var(--accent-color);
+      color: white;
+      border-color: var(--accent-color);
+    }
+    .expand-btn.expanded {
+      background: var(--accent-color);
+      color: white;
+      border-color: var(--accent-color);
+    }
+    .page-count {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .folio-details-row td {
+      background: var(--bg-secondary);
+      padding: 12px 16px;
+    }
+    .folio-details-row:hover {
+      background: var(--bg-secondary) !important;
+    }
+    .folio-details {
+      font-size: 13px;
+      line-height: 1.8;
+    }
+    .quire-group {
+      margin-top: 10px;
+      padding-left: 12px;
+      border-left: 2px solid var(--border-color);
+    }
+    .quire-group:first-child {
+      margin-top: 8px;
+    }
+    .quire-label {
+      display: inline-block;
+      background: var(--bg-primary);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-right: 10px;
+      margin-bottom: 4px;
+    }
+    .folio-item {
+      display: inline-block;
+      margin-right: 16px;
+      margin-bottom: 4px;
+    }
+    .folio-item strong {
+      color: var(--accent-color);
+    }
+    
+    /* Overlap visualization section */
+    .overlap-section {
+      margin-top: 40px;
+    }
+    .overlap-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .overlap-controls label {
+      font-weight: 600;
+    }
+    .overlap-controls select {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      font-size: 14px;
+      min-width: 200px;
+    }
+    .overlap-summary {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-left: auto;
+    }
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 16px;
+    }
+    @media (max-width: 800px) {
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .chart-container {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .chart-container h4 {
+      margin: 0 0 16px;
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+    .bar-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bar-label {
+      width: 60px;
+      font-size: 12px;
+      text-align: right;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+    .bar-track {
+      flex: 1;
+      height: 20px;
+      background: var(--bg-primary);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    .bar-fill.hand { background: #6366f1; }
+    .bar-fill.language { background: #10b981; }
+    .bar-fill.illustration { background: #f59e0b; }
+    .bar-value {
+      width: 50px;
+      font-size: 12px;
+      text-align: left;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+    .no-data {
+      color: var(--text-secondary);
+      font-style: italic;
+      text-align: center;
+      padding: 20px;
+    }
   </style>
 </head>
 <body>
@@ -279,42 +446,413 @@
     <p>
       Page-level transition counts are aggregated into various subsets based on
       metadata filters. This allows comparison between different sections,
-      scribal hands, or Currier languages.
+      scribal hands, or Currier languages. Click the <strong>?</strong> button to see which folios and pages are included in each aggregation.
     </p>
     <table>
       <thead>
-        <tr><th>Name</th><th>Description</th><th>Filter</th></tr>
+        <tr><th>Name</th><th>Description</th><th>Filter</th><th>Pages</th></tr>
       </thead>
       <tbody>
-          <tr class="group-header"><td colspan="3"><strong>All</strong></td></tr>
-          <tr><td><code>all</code></td><td>All pages</td><td>None (all pages)</td></tr>
-          <tr class="group-header"><td colspan="3"><strong>By Language</strong></td></tr>
-          <tr><td><code>language_a</code></td><td>Currier Language A</td><td>language=A</td></tr>
-          <tr><td><code>language_b</code></td><td>Currier Language B</td><td>language=B</td></tr>
-          <tr class="group-header"><td colspan="3"><strong>By Hand</strong></td></tr>
-          <tr><td><code>hand_1</code></td><td>Hand 1</td><td>hand=1</td></tr>
-          <tr><td><code>hand_2</code></td><td>Hand 2</td><td>hand=2</td></tr>
-          <tr><td><code>hand_3</code></td><td>Hand 3</td><td>hand=3</td></tr>
-          <tr><td><code>hand_4</code></td><td>Hand 4</td><td>hand=4</td></tr>
-          <tr><td><code>hand_5</code></td><td>Hand 5</td><td>hand=5</td></tr>
-          <tr class="group-header"><td colspan="3"><strong>By Illustration</strong></td></tr>
-          <tr><td><code>herbal</code></td><td>Herbal section</td><td>illustration=H</td></tr>
-          <tr><td><code>zodiac</code></td><td>Zodiac section</td><td>illustration=Z</td></tr>
-          <tr><td><code>biological</code></td><td>Biological section</td><td>illustration=B</td></tr>
-          <tr><td><code>pharmaceutical</code></td><td>Pharmaceutical section</td><td>illustration=P</td></tr>
-          <tr><td><code>astronomical</code></td><td>Astronomical section</td><td>illustration=A</td></tr>
-          <tr><td><code>cosmological</code></td><td>Cosmological section</td><td>illustration=C</td></tr>
-          <tr><td><code>text_only</code></td><td>Text only pages</td><td>illustration=T</td></tr>
-          <tr class="group-header"><td colspan="3"><strong>By Quire</strong></td></tr>
-          <tr><td><code>quire_13</code></td><td>Quire 13</td><td>quire=13</td></tr>
-          <tr><td><code>quire_20</code></td><td>Quire 20</td><td>quire=20</td></tr>
-          <tr class="group-header"><td colspan="3"><strong>Combined Filters</strong></td></tr>
-          <tr><td><code>herbal_lang_a</code></td><td>Herbal section, Language A</td><td>illustration=H, language=A</td></tr>
-          <tr><td><code>herbal_lang_b</code></td><td>Herbal section, Language B</td><td>illustration=H, language=B</td></tr>
-          <tr><td><code>biological_lang_a</code></td><td>Biological section, Language A</td><td>illustration=B, language=A</td></tr>
-          <tr><td><code>biological_lang_b</code></td><td>Biological section, Language B</td><td>illustration=B, language=B</td></tr>
+          <tr class="group-header"><td colspan="4"><strong>All</strong></td></tr>
+          <tr>
+            <td><code>all</code></td>
+            <td>All pages</td>
+            <td>None (all pages)</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">226 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>134 folios, 226 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 1</span> <span class="folio-item"><strong>f1</strong>: f1r, f1v</span> <span class="folio-item"><strong>f2</strong>: f2r, f2v</span> <span class="folio-item"><strong>f3</strong>: f3r, f3v</span> <span class="folio-item"><strong>f4</strong>: f4r, f4v</span> <span class="folio-item"><strong>f5</strong>: f5r, f5v</span> <span class="folio-item"><strong>f6</strong>: f6r, f6v</span> <span class="folio-item"><strong>f7</strong>: f7r, f7v</span> <span class="folio-item"><strong>f8</strong>: f8r, f8v</span></div><div class="quire-group"><span class="quire-label">Quire 2</span> <span class="folio-item"><strong>f10</strong>: f10r, f10v</span> <span class="folio-item"><strong>f11</strong>: f11r, f11v</span> <span class="folio-item"><strong>f13</strong>: f13r, f13v</span> <span class="folio-item"><strong>f14</strong>: f14r, f14v</span> <span class="folio-item"><strong>f15</strong>: f15r, f15v</span> <span class="folio-item"><strong>f16</strong>: f16r, f16v</span> <span class="folio-item"><strong>f9</strong>: f9r, f9v</span></div><div class="quire-group"><span class="quire-label">Quire 3</span> <span class="folio-item"><strong>f17</strong>: f17r, f17v</span> <span class="folio-item"><strong>f18</strong>: f18r, f18v</span> <span class="folio-item"><strong>f19</strong>: f19r, f19v</span> <span class="folio-item"><strong>f20</strong>: f20r, f20v</span> <span class="folio-item"><strong>f21</strong>: f21r, f21v</span> <span class="folio-item"><strong>f22</strong>: f22r, f22v</span> <span class="folio-item"><strong>f23</strong>: f23r, f23v</span> <span class="folio-item"><strong>f24</strong>: f24r, f24v</span></div><div class="quire-group"><span class="quire-label">Quire 4</span> <span class="folio-item"><strong>f25</strong>: f25r, f25v</span> <span class="folio-item"><strong>f26</strong>: f26r, f26v</span> <span class="folio-item"><strong>f27</strong>: f27r, f27v</span> <span class="folio-item"><strong>f28</strong>: f28r, f28v</span> <span class="folio-item"><strong>f29</strong>: f29r, f29v</span> <span class="folio-item"><strong>f30</strong>: f30r, f30v</span> <span class="folio-item"><strong>f31</strong>: f31r, f31v</span> <span class="folio-item"><strong>f32</strong>: f32r, f32v</span></div><div class="quire-group"><span class="quire-label">Quire 5</span> <span class="folio-item"><strong>f33</strong>: f33r, f33v</span> <span class="folio-item"><strong>f34</strong>: f34r, f34v</span> <span class="folio-item"><strong>f35</strong>: f35r, f35v</span> <span class="folio-item"><strong>f36</strong>: f36r, f36v</span> <span class="folio-item"><strong>f37</strong>: f37r, f37v</span> <span class="folio-item"><strong>f38</strong>: f38r, f38v</span> <span class="folio-item"><strong>f39</strong>: f39r, f39v</span> <span class="folio-item"><strong>f40</strong>: f40r, f40v</span></div><div class="quire-group"><span class="quire-label">Quire 6</span> <span class="folio-item"><strong>f41</strong>: f41r, f41v</span> <span class="folio-item"><strong>f42</strong>: f42r, f42v</span> <span class="folio-item"><strong>f43</strong>: f43r, f43v</span> <span class="folio-item"><strong>f44</strong>: f44r, f44v</span> <span class="folio-item"><strong>f45</strong>: f45r, f45v</span> <span class="folio-item"><strong>f46</strong>: f46r, f46v</span> <span class="folio-item"><strong>f47</strong>: f47r, f47v</span> <span class="folio-item"><strong>f48</strong>: f48r, f48v</span></div><div class="quire-group"><span class="quire-label">Quire 7</span> <span class="folio-item"><strong>f49</strong>: f49r, f49v</span> <span class="folio-item"><strong>f50</strong>: f50r, f50v</span> <span class="folio-item"><strong>f51</strong>: f51r, f51v</span> <span class="folio-item"><strong>f52</strong>: f52r, f52v</span> <span class="folio-item"><strong>f53</strong>: f53r, f53v</span> <span class="folio-item"><strong>f54</strong>: f54r, f54v</span> <span class="folio-item"><strong>f55</strong>: f55r, f55v</span> <span class="folio-item"><strong>f56</strong>: f56r, f56v</span></div><div class="quire-group"><span class="quire-label">Quire 8</span> <span class="folio-item"><strong>f57</strong>: f57r, f57v</span> <span class="folio-item"><strong>f58</strong>: f58r, f58v</span> <span class="folio-item"><strong>f65</strong>: f65r, f65v</span> <span class="folio-item"><strong>f66</strong>: f66r, f66v</span></div><div class="quire-group"><span class="quire-label">Quire 9</span> <span class="folio-item"><strong>f67r1</strong>: f67r1</span> <span class="folio-item"><strong>f67r2</strong>: f67r2</span> <span class="folio-item"><strong>f67v1</strong>: f67v1</span> <span class="folio-item"><strong>f67v2</strong>: f67v2</span> <span class="folio-item"><strong>f68r1</strong>: f68r1</span> <span class="folio-item"><strong>f68r2</strong>: f68r2</span> <span class="folio-item"><strong>f68r3</strong>: f68r3</span> <span class="folio-item"><strong>f68v1</strong>: f68v1</span> <span class="folio-item"><strong>f68v2</strong>: f68v2</span> <span class="folio-item"><strong>f68v3</strong>: f68v3</span></div><div class="quire-group"><span class="quire-label">Quire 10</span> <span class="folio-item"><strong>f69</strong>: f69r, f69v</span> <span class="folio-item"><strong>f70r1</strong>: f70r1</span> <span class="folio-item"><strong>f70r2</strong>: f70r2</span> <span class="folio-item"><strong>f70v1</strong>: f70v1</span> <span class="folio-item"><strong>f70v2</strong>: f70v2</span></div><div class="quire-group"><span class="quire-label">Quire 11</span> <span class="folio-item"><strong>f71</strong>: f71r, f71v</span> <span class="folio-item"><strong>f72r1</strong>: f72r1</span> <span class="folio-item"><strong>f72r2</strong>: f72r2</span> <span class="folio-item"><strong>f72r3</strong>: f72r3</span> <span class="folio-item"><strong>f72v1</strong>: f72v1</span> <span class="folio-item"><strong>f72v2</strong>: f72v2</span> <span class="folio-item"><strong>f72v3</strong>: f72v3</span></div><div class="quire-group"><span class="quire-label">Quire 12</span> <span class="folio-item"><strong>f73</strong>: f73r, f73v</span></div><div class="quire-group"><span class="quire-label">Quire 13</span> <span class="folio-item"><strong>f75</strong>: f75r, f75v</span> <span class="folio-item"><strong>f76</strong>: f76r, f76v</span> <span class="folio-item"><strong>f77</strong>: f77r, f77v</span> <span class="folio-item"><strong>f78</strong>: f78r, f78v</span> <span class="folio-item"><strong>f79</strong>: f79r, f79v</span> <span class="folio-item"><strong>f80</strong>: f80r, f80v</span> <span class="folio-item"><strong>f81</strong>: f81r, f81v</span> <span class="folio-item"><strong>f82</strong>: f82r, f82v</span> <span class="folio-item"><strong>f83</strong>: f83r, f83v</span> <span class="folio-item"><strong>f84</strong>: f84r, f84v</span></div><div class="quire-group"><span class="quire-label">Quire 14</span> <span class="folio-item"><strong>f85r1</strong>: f85r1</span> <span class="folio-item"><strong>f85r2</strong>: f85r2</span> <span class="folio-item"><strong>f86v3</strong>: f86v3</span> <span class="folio-item"><strong>f86v4</strong>: f86v4</span> <span class="folio-item"><strong>f86v5</strong>: f86v5</span> <span class="folio-item"><strong>f86v6</strong>: f86v6</span></div><div class="quire-group"><span class="quire-label">Quire 15</span> <span class="folio-item"><strong>f87</strong>: f87r, f87v</span> <span class="folio-item"><strong>f88</strong>: f88r, f88v</span> <span class="folio-item"><strong>f89r1</strong>: f89r1</span> <span class="folio-item"><strong>f89r2</strong>: f89r2</span> <span class="folio-item"><strong>f89v1</strong>: f89v1</span> <span class="folio-item"><strong>f89v2</strong>: f89v2</span> <span class="folio-item"><strong>f90r1</strong>: f90r1</span> <span class="folio-item"><strong>f90r2</strong>: f90r2</span> <span class="folio-item"><strong>f90v1</strong>: f90v1</span> <span class="folio-item"><strong>f90v2</strong>: f90v2</span></div><div class="quire-group"><span class="quire-label">Quire 17</span> <span class="folio-item"><strong>f93</strong>: f93r, f93v</span> <span class="folio-item"><strong>f94</strong>: f94r, f94v</span> <span class="folio-item"><strong>f95r1</strong>: f95r1</span> <span class="folio-item"><strong>f95r2</strong>: f95r2</span> <span class="folio-item"><strong>f95v1</strong>: f95v1</span> <span class="folio-item"><strong>f95v2</strong>: f95v2</span> <span class="folio-item"><strong>f96</strong>: f96r, f96v</span></div><div class="quire-group"><span class="quire-label">Quire 19</span> <span class="folio-item"><strong>f100</strong>: f100r, f100v</span> <span class="folio-item"><strong>f101</strong>: f101r, f101v</span> <span class="folio-item"><strong>f102r1</strong>: f102r1</span> <span class="folio-item"><strong>f102r2</strong>: f102r2</span> <span class="folio-item"><strong>f102v1</strong>: f102v1</span> <span class="folio-item"><strong>f102v2</strong>: f102v2</span> <span class="folio-item"><strong>f99</strong>: f99r, f99v</span></div><div class="quire-group"><span class="quire-label">Quire 20</span> <span class="folio-item"><strong>f103</strong>: f103r, f103v</span> <span class="folio-item"><strong>f104</strong>: f104r, f104v</span> <span class="folio-item"><strong>f105</strong>: f105r, f105v</span> <span class="folio-item"><strong>f106</strong>: f106r, f106v</span> <span class="folio-item"><strong>f107</strong>: f107r, f107v</span> <span class="folio-item"><strong>f108</strong>: f108r, f108v</span> <span class="folio-item"><strong>f111</strong>: f111r, f111v</span> <span class="folio-item"><strong>f112</strong>: f112r, f112v</span> <span class="folio-item"><strong>f113</strong>: f113r, f113v</span> <span class="folio-item"><strong>f114</strong>: f114r, f114v</span> <span class="folio-item"><strong>f115</strong>: f115r, f115v</span> <span class="folio-item"><strong>f116</strong>: f116r, f116v</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr class="group-header"><td colspan="4"><strong>By Language</strong></td></tr>
+          <tr>
+            <td><code>language_a</code></td>
+            <td>Currier Language A</td>
+            <td>language=A</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">114 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>63 folios, 114 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 1</span> <span class="folio-item"><strong>f1</strong>: f1r, f1v</span> <span class="folio-item"><strong>f2</strong>: f2r, f2v</span> <span class="folio-item"><strong>f3</strong>: f3r, f3v</span> <span class="folio-item"><strong>f4</strong>: f4r, f4v</span> <span class="folio-item"><strong>f5</strong>: f5r, f5v</span> <span class="folio-item"><strong>f6</strong>: f6r, f6v</span> <span class="folio-item"><strong>f7</strong>: f7r, f7v</span> <span class="folio-item"><strong>f8</strong>: f8r, f8v</span></div><div class="quire-group"><span class="quire-label">Quire 2</span> <span class="folio-item"><strong>f10</strong>: f10r, f10v</span> <span class="folio-item"><strong>f11</strong>: f11r, f11v</span> <span class="folio-item"><strong>f13</strong>: f13r, f13v</span> <span class="folio-item"><strong>f14</strong>: f14r, f14v</span> <span class="folio-item"><strong>f15</strong>: f15r, f15v</span> <span class="folio-item"><strong>f16</strong>: f16r, f16v</span> <span class="folio-item"><strong>f9</strong>: f9r, f9v</span></div><div class="quire-group"><span class="quire-label">Quire 3</span> <span class="folio-item"><strong>f17</strong>: f17r, f17v</span> <span class="folio-item"><strong>f18</strong>: f18r, f18v</span> <span class="folio-item"><strong>f19</strong>: f19r, f19v</span> <span class="folio-item"><strong>f20</strong>: f20r, f20v</span> <span class="folio-item"><strong>f21</strong>: f21r, f21v</span> <span class="folio-item"><strong>f22</strong>: f22r, f22v</span> <span class="folio-item"><strong>f23</strong>: f23r, f23v</span> <span class="folio-item"><strong>f24</strong>: f24r, f24v</span></div><div class="quire-group"><span class="quire-label">Quire 4</span> <span class="folio-item"><strong>f25</strong>: f25r, f25v</span> <span class="folio-item"><strong>f27</strong>: f27r, f27v</span> <span class="folio-item"><strong>f28</strong>: f28r, f28v</span> <span class="folio-item"><strong>f29</strong>: f29r, f29v</span> <span class="folio-item"><strong>f30</strong>: f30r, f30v</span> <span class="folio-item"><strong>f32</strong>: f32r, f32v</span></div><div class="quire-group"><span class="quire-label">Quire 5</span> <span class="folio-item"><strong>f35</strong>: f35r, f35v</span> <span class="folio-item"><strong>f36</strong>: f36r, f36v</span> <span class="folio-item"><strong>f37</strong>: f37r, f37v</span> <span class="folio-item"><strong>f38</strong>: f38r, f38v</span></div><div class="quire-group"><span class="quire-label">Quire 6</span> <span class="folio-item"><strong>f42</strong>: f42r, f42v</span> <span class="folio-item"><strong>f44</strong>: f44r, f44v</span> <span class="folio-item"><strong>f45</strong>: f45r, f45v</span> <span class="folio-item"><strong>f47</strong>: f47r, f47v</span></div><div class="quire-group"><span class="quire-label">Quire 7</span> <span class="folio-item"><strong>f49</strong>: f49r, f49v</span> <span class="folio-item"><strong>f51</strong>: f51r, f51v</span> <span class="folio-item"><strong>f52</strong>: f52r, f52v</span> <span class="folio-item"><strong>f53</strong>: f53r, f53v</span> <span class="folio-item"><strong>f54</strong>: f54r, f54v</span> <span class="folio-item"><strong>f56</strong>: f56r, f56v</span></div><div class="quire-group"><span class="quire-label">Quire 8</span> <span class="folio-item"><strong>f58</strong>: f58r, f58v</span></div><div class="quire-group"><span class="quire-label">Quire 15</span> <span class="folio-item"><strong>f87</strong>: f87r, f87v</span> <span class="folio-item"><strong>f88</strong>: f88r, f88v</span> <span class="folio-item"><strong>f89r1</strong>: f89r1</span> <span class="folio-item"><strong>f89r2</strong>: f89r2</span> <span class="folio-item"><strong>f89v1</strong>: f89v1</span> <span class="folio-item"><strong>f89v2</strong>: f89v2</span> <span class="folio-item"><strong>f90r1</strong>: f90r1</span> <span class="folio-item"><strong>f90r2</strong>: f90r2</span> <span class="folio-item"><strong>f90v1</strong>: f90v1</span> <span class="folio-item"><strong>f90v2</strong>: f90v2</span></div><div class="quire-group"><span class="quire-label">Quire 17</span> <span class="folio-item"><strong>f93</strong>: f93r, f93v</span> <span class="folio-item"><strong>f96</strong>: f96r, f96v</span></div><div class="quire-group"><span class="quire-label">Quire 19</span> <span class="folio-item"><strong>f100</strong>: f100r, f100v</span> <span class="folio-item"><strong>f101</strong>: f101r, f101v</span> <span class="folio-item"><strong>f102r1</strong>: f102r1</span> <span class="folio-item"><strong>f102r2</strong>: f102r2</span> <span class="folio-item"><strong>f102v1</strong>: f102v1</span> <span class="folio-item"><strong>f102v2</strong>: f102v2</span> <span class="folio-item"><strong>f99</strong>: f99r, f99v</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>language_b</code></td>
+            <td>Currier Language B</td>
+            <td>language=B</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">83 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>47 folios, 83 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 4</span> <span class="folio-item"><strong>f26</strong>: f26r, f26v</span> <span class="folio-item"><strong>f31</strong>: f31r, f31v</span></div><div class="quire-group"><span class="quire-label">Quire 5</span> <span class="folio-item"><strong>f33</strong>: f33r, f33v</span> <span class="folio-item"><strong>f34</strong>: f34r, f34v</span> <span class="folio-item"><strong>f39</strong>: f39r, f39v</span> <span class="folio-item"><strong>f40</strong>: f40r, f40v</span></div><div class="quire-group"><span class="quire-label">Quire 6</span> <span class="folio-item"><strong>f41</strong>: f41r, f41v</span> <span class="folio-item"><strong>f43</strong>: f43r, f43v</span> <span class="folio-item"><strong>f46</strong>: f46r, f46v</span> <span class="folio-item"><strong>f48</strong>: f48r, f48v</span></div><div class="quire-group"><span class="quire-label">Quire 7</span> <span class="folio-item"><strong>f50</strong>: f50r, f50v</span> <span class="folio-item"><strong>f55</strong>: f55r, f55v</span></div><div class="quire-group"><span class="quire-label">Quire 8</span> <span class="folio-item"><strong>f57</strong>: f57r, f57v</span> <span class="folio-item"><strong>f66</strong>: f66r, f66v</span></div><div class="quire-group"><span class="quire-label">Quire 13</span> <span class="folio-item"><strong>f75</strong>: f75r, f75v</span> <span class="folio-item"><strong>f76</strong>: f76r, f76v</span> <span class="folio-item"><strong>f77</strong>: f77r, f77v</span> <span class="folio-item"><strong>f78</strong>: f78r, f78v</span> <span class="folio-item"><strong>f79</strong>: f79r, f79v</span> <span class="folio-item"><strong>f80</strong>: f80r, f80v</span> <span class="folio-item"><strong>f81</strong>: f81r, f81v</span> <span class="folio-item"><strong>f82</strong>: f82r, f82v</span> <span class="folio-item"><strong>f83</strong>: f83r, f83v</span> <span class="folio-item"><strong>f84</strong>: f84r, f84v</span></div><div class="quire-group"><span class="quire-label">Quire 14</span> <span class="folio-item"><strong>f85r1</strong>: f85r1</span> <span class="folio-item"><strong>f85r2</strong>: f85r2</span> <span class="folio-item"><strong>f86v3</strong>: f86v3</span> <span class="folio-item"><strong>f86v4</strong>: f86v4</span> <span class="folio-item"><strong>f86v5</strong>: f86v5</span> <span class="folio-item"><strong>f86v6</strong>: f86v6</span></div><div class="quire-group"><span class="quire-label">Quire 17</span> <span class="folio-item"><strong>f94</strong>: f94r, f94v</span> <span class="folio-item"><strong>f95r1</strong>: f95r1</span> <span class="folio-item"><strong>f95r2</strong>: f95r2</span> <span class="folio-item"><strong>f95v1</strong>: f95v1</span> <span class="folio-item"><strong>f95v2</strong>: f95v2</span></div><div class="quire-group"><span class="quire-label">Quire 20</span> <span class="folio-item"><strong>f103</strong>: f103r, f103v</span> <span class="folio-item"><strong>f104</strong>: f104r, f104v</span> <span class="folio-item"><strong>f105</strong>: f105r, f105v</span> <span class="folio-item"><strong>f106</strong>: f106r, f106v</span> <span class="folio-item"><strong>f107</strong>: f107r, f107v</span> <span class="folio-item"><strong>f108</strong>: f108r, f108v</span> <span class="folio-item"><strong>f111</strong>: f111r, f111v</span> <span class="folio-item"><strong>f112</strong>: f112r, f112v</span> <span class="folio-item"><strong>f113</strong>: f113r, f113v</span> <span class="folio-item"><strong>f114</strong>: f114r, f114v</span> <span class="folio-item"><strong>f115</strong>: f115r, f115v</span> <span class="folio-item"><strong>f116</strong>: f116r</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr class="group-header"><td colspan="4"><strong>By Hand</strong></td></tr>
+          <tr>
+            <td><code>hand_1</code></td>
+            <td>Hand 1</td>
+            <td>hand=1</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">98 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>55 folios, 98 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 1</span> <span class="folio-item"><strong>f1</strong>: f1r, f1v</span> <span class="folio-item"><strong>f2</strong>: f2r, f2v</span> <span class="folio-item"><strong>f3</strong>: f3r, f3v</span> <span class="folio-item"><strong>f4</strong>: f4r, f4v</span> <span class="folio-item"><strong>f5</strong>: f5r, f5v</span> <span class="folio-item"><strong>f6</strong>: f6r, f6v</span> <span class="folio-item"><strong>f7</strong>: f7r, f7v</span> <span class="folio-item"><strong>f8</strong>: f8r, f8v</span></div><div class="quire-group"><span class="quire-label">Quire 2</span> <span class="folio-item"><strong>f10</strong>: f10r, f10v</span> <span class="folio-item"><strong>f11</strong>: f11r, f11v</span> <span class="folio-item"><strong>f13</strong>: f13r, f13v</span> <span class="folio-item"><strong>f14</strong>: f14r, f14v</span> <span class="folio-item"><strong>f15</strong>: f15r, f15v</span> <span class="folio-item"><strong>f16</strong>: f16r, f16v</span> <span class="folio-item"><strong>f9</strong>: f9r, f9v</span></div><div class="quire-group"><span class="quire-label">Quire 3</span> <span class="folio-item"><strong>f17</strong>: f17r, f17v</span> <span class="folio-item"><strong>f18</strong>: f18r, f18v</span> <span class="folio-item"><strong>f19</strong>: f19r, f19v</span> <span class="folio-item"><strong>f20</strong>: f20r, f20v</span> <span class="folio-item"><strong>f21</strong>: f21r, f21v</span> <span class="folio-item"><strong>f22</strong>: f22r, f22v</span> <span class="folio-item"><strong>f23</strong>: f23r, f23v</span> <span class="folio-item"><strong>f24</strong>: f24r, f24v</span></div><div class="quire-group"><span class="quire-label">Quire 4</span> <span class="folio-item"><strong>f25</strong>: f25r, f25v</span> <span class="folio-item"><strong>f27</strong>: f27r, f27v</span> <span class="folio-item"><strong>f28</strong>: f28r, f28v</span> <span class="folio-item"><strong>f29</strong>: f29r, f29v</span> <span class="folio-item"><strong>f30</strong>: f30r, f30v</span> <span class="folio-item"><strong>f32</strong>: f32r, f32v</span></div><div class="quire-group"><span class="quire-label">Quire 5</span> <span class="folio-item"><strong>f35</strong>: f35r, f35v</span> <span class="folio-item"><strong>f36</strong>: f36r, f36v</span> <span class="folio-item"><strong>f37</strong>: f37r, f37v</span> <span class="folio-item"><strong>f38</strong>: f38r, f38v</span></div><div class="quire-group"><span class="quire-label">Quire 6</span> <span class="folio-item"><strong>f42</strong>: f42r, f42v</span> <span class="folio-item"><strong>f44</strong>: f44r, f44v</span> <span class="folio-item"><strong>f45</strong>: f45r, f45v</span> <span class="folio-item"><strong>f47</strong>: f47r, f47v</span></div><div class="quire-group"><span class="quire-label">Quire 7</span> <span class="folio-item"><strong>f49</strong>: f49r, f49v</span> <span class="folio-item"><strong>f51</strong>: f51r, f51v</span> <span class="folio-item"><strong>f52</strong>: f52r, f52v</span> <span class="folio-item"><strong>f53</strong>: f53r, f53v</span> <span class="folio-item"><strong>f54</strong>: f54r, f54v</span> <span class="folio-item"><strong>f56</strong>: f56r, f56v</span></div><div class="quire-group"><span class="quire-label">Quire 15</span> <span class="folio-item"><strong>f89r1</strong>: f89r1</span> <span class="folio-item"><strong>f89r2</strong>: f89r2</span> <span class="folio-item"><strong>f89v1</strong>: f89v1</span> <span class="folio-item"><strong>f89v2</strong>: f89v2</span> <span class="folio-item"><strong>f90r1</strong>: f90r1</span> <span class="folio-item"><strong>f90r2</strong>: f90r2</span> <span class="folio-item"><strong>f90v1</strong>: f90v1</span> <span class="folio-item"><strong>f90v2</strong>: f90v2</span></div><div class="quire-group"><span class="quire-label">Quire 19</span> <span class="folio-item"><strong>f102r1</strong>: f102r1</span> <span class="folio-item"><strong>f102r2</strong>: f102r2</span> <span class="folio-item"><strong>f102v1</strong>: f102v1</span> <span class="folio-item"><strong>f102v2</strong>: f102v2</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>hand_2</code></td>
+            <td>Hand 2</td>
+            <td>hand=2</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">46 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>23 folios, 46 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 4</span> <span class="folio-item"><strong>f26</strong>: f26r, f26v</span> <span class="folio-item"><strong>f31</strong>: f31r, f31v</span></div><div class="quire-group"><span class="quire-label">Quire 5</span> <span class="folio-item"><strong>f33</strong>: f33r, f33v</span> <span class="folio-item"><strong>f34</strong>: f34r, f34v</span> <span class="folio-item"><strong>f39</strong>: f39r, f39v</span> <span class="folio-item"><strong>f40</strong>: f40r, f40v</span></div><div class="quire-group"><span class="quire-label">Quire 6</span> <span class="folio-item"><strong>f41</strong>: f41r, f41v</span> <span class="folio-item"><strong>f43</strong>: f43r, f43v</span> <span class="folio-item"><strong>f46</strong>: f46r, f46v</span> <span class="folio-item"><strong>f48</strong>: f48r, f48v</span></div><div class="quire-group"><span class="quire-label">Quire 7</span> <span class="folio-item"><strong>f50</strong>: f50r, f50v</span> <span class="folio-item"><strong>f55</strong>: f55r, f55v</span></div><div class="quire-group"><span class="quire-label">Quire 8</span> <span class="folio-item"><strong>f57</strong>: f57r, f57v</span></div><div class="quire-group"><span class="quire-label">Quire 13</span> <span class="folio-item"><strong>f75</strong>: f75r, f75v</span> <span class="folio-item"><strong>f76</strong>: f76r, f76v</span> <span class="folio-item"><strong>f77</strong>: f77r, f77v</span> <span class="folio-item"><strong>f78</strong>: f78r, f78v</span> <span class="folio-item"><strong>f79</strong>: f79r, f79v</span> <span class="folio-item"><strong>f80</strong>: f80r, f80v</span> <span class="folio-item"><strong>f81</strong>: f81r, f81v</span> <span class="folio-item"><strong>f82</strong>: f82r, f82v</span> <span class="folio-item"><strong>f83</strong>: f83r, f83v</span> <span class="folio-item"><strong>f84</strong>: f84r, f84v</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>hand_3</code></td>
+            <td>Hand 3</td>
+            <td>hand=3</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">33 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>20 folios, 33 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 8</span> <span class="folio-item"><strong>f58</strong>: f58r, f58v</span> <span class="folio-item"><strong>f65</strong>: f65r, f65v</span></div><div class="quire-group"><span class="quire-label">Quire 14</span> <span class="folio-item"><strong>f85r1</strong>: f85r1</span> <span class="folio-item"><strong>f85r2</strong>: f85r2</span> <span class="folio-item"><strong>f86v3</strong>: f86v3</span> <span class="folio-item"><strong>f86v4</strong>: f86v4</span> <span class="folio-item"><strong>f86v5</strong>: f86v5</span> <span class="folio-item"><strong>f86v6</strong>: f86v6</span></div><div class="quire-group"><span class="quire-label">Quire 20</span> <span class="folio-item"><strong>f103</strong>: f103r, f103v</span> <span class="folio-item"><strong>f104</strong>: f104r, f104v</span> <span class="folio-item"><strong>f105</strong>: f105r, f105v</span> <span class="folio-item"><strong>f106</strong>: f106r, f106v</span> <span class="folio-item"><strong>f107</strong>: f107r, f107v</span> <span class="folio-item"><strong>f108</strong>: f108r, f108v</span> <span class="folio-item"><strong>f111</strong>: f111r, f111v</span> <span class="folio-item"><strong>f112</strong>: f112r, f112v</span> <span class="folio-item"><strong>f113</strong>: f113r, f113v</span> <span class="folio-item"><strong>f114</strong>: f114r, f114v</span> <span class="folio-item"><strong>f115</strong>: f115v</span> <span class="folio-item"><strong>f116</strong>: f116r, f116v</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>hand_4</code></td>
+            <td>Hand 4</td>
+            <td>hand=4</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">40 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>30 folios, 40 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 9</span> <span class="folio-item"><strong>f67r1</strong>: f67r1</span> <span class="folio-item"><strong>f67r2</strong>: f67r2</span> <span class="folio-item"><strong>f67v1</strong>: f67v1</span> <span class="folio-item"><strong>f67v2</strong>: f67v2</span> <span class="folio-item"><strong>f68r1</strong>: f68r1</span> <span class="folio-item"><strong>f68r2</strong>: f68r2</span> <span class="folio-item"><strong>f68r3</strong>: f68r3</span> <span class="folio-item"><strong>f68v1</strong>: f68v1</span> <span class="folio-item"><strong>f68v2</strong>: f68v2</span> <span class="folio-item"><strong>f68v3</strong>: f68v3</span></div><div class="quire-group"><span class="quire-label">Quire 10</span> <span class="folio-item"><strong>f69</strong>: f69r, f69v</span> <span class="folio-item"><strong>f70r1</strong>: f70r1</span> <span class="folio-item"><strong>f70r2</strong>: f70r2</span> <span class="folio-item"><strong>f70v1</strong>: f70v1</span> <span class="folio-item"><strong>f70v2</strong>: f70v2</span></div><div class="quire-group"><span class="quire-label">Quire 11</span> <span class="folio-item"><strong>f71</strong>: f71r, f71v</span> <span class="folio-item"><strong>f72r1</strong>: f72r1</span> <span class="folio-item"><strong>f72r2</strong>: f72r2</span> <span class="folio-item"><strong>f72r3</strong>: f72r3</span> <span class="folio-item"><strong>f72v1</strong>: f72v1</span> <span class="folio-item"><strong>f72v2</strong>: f72v2</span> <span class="folio-item"><strong>f72v3</strong>: f72v3</span></div><div class="quire-group"><span class="quire-label">Quire 12</span> <span class="folio-item"><strong>f73</strong>: f73r, f73v</span></div><div class="quire-group"><span class="quire-label">Quire 15</span> <span class="folio-item"><strong>f87</strong>: f87r, f87v</span> <span class="folio-item"><strong>f88</strong>: f88r, f88v</span></div><div class="quire-group"><span class="quire-label">Quire 17</span> <span class="folio-item"><strong>f93</strong>: f93r, f93v</span> <span class="folio-item"><strong>f96</strong>: f96r, f96v</span></div><div class="quire-group"><span class="quire-label">Quire 19</span> <span class="folio-item"><strong>f100</strong>: f100r, f100v</span> <span class="folio-item"><strong>f101</strong>: f101r, f101v</span> <span class="folio-item"><strong>f99</strong>: f99r, f99v</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>hand_5</code></td>
+            <td>Hand 5</td>
+            <td>hand=5</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">8 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>6 folios, 8 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 8</span> <span class="folio-item"><strong>f66</strong>: f66r, f66v</span></div><div class="quire-group"><span class="quire-label">Quire 17</span> <span class="folio-item"><strong>f94</strong>: f94r, f94v</span> <span class="folio-item"><strong>f95r1</strong>: f95r1</span> <span class="folio-item"><strong>f95r2</strong>: f95r2</span> <span class="folio-item"><strong>f95v1</strong>: f95v1</span> <span class="folio-item"><strong>f95v2</strong>: f95v2</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr class="group-header"><td colspan="4"><strong>By Illustration</strong></td></tr>
+          <tr>
+            <td><code>herbal</code></td>
+            <td>Herbal section</td>
+            <td>illustration=H</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">129 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>70 folios, 129 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 1</span> <span class="folio-item"><strong>f1</strong>: f1v</span> <span class="folio-item"><strong>f2</strong>: f2r, f2v</span> <span class="folio-item"><strong>f3</strong>: f3r, f3v</span> <span class="folio-item"><strong>f4</strong>: f4r, f4v</span> <span class="folio-item"><strong>f5</strong>: f5r, f5v</span> <span class="folio-item"><strong>f6</strong>: f6r, f6v</span> <span class="folio-item"><strong>f7</strong>: f7r, f7v</span> <span class="folio-item"><strong>f8</strong>: f8r, f8v</span></div><div class="quire-group"><span class="quire-label">Quire 2</span> <span class="folio-item"><strong>f10</strong>: f10r, f10v</span> <span class="folio-item"><strong>f11</strong>: f11r, f11v</span> <span class="folio-item"><strong>f13</strong>: f13r, f13v</span> <span class="folio-item"><strong>f14</strong>: f14r, f14v</span> <span class="folio-item"><strong>f15</strong>: f15r, f15v</span> <span class="folio-item"><strong>f16</strong>: f16r, f16v</span> <span class="folio-item"><strong>f9</strong>: f9r, f9v</span></div><div class="quire-group"><span class="quire-label">Quire 3</span> <span class="folio-item"><strong>f17</strong>: f17r, f17v</span> <span class="folio-item"><strong>f18</strong>: f18r, f18v</span> <span class="folio-item"><strong>f19</strong>: f19r, f19v</span> <span class="folio-item"><strong>f20</strong>: f20r, f20v</span> <span class="folio-item"><strong>f21</strong>: f21r, f21v</span> <span class="folio-item"><strong>f22</strong>: f22r, f22v</span> <span class="folio-item"><strong>f23</strong>: f23r, f23v</span> <span class="folio-item"><strong>f24</strong>: f24r, f24v</span></div><div class="quire-group"><span class="quire-label">Quire 4</span> <span class="folio-item"><strong>f25</strong>: f25r, f25v</span> <span class="folio-item"><strong>f26</strong>: f26r, f26v</span> <span class="folio-item"><strong>f27</strong>: f27r, f27v</span> <span class="folio-item"><strong>f28</strong>: f28r, f28v</span> <span class="folio-item"><strong>f29</strong>: f29r, f29v</span> <span class="folio-item"><strong>f30</strong>: f30r, f30v</span> <span class="folio-item"><strong>f31</strong>: f31r, f31v</span> <span class="folio-item"><strong>f32</strong>: f32r, f32v</span></div><div class="quire-group"><span class="quire-label">Quire 5</span> <span class="folio-item"><strong>f33</strong>: f33r, f33v</span> <span class="folio-item"><strong>f34</strong>: f34r, f34v</span> <span class="folio-item"><strong>f35</strong>: f35r, f35v</span> <span class="folio-item"><strong>f36</strong>: f36r, f36v</span> <span class="folio-item"><strong>f37</strong>: f37r, f37v</span> <span class="folio-item"><strong>f38</strong>: f38r, f38v</span> <span class="folio-item"><strong>f39</strong>: f39r, f39v</span> <span class="folio-item"><strong>f40</strong>: f40r, f40v</span></div><div class="quire-group"><span class="quire-label">Quire 6</span> <span class="folio-item"><strong>f41</strong>: f41r, f41v</span> <span class="folio-item"><strong>f42</strong>: f42r, f42v</span> <span class="folio-item"><strong>f43</strong>: f43r, f43v</span> <span class="folio-item"><strong>f44</strong>: f44r, f44v</span> <span class="folio-item"><strong>f45</strong>: f45r, f45v</span> <span class="folio-item"><strong>f46</strong>: f46r, f46v</span> <span class="folio-item"><strong>f47</strong>: f47r, f47v</span> <span class="folio-item"><strong>f48</strong>: f48r, f48v</span></div><div class="quire-group"><span class="quire-label">Quire 7</span> <span class="folio-item"><strong>f49</strong>: f49r, f49v</span> <span class="folio-item"><strong>f50</strong>: f50r, f50v</span> <span class="folio-item"><strong>f51</strong>: f51r, f51v</span> <span class="folio-item"><strong>f52</strong>: f52r, f52v</span> <span class="folio-item"><strong>f53</strong>: f53r, f53v</span> <span class="folio-item"><strong>f54</strong>: f54r, f54v</span> <span class="folio-item"><strong>f55</strong>: f55r, f55v</span> <span class="folio-item"><strong>f56</strong>: f56r, f56v</span></div><div class="quire-group"><span class="quire-label">Quire 8</span> <span class="folio-item"><strong>f57</strong>: f57r</span> <span class="folio-item"><strong>f65</strong>: f65r, f65v</span> <span class="folio-item"><strong>f66</strong>: f66v</span></div><div class="quire-group"><span class="quire-label">Quire 15</span> <span class="folio-item"><strong>f87</strong>: f87r, f87v</span> <span class="folio-item"><strong>f90r1</strong>: f90r1</span> <span class="folio-item"><strong>f90r2</strong>: f90r2</span> <span class="folio-item"><strong>f90v1</strong>: f90v1</span> <span class="folio-item"><strong>f90v2</strong>: f90v2</span></div><div class="quire-group"><span class="quire-label">Quire 17</span> <span class="folio-item"><strong>f93</strong>: f93r, f93v</span> <span class="folio-item"><strong>f94</strong>: f94r, f94v</span> <span class="folio-item"><strong>f95r1</strong>: f95r1</span> <span class="folio-item"><strong>f95r2</strong>: f95r2</span> <span class="folio-item"><strong>f95v1</strong>: f95v1</span> <span class="folio-item"><strong>f95v2</strong>: f95v2</span> <span class="folio-item"><strong>f96</strong>: f96r, f96v</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>zodiac</code></td>
+            <td>Zodiac section</td>
+            <td>illustration=Z</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">12 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>10 folios, 12 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 10</span> <span class="folio-item"><strong>f70v1</strong>: f70v1</span> <span class="folio-item"><strong>f70v2</strong>: f70v2</span></div><div class="quire-group"><span class="quire-label">Quire 11</span> <span class="folio-item"><strong>f71</strong>: f71r, f71v</span> <span class="folio-item"><strong>f72r1</strong>: f72r1</span> <span class="folio-item"><strong>f72r2</strong>: f72r2</span> <span class="folio-item"><strong>f72r3</strong>: f72r3</span> <span class="folio-item"><strong>f72v1</strong>: f72v1</span> <span class="folio-item"><strong>f72v2</strong>: f72v2</span> <span class="folio-item"><strong>f72v3</strong>: f72v3</span></div><div class="quire-group"><span class="quire-label">Quire 12</span> <span class="folio-item"><strong>f73</strong>: f73r, f73v</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>biological</code></td>
+            <td>Biological section</td>
+            <td>illustration=B</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">19 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>10 folios, 19 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 13</span> <span class="folio-item"><strong>f75</strong>: f75r, f75v</span> <span class="folio-item"><strong>f76</strong>: f76v</span> <span class="folio-item"><strong>f77</strong>: f77r, f77v</span> <span class="folio-item"><strong>f78</strong>: f78r, f78v</span> <span class="folio-item"><strong>f79</strong>: f79r, f79v</span> <span class="folio-item"><strong>f80</strong>: f80r, f80v</span> <span class="folio-item"><strong>f81</strong>: f81r, f81v</span> <span class="folio-item"><strong>f82</strong>: f82r, f82v</span> <span class="folio-item"><strong>f83</strong>: f83r, f83v</span> <span class="folio-item"><strong>f84</strong>: f84r, f84v</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>pharmaceutical</code></td>
+            <td>Pharmaceutical section</td>
+            <td>illustration=P</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">16 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>12 folios, 16 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 15</span> <span class="folio-item"><strong>f88</strong>: f88r, f88v</span> <span class="folio-item"><strong>f89r1</strong>: f89r1</span> <span class="folio-item"><strong>f89r2</strong>: f89r2</span> <span class="folio-item"><strong>f89v1</strong>: f89v1</span> <span class="folio-item"><strong>f89v2</strong>: f89v2</span></div><div class="quire-group"><span class="quire-label">Quire 19</span> <span class="folio-item"><strong>f100</strong>: f100r, f100v</span> <span class="folio-item"><strong>f101</strong>: f101r, f101v</span> <span class="folio-item"><strong>f102r1</strong>: f102r1</span> <span class="folio-item"><strong>f102r2</strong>: f102r2</span> <span class="folio-item"><strong>f102v1</strong>: f102v1</span> <span class="folio-item"><strong>f102v2</strong>: f102v2</span> <span class="folio-item"><strong>f99</strong>: f99r, f99v</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>astronomical</code></td>
+            <td>Astronomical section</td>
+            <td>illustration=A</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">8 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>8 folios, 8 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 9</span> <span class="folio-item"><strong>f67r1</strong>: f67r1</span> <span class="folio-item"><strong>f67r2</strong>: f67r2</span> <span class="folio-item"><strong>f67v1</strong>: f67v1</span> <span class="folio-item"><strong>f68r1</strong>: f68r1</span> <span class="folio-item"><strong>f68r2</strong>: f68r2</span> <span class="folio-item"><strong>f68r3</strong>: f68r3</span> <span class="folio-item"><strong>f68v1</strong>: f68v1</span> <span class="folio-item"><strong>f68v2</strong>: f68v2</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>cosmological</code></td>
+            <td>Cosmological section</td>
+            <td>illustration=C</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">10 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>9 folios, 10 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 8</span> <span class="folio-item"><strong>f57</strong>: f57v</span></div><div class="quire-group"><span class="quire-label">Quire 9</span> <span class="folio-item"><strong>f67v2</strong>: f67v2</span> <span class="folio-item"><strong>f68v3</strong>: f68v3</span></div><div class="quire-group"><span class="quire-label">Quire 10</span> <span class="folio-item"><strong>f69</strong>: f69r, f69v</span> <span class="folio-item"><strong>f70r1</strong>: f70r1</span> <span class="folio-item"><strong>f70r2</strong>: f70r2</span></div><div class="quire-group"><span class="quire-label">Quire 14</span> <span class="folio-item"><strong>f85r2</strong>: f85r2</span> <span class="folio-item"><strong>f86v3</strong>: f86v3</span> <span class="folio-item"><strong>f86v4</strong>: f86v4</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>text_only</code></td>
+            <td>Text only pages</td>
+            <td>illustration=T</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">7 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>7 folios, 7 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 1</span> <span class="folio-item"><strong>f1</strong>: f1r</span></div><div class="quire-group"><span class="quire-label">Quire 8</span> <span class="folio-item"><strong>f66</strong>: f66r</span></div><div class="quire-group"><span class="quire-label">Quire 13</span> <span class="folio-item"><strong>f76</strong>: f76r</span></div><div class="quire-group"><span class="quire-label">Quire 14</span> <span class="folio-item"><strong>f85r1</strong>: f85r1</span> <span class="folio-item"><strong>f86v5</strong>: f86v5</span> <span class="folio-item"><strong>f86v6</strong>: f86v6</span></div><div class="quire-group"><span class="quire-label">Quire 20</span> <span class="folio-item"><strong>f116</strong>: f116v</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr class="group-header"><td colspan="4"><strong>By Quire</strong></td></tr>
+          <tr>
+            <td><code>quire_13</code></td>
+            <td>Quire 13</td>
+            <td>quire=13</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">20 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>10 folios, 20 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 13</span> <span class="folio-item"><strong>f75</strong>: f75r, f75v</span> <span class="folio-item"><strong>f76</strong>: f76r, f76v</span> <span class="folio-item"><strong>f77</strong>: f77r, f77v</span> <span class="folio-item"><strong>f78</strong>: f78r, f78v</span> <span class="folio-item"><strong>f79</strong>: f79r, f79v</span> <span class="folio-item"><strong>f80</strong>: f80r, f80v</span> <span class="folio-item"><strong>f81</strong>: f81r, f81v</span> <span class="folio-item"><strong>f82</strong>: f82r, f82v</span> <span class="folio-item"><strong>f83</strong>: f83r, f83v</span> <span class="folio-item"><strong>f84</strong>: f84r, f84v</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>quire_20</code></td>
+            <td>Quire 20</td>
+            <td>quire=20</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">24 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>12 folios, 24 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 20</span> <span class="folio-item"><strong>f103</strong>: f103r, f103v</span> <span class="folio-item"><strong>f104</strong>: f104r, f104v</span> <span class="folio-item"><strong>f105</strong>: f105r, f105v</span> <span class="folio-item"><strong>f106</strong>: f106r, f106v</span> <span class="folio-item"><strong>f107</strong>: f107r, f107v</span> <span class="folio-item"><strong>f108</strong>: f108r, f108v</span> <span class="folio-item"><strong>f111</strong>: f111r, f111v</span> <span class="folio-item"><strong>f112</strong>: f112r, f112v</span> <span class="folio-item"><strong>f113</strong>: f113r, f113v</span> <span class="folio-item"><strong>f114</strong>: f114r, f114v</span> <span class="folio-item"><strong>f115</strong>: f115r, f115v</span> <span class="folio-item"><strong>f116</strong>: f116r, f116v</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr class="group-header"><td colspan="4"><strong>Combined Filters</strong></td></tr>
+          <tr>
+            <td><code>herbal_lang_a</code></td>
+            <td>Herbal section, Language A</td>
+            <td>illustration=H, language=A</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">95 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>50 folios, 95 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 1</span> <span class="folio-item"><strong>f1</strong>: f1v</span> <span class="folio-item"><strong>f2</strong>: f2r, f2v</span> <span class="folio-item"><strong>f3</strong>: f3r, f3v</span> <span class="folio-item"><strong>f4</strong>: f4r, f4v</span> <span class="folio-item"><strong>f5</strong>: f5r, f5v</span> <span class="folio-item"><strong>f6</strong>: f6r, f6v</span> <span class="folio-item"><strong>f7</strong>: f7r, f7v</span> <span class="folio-item"><strong>f8</strong>: f8r, f8v</span></div><div class="quire-group"><span class="quire-label">Quire 2</span> <span class="folio-item"><strong>f10</strong>: f10r, f10v</span> <span class="folio-item"><strong>f11</strong>: f11r, f11v</span> <span class="folio-item"><strong>f13</strong>: f13r, f13v</span> <span class="folio-item"><strong>f14</strong>: f14r, f14v</span> <span class="folio-item"><strong>f15</strong>: f15r, f15v</span> <span class="folio-item"><strong>f16</strong>: f16r, f16v</span> <span class="folio-item"><strong>f9</strong>: f9r, f9v</span></div><div class="quire-group"><span class="quire-label">Quire 3</span> <span class="folio-item"><strong>f17</strong>: f17r, f17v</span> <span class="folio-item"><strong>f18</strong>: f18r, f18v</span> <span class="folio-item"><strong>f19</strong>: f19r, f19v</span> <span class="folio-item"><strong>f20</strong>: f20r, f20v</span> <span class="folio-item"><strong>f21</strong>: f21r, f21v</span> <span class="folio-item"><strong>f22</strong>: f22r, f22v</span> <span class="folio-item"><strong>f23</strong>: f23r, f23v</span> <span class="folio-item"><strong>f24</strong>: f24r, f24v</span></div><div class="quire-group"><span class="quire-label">Quire 4</span> <span class="folio-item"><strong>f25</strong>: f25r, f25v</span> <span class="folio-item"><strong>f27</strong>: f27r, f27v</span> <span class="folio-item"><strong>f28</strong>: f28r, f28v</span> <span class="folio-item"><strong>f29</strong>: f29r, f29v</span> <span class="folio-item"><strong>f30</strong>: f30r, f30v</span> <span class="folio-item"><strong>f32</strong>: f32r, f32v</span></div><div class="quire-group"><span class="quire-label">Quire 5</span> <span class="folio-item"><strong>f35</strong>: f35r, f35v</span> <span class="folio-item"><strong>f36</strong>: f36r, f36v</span> <span class="folio-item"><strong>f37</strong>: f37r, f37v</span> <span class="folio-item"><strong>f38</strong>: f38r, f38v</span></div><div class="quire-group"><span class="quire-label">Quire 6</span> <span class="folio-item"><strong>f42</strong>: f42r, f42v</span> <span class="folio-item"><strong>f44</strong>: f44r, f44v</span> <span class="folio-item"><strong>f45</strong>: f45r, f45v</span> <span class="folio-item"><strong>f47</strong>: f47r, f47v</span></div><div class="quire-group"><span class="quire-label">Quire 7</span> <span class="folio-item"><strong>f49</strong>: f49r, f49v</span> <span class="folio-item"><strong>f51</strong>: f51r, f51v</span> <span class="folio-item"><strong>f52</strong>: f52r, f52v</span> <span class="folio-item"><strong>f53</strong>: f53r, f53v</span> <span class="folio-item"><strong>f54</strong>: f54r, f54v</span> <span class="folio-item"><strong>f56</strong>: f56r, f56v</span></div><div class="quire-group"><span class="quire-label">Quire 15</span> <span class="folio-item"><strong>f87</strong>: f87r, f87v</span> <span class="folio-item"><strong>f90r1</strong>: f90r1</span> <span class="folio-item"><strong>f90r2</strong>: f90r2</span> <span class="folio-item"><strong>f90v1</strong>: f90v1</span> <span class="folio-item"><strong>f90v2</strong>: f90v2</span></div><div class="quire-group"><span class="quire-label">Quire 17</span> <span class="folio-item"><strong>f93</strong>: f93r, f93v</span> <span class="folio-item"><strong>f96</strong>: f96r, f96v</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>herbal_lang_b</code></td>
+            <td>Herbal section, Language B</td>
+            <td>illustration=H, language=B</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">32 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>19 folios, 32 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 4</span> <span class="folio-item"><strong>f26</strong>: f26r, f26v</span> <span class="folio-item"><strong>f31</strong>: f31r, f31v</span></div><div class="quire-group"><span class="quire-label">Quire 5</span> <span class="folio-item"><strong>f33</strong>: f33r, f33v</span> <span class="folio-item"><strong>f34</strong>: f34r, f34v</span> <span class="folio-item"><strong>f39</strong>: f39r, f39v</span> <span class="folio-item"><strong>f40</strong>: f40r, f40v</span></div><div class="quire-group"><span class="quire-label">Quire 6</span> <span class="folio-item"><strong>f41</strong>: f41r, f41v</span> <span class="folio-item"><strong>f43</strong>: f43r, f43v</span> <span class="folio-item"><strong>f46</strong>: f46r, f46v</span> <span class="folio-item"><strong>f48</strong>: f48r, f48v</span></div><div class="quire-group"><span class="quire-label">Quire 7</span> <span class="folio-item"><strong>f50</strong>: f50r, f50v</span> <span class="folio-item"><strong>f55</strong>: f55r, f55v</span></div><div class="quire-group"><span class="quire-label">Quire 8</span> <span class="folio-item"><strong>f57</strong>: f57r</span> <span class="folio-item"><strong>f66</strong>: f66v</span></div><div class="quire-group"><span class="quire-label">Quire 17</span> <span class="folio-item"><strong>f94</strong>: f94r, f94v</span> <span class="folio-item"><strong>f95r1</strong>: f95r1</span> <span class="folio-item"><strong>f95r2</strong>: f95r2</span> <span class="folio-item"><strong>f95v1</strong>: f95v1</span> <span class="folio-item"><strong>f95v2</strong>: f95v2</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>biological_lang_a</code></td>
+            <td>Biological section, Language A</td>
+            <td>illustration=B, language=A</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">0 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>0 folios, 0 pages:</strong>
+                <em>No pages</em>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>biological_lang_b</code></td>
+            <td>Biological section, Language B</td>
+            <td>illustration=B, language=B</td>
+            <td class="expand-cell">
+              <button class="expand-btn" onclick="toggleFolioDetails(this)" title="Show folios">?</button>
+              <span class="page-count">19 pages</span>
+            </td>
+          </tr>
+          <tr class="folio-details-row" style="display: none;">
+            <td colspan="4">
+              <div class="folio-details">
+                <strong>10 folios, 19 pages:</strong>
+                <div class="quire-group"><span class="quire-label">Quire 13</span> <span class="folio-item"><strong>f75</strong>: f75r, f75v</span> <span class="folio-item"><strong>f76</strong>: f76v</span> <span class="folio-item"><strong>f77</strong>: f77r, f77v</span> <span class="folio-item"><strong>f78</strong>: f78r, f78v</span> <span class="folio-item"><strong>f79</strong>: f79r, f79v</span> <span class="folio-item"><strong>f80</strong>: f80r, f80v</span> <span class="folio-item"><strong>f81</strong>: f81r, f81v</span> <span class="folio-item"><strong>f82</strong>: f82r, f82v</span> <span class="folio-item"><strong>f83</strong>: f83r, f83v</span> <span class="folio-item"><strong>f84</strong>: f84r, f84v</span></div>
+              </div>
+            </td>
+          </tr>
       </tbody>
     </table>
+
+    <h2>Aggregation Overlap Analysis</h2>
+    <p>
+      This section shows how each aggregation breaks down by other metadata dimensions.
+      Select an aggregation to see its composition by scribal hand, Currier language, and illustration type.
+    </p>
+    
+    <div class="overlap-section">
+      <div class="overlap-controls">
+        <label for="overlap-select">Select Aggregation:</label>
+        <select id="overlap-select" onchange="updateOverlapCharts()">
+          <option value="">-- Choose an aggregation --</option>
+        </select>
+        <span class="overlap-summary" id="overlap-summary"></span>
+      </div>
+      
+      <div class="charts-grid" id="charts-container" style="display: none;">
+        <div class="chart-container">
+          <h4>By Scribal Hand</h4>
+          <div class="bar-chart" id="hand-chart"></div>
+        </div>
+        <div class="chart-container">
+          <h4>By Currier Language</h4>
+          <div class="bar-chart" id="language-chart"></div>
+        </div>
+        <div class="chart-container">
+          <h4>By Illustration Type</h4>
+          <div class="bar-chart" id="illustration-chart"></div>
+        </div>
+      </div>
+      
+      <div class="no-data" id="no-selection">
+        Select an aggregation above to view its composition breakdown.
+      </div>
+    </div>
 
     <h2>Illustration Types</h2>
     <p>
@@ -361,8 +899,139 @@
     </p>
 
     <p class="timestamp">
-      Generated: 2026-03-02 19:47:32
+      Generated: 2026-03-04 13:01:52
     </p>
   </div>
+
+  <script>
+    // Overlap statistics data
+    const overlapStats = {"all": {"total": 226, "hands": {"1": 98, "2": 46, "3": 33, "5": 8, "4": 40, "": 1}, "languages": {"A": 114, "B": 83, "": 29}, "illustrations": {"T": 7, "H": 129, "C": 10, "S": 25, "A": 8, "Z": 12, "B": 19, "P": 16}}, "language_a": {"total": 114, "hands": {"1": 98, "3": 2, "4": 14}, "languages": {"A": 114}, "illustrations": {"T": 1, "H": 95, "S": 2, "P": 16}}, "language_b": {"total": 83, "hands": {"2": 46, "5": 8, "3": 28, "": 1}, "languages": {"B": 83}, "illustrations": {"H": 32, "C": 4, "T": 5, "B": 19, "S": 23}}, "hand_1": {"total": 98, "hands": {"1": 98}, "languages": {"A": 98}, "illustrations": {"T": 1, "H": 89, "P": 8}}, "hand_2": {"total": 46, "hands": {"2": 46}, "languages": {"B": 46}, "illustrations": {"H": 25, "C": 1, "B": 19, "T": 1}}, "hand_3": {"total": 33, "hands": {"3": 33}, "languages": {"A": 2, "": 3, "B": 28}, "illustrations": {"S": 24, "H": 2, "T": 4, "C": 3}}, "hand_4": {"total": 40, "hands": {"4": 40}, "languages": {"": 26, "A": 14}, "illustrations": {"A": 8, "C": 6, "Z": 12, "H": 6, "P": 8}}, "hand_5": {"total": 8, "hands": {"5": 8}, "languages": {"B": 8}, "illustrations": {"T": 1, "H": 7}}, "herbal": {"total": 129, "hands": {"1": 89, "2": 25, "3": 2, "5": 7, "4": 6}, "languages": {"A": 95, "B": 32, "": 2}, "illustrations": {"H": 129}}, "zodiac": {"total": 12, "hands": {"4": 12}, "languages": {"": 12}, "illustrations": {"Z": 12}}, "biological": {"total": 19, "hands": {"2": 19}, "languages": {"B": 19}, "illustrations": {"B": 19}}, "pharmaceutical": {"total": 16, "hands": {"4": 8, "1": 8}, "languages": {"A": 16}, "illustrations": {"P": 16}}, "astronomical": {"total": 8, "hands": {"4": 8}, "languages": {"": 8}, "illustrations": {"A": 8}}, "cosmological": {"total": 10, "hands": {"2": 1, "4": 6, "3": 3}, "languages": {"B": 4, "": 6}, "illustrations": {"C": 10}}, "text_only": {"total": 7, "hands": {"1": 1, "5": 1, "2": 1, "3": 4}, "languages": {"A": 1, "B": 5, "": 1}, "illustrations": {"T": 7}}, "herbal_lang_a": {"total": 95, "hands": {"1": 89, "4": 6}, "languages": {"A": 95}, "illustrations": {"H": 95}}, "herbal_lang_b": {"total": 32, "hands": {"2": 25, "5": 7}, "languages": {"B": 32}, "illustrations": {"H": 32}}, "biological_lang_a": {"total": 0, "hands": {}, "languages": {}, "illustrations": {}}, "biological_lang_b": {"total": 19, "hands": {"2": 19}, "languages": {"B": 19}, "illustrations": {"B": 19}}, "quire_13": {"total": 20, "hands": {"2": 20}, "languages": {"B": 20}, "illustrations": {"B": 19, "T": 1}}, "quire_20": {"total": 24, "hands": {"3": 23, "": 1}, "languages": {"B": 23, "": 1}, "illustrations": {"S": 23, "T": 1}}};
+    
+    // Illustration type labels
+    const illustrationLabels = {
+      'A': 'Astronomical',
+      'B': 'Biological',
+      'C': 'Cosmological',
+      'H': 'Herbal',
+      'P': 'Pharmaceutical',
+      'S': 'Stars',
+      'T': 'Text only',
+      'Z': 'Zodiac'
+    };
+    
+    // Aggregation order matching the table
+    const aggregationOrder = [
+      // All
+      'all',
+      // By Language
+      'language_a', 'language_b',
+      // By Hand
+      'hand_1', 'hand_2', 'hand_3', 'hand_4', 'hand_5',
+      // By Illustration
+      'herbal', 'zodiac', 'biological', 'pharmaceutical', 'astronomical', 'cosmological', 'text_only',
+      // By Quire
+      'quire_13', 'quire_20',
+      // Combined Filters
+      'herbal_lang_a', 'herbal_lang_b', 'biological_lang_a', 'biological_lang_b'
+    ];
+    
+    // Initialize the aggregation dropdown
+    function initOverlapSelect() {
+      const select = document.getElementById('overlap-select');
+      
+      // Use the predefined order matching the table
+      aggregationOrder.forEach(name => {
+        if (overlapStats[name]) {
+          const option = document.createElement('option');
+          option.value = name;
+          option.textContent = name + ' (' + (overlapStats[name].total || 0) + ' pages)';
+          select.appendChild(option);
+        }
+      });
+    }
+    
+    // Toggle folio details row
+    function toggleFolioDetails(btn) {
+      const row = btn.closest('tr');
+      const detailsRow = row.nextElementSibling;
+      
+      if (detailsRow && detailsRow.classList.contains('folio-details-row')) {
+        const isHidden = detailsRow.style.display === 'none';
+        detailsRow.style.display = isHidden ? 'table-row' : 'none';
+        btn.classList.toggle('expanded', isHidden);
+        btn.textContent = isHidden ? '-' : '?';
+      }
+    }
+    
+    // Create a bar chart
+    function createBarChart(container, data, total, cssClass) {
+      container.innerHTML = '';
+      
+      if (!data || Object.keys(data).length === 0) {
+        container.innerHTML = '<div class="no-data">No data</div>';
+        return;
+      }
+      
+      // Sort by count descending
+      const sorted = Object.entries(data).sort((a, b) => b[1] - a[1]);
+      
+      sorted.forEach(([label, count]) => {
+        const pct = total > 0 ? (count / total * 100) : 0;
+        
+        // Get display label with fallbacks for empty values
+        let displayLabel = label || 'Unknown';
+        if (cssClass === 'illustration') {
+          displayLabel = illustrationLabels[label] || (label ? label : 'Unknown');
+        } else if (cssClass === 'hand') {
+          displayLabel = label ? 'Hand ' + label : 'Unknown';
+        } else if (cssClass === 'language') {
+          displayLabel = label ? 'Lang ' + label : 'Unknown';
+        }
+        
+        const row = document.createElement('div');
+        row.className = 'bar-row';
+        row.innerHTML = `
+          <span class="bar-label">${displayLabel}</span>
+          <div class="bar-track">
+            <div class="bar-fill ${cssClass}" style="width: ${pct}%"></div>
+          </div>
+          <span class="bar-value">${pct.toFixed(1)}%</span>
+        `;
+        container.appendChild(row);
+      });
+    }
+    
+    // Update overlap charts based on selection
+    function updateOverlapCharts() {
+      const select = document.getElementById('overlap-select');
+      const chartsContainer = document.getElementById('charts-container');
+      const noSelection = document.getElementById('no-selection');
+      const summary = document.getElementById('overlap-summary');
+      
+      const aggName = select.value;
+      
+      if (!aggName || !overlapStats[aggName]) {
+        chartsContainer.style.display = 'none';
+        noSelection.style.display = 'block';
+        summary.textContent = '';
+        return;
+      }
+      
+      const stats = overlapStats[aggName];
+      const total = stats.total || 0;
+      
+      chartsContainer.style.display = 'grid';
+      noSelection.style.display = 'none';
+      summary.textContent = total + ' pages total';
+      
+      // Create charts
+      createBarChart(document.getElementById('hand-chart'), stats.hands, total, 'hand');
+      createBarChart(document.getElementById('language-chart'), stats.languages, total, 'language');
+      createBarChart(document.getElementById('illustration-chart'), stats.illustrations, total, 'illustration');
+    }
+    
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', initOverlapSelect);
+  </script>
 </body>
 </html>
