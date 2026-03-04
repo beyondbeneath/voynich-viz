@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page-Level Explorer - Voynich Analysis</title>
+  <link rel="stylesheet" href="../common/css/base.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <h1>Page-Level Explorer</h1>
+      <p class="subtitle">Scatter plots of per-page metrics to reveal spectral patterns across the manuscript</p>
+    </header>
+
+    <div class="controls-panel">
+      <div class="control-group">
+        <label for="axis-x">X axis:</label>
+        <select id="axis-x"></select>
+      </div>
+      <div class="control-group">
+        <label for="axis-y">Y axis:</label>
+        <select id="axis-y"></select>
+      </div>
+      <div class="control-separator"></div>
+      <div class="control-group">
+        <label for="color-by">Color by:</label>
+        <select id="color-by">
+          <option value="language">Language</option>
+          <option value="hand">Hand</option>
+          <option value="illustration">Illustration</option>
+          <option value="quire">Quire</option>
+        </select>
+      </div>
+      <div class="control-separator"></div>
+      <div class="control-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="show-labels">
+          Show folio labels
+        </label>
+      </div>
+      <div class="control-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="highlight-hover" checked>
+          Highlight on hover
+        </label>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="chart-area">
+        <div class="chart-wrapper">
+          <canvas id="scatter-canvas" width="800" height="550"></canvas>
+          <div id="hover-tooltip" class="tooltip"></div>
+        </div>
+      </div>
+
+      <aside class="info-panel">
+        <div class="info-card">
+          <h3>Metrics</h3>
+          <p class="metric-desc" id="metric-desc">
+            Select axes to explore page-level patterns. Each point is a page; color indicates grouping.
+          </p>
+        </div>
+        <div class="info-card">
+          <h3>Hover Details</h3>
+          <div id="hover-info">
+            <span class="placeholder">Hover over a point to see page details</span>
+          </div>
+        </div>
+        <div class="info-card">
+          <h3>Legend</h3>
+          <div id="legend"></div>
+        </div>
+        <div class="info-card">
+          <h3>About</h3>
+          <p class="text-muted" style="font-size: 12px; margin: 0;">
+            Metrics are computed client-side from existing page-level data (Markov, n-gram, word position, page position).
+            Use this to spot spectral patterns—e.g. pages that blend A/B characteristics, or gradual shifts across quires.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="loading-overlay" id="loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <script src="js/metrics.js"></script>
+  <script src="js/scatter.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

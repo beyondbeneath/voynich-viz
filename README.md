@@ -33,6 +33,10 @@ There are five main analyses presented:
    * similar to above, but uses actual pixel coordinates from word bounding boxes
    * character positions are interpolated within word bounds
    * provides a more accurate spatial representation than line/char indices
+6. Page-Level Explorer
+   * scatter plots of per-page metrics (entropy, diversity, position bias, etc.)
+   * colour by language, hand, illustration, or quire
+   * reveals spectral patterns—e.g. pages that blend A/B characteristics, or gradual shifts across quires
 
 Examples:
 
@@ -48,6 +52,7 @@ Examples:
 | N-gram | Compare most common tokens (1-grams) for Hand 1 vs Hand 2 | <img src="examples/ngram-tokens-diff.png" height=200px> |
 | N-gram | Look for divergence in bigram proportions for Hand 1 vs Hand 2 | <img src="examples/ngram-bigrams-diff.png" height=200px> |
 | Word position | See overall word order preference for tokens across whole manuscript | <img src="examples/wordposition.png" height=200px> |
+| Page-Level Explorer | Scatter plot of per-page metrics, colour by language/hand/illustration/quire | — |
 
 ## Groupings
 
@@ -146,7 +151,8 @@ voynich/
     ├── ngram/                     # N-gram frequency visualization
     ├── wordpos/                   # Word position visualization
     ├── pagepos/                   # Page position visualization
-    └── physpagepos/               # Physical page position visualization
+    ├── physpagepos/               # Physical page position visualization
+    └── page-level-scatter/         # Page-level scatter plot explorer
 ```
 
 ## Install
