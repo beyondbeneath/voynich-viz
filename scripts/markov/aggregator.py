@@ -27,6 +27,7 @@ class AggregationResult:
     page_count: int
     transitions: Counter
     char_counts: Counter
+    pages: list  # List of page metadata dicts
     
     def get_charset(self) -> list[str]:
         """Get sorted list of all characters in transitions."""
@@ -64,6 +65,7 @@ class AggregationResult:
             'probabilities': {f"{k[0]}|{k[1]}": v for k, v in probs.items()},
             'char_counts': dict(self.char_counts),
             'charset': self.get_charset(),
+            'pages': self.pages,
         }
 
 
@@ -154,11 +156,23 @@ def aggregate_pages(
     merged_transitions = Counter()
     merged_chars = Counter()
     
+    # Collect page metadata for the pages panel
+    page_metadata_list = []
+    
     for page in matching_pages:
         if page.folio in page_transitions:
             tc = page_transitions[page.folio]
             merged_transitions.update(tc.transitions)
             merged_chars.update(tc.char_counts)
+        
+        # Store page metadata
+        page_metadata_list.append({
+            'folio': page.folio,
+            'quire': page.quire,
+            'language': page.language,
+            'hand': page.hand,
+            'illustration': page.illustration,
+        })
     
     return AggregationResult(
         name=name,
@@ -166,6 +180,7 @@ def aggregate_pages(
         page_count=len(matching_pages),
         transitions=merged_transitions,
         char_counts=merged_chars,
+        pages=page_metadata_list,
     )
 
 

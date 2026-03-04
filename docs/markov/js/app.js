@@ -122,6 +122,8 @@ const App = (function() {
       legendDiff: document.getElementById('legend-diff'),
       legendGradientStandard: document.getElementById('legend-gradient-standard'),
       legendGradientDiff: document.getElementById('legend-gradient-diff'),
+      pagesPanelSingle: document.getElementById('pages-panel-single'),
+      pagesPanelCompare: document.getElementById('pages-panel-compare'),
     };
     
     // Read URL state before setting up
@@ -542,6 +544,11 @@ const App = (function() {
     if (state.viewMode === 'single') {
       elements.pageCount.textContent = state.currentData.page_count;
       elements.description.textContent = state.currentData.description;
+      
+      // Update pages panel for single mode
+      elements.pagesPanelSingle.style.display = '';
+      elements.pagesPanelCompare.style.display = 'none';
+      PagesPanel.updatePanel(elements.pagesPanelSingle, state.currentData);
     } else {
       // Compare or diff mode
       elements.compareDescA.textContent = state.currentData.description;
@@ -551,6 +558,11 @@ const App = (function() {
         elements.compareDescB.textContent = state.currentDataB.description;
         elements.comparePagesB.textContent = state.currentDataB.page_count;
       }
+      
+      // Update pages panel for compare/diff mode
+      elements.pagesPanelSingle.style.display = 'none';
+      elements.pagesPanelCompare.style.display = '';
+      PagesPanel.updateComparePanel(elements.pagesPanelCompare, state.currentData, state.currentDataB);
     }
   }
   

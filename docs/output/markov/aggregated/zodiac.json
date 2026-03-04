@@ -5,5 +5,91 @@
   "transitions": {},
   "probabilities": {},
   "char_counts": {},
-  "charset": []
+  "charset": [],
+  "pages": [
+    {
+      "folio": "f70v2",
+      "quire": "J",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f70v1",
+      "quire": "J",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f71r",
+      "quire": "K",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f71v",
+      "quire": "K",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f72r1",
+      "quire": "K",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f72r2",
+      "quire": "K",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f72r3",
+      "quire": "K",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f72v3",
+      "quire": "K",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f72v2",
+      "quire": "K",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f72v1",
+      "quire": "K",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f73r",
+      "quire": "L",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f73v",
+      "quire": "L",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    }
+  ]
 }

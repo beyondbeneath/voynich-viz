@@ -912,6 +912,141 @@
   "name": "biological",
   "description": "Biological section",
   "page_count": 19,
+  "pages": [
+    {
+      "folio": "f75r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f75v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f76v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f77r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f77v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f78r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f78v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f79r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f79v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f80r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f80v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f81r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f81v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f82r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f82v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f83r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f83v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f84r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f84v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    }
+  ],
   "bigram_matrix": {
     "charset": [
       "1",

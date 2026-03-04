@@ -24,6 +24,7 @@ class AggregationResult:
     description: str
     page_count: int
     counts: NgramCounts
+    pages: list  # List of page metadata dicts
     
     def to_dict(self, min_count: int = 1) -> dict:
         """Convert to JSON-serializable dict."""
@@ -32,6 +33,7 @@ class AggregationResult:
             'name': self.name,
             'description': self.description,
             'page_count': self.page_count,
+            'pages': self.pages,
         })
         
         # Add bigram matrix for visualization
@@ -111,16 +113,27 @@ def aggregate_pages(
     matching_pages = [p for p in pages if filter_func(p)]
     
     merged_counts = NgramCounts()
+    page_metadata_list = []
     
     for page in matching_pages:
         if page.folio in page_ngrams:
             merged_counts.merge(page_ngrams[page.folio].counts)
+        
+        # Store page metadata
+        page_metadata_list.append({
+            'folio': page.folio,
+            'quire': page.quire,
+            'language': page.language,
+            'hand': page.hand,
+            'illustration': page.illustration,
+        })
     
     return AggregationResult(
         name=name,
         description=description,
         page_count=len(matching_pages),
         counts=merged_counts,
+        pages=page_metadata_list,
     )
 
 

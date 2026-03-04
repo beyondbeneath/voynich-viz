@@ -219,8 +219,11 @@ def generate_methodology_html(metadata_path: Optional[Path] = None,
                     folio_items = []
                     for folio_base in sorted(quire_folios.keys(), key=lambda x: (x[1:].zfill(5) if x[1:].rstrip('rv0123456789').replace('f','').isdigit() else x)):
                         page_list = quire_folios[folio_base]
-                        page_ids = ', '.join(p['folio'] for p in sorted(page_list, key=lambda x: x['folio']))
-                        folio_items.append(f'<span class="folio-item"><strong>{folio_base}</strong>: {page_ids}</span>')
+                        page_links = ', '.join(
+                            f'<a href="https://voynichese.com/#/{p["folio"]}/0" target="_blank" rel="noopener" class="page-link" title="View {p["folio"]} on Voynichese">{p["folio"]}</a>'
+                            for p in sorted(page_list, key=lambda x: x['folio'])
+                        )
+                        folio_items.append(f'<span class="folio-item"><strong>{folio_base}</strong>: {page_links}</span>')
                     
                     quire_label = f'Quire {quire_num}' if quire_num != '?' else 'Unknown Quire'
                     quire_sections.append(
@@ -470,6 +473,14 @@ def generate_methodology_html(metadata_path: Optional[Path] = None,
     }}
     .folio-item strong {{
       color: var(--accent-color);
+    }}
+    .page-link {{
+      color: var(--text-secondary);
+      text-decoration: none;
+    }}
+    .page-link:hover {{
+      color: var(--accent-color);
+      text-decoration: underline;
     }}
     
     /* Overlap visualization section */

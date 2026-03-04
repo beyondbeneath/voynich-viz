@@ -433,5 +433,329 @@
   "name": "hand_2",
   "description": "Hand 2",
   "page_count": 46,
-  "word_count": 9640
+  "word_count": 9640,
+  "pages": [
+    {
+      "folio": "f26r",
+      "quire": "D",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f26v",
+      "quire": "D",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f31r",
+      "quire": "D",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f31v",
+      "quire": "D",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f33r",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f33v",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f34r",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f34v",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f39r",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f39v",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f40r",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f40v",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f41r",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f41v",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f43r",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f43v",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f46r",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f46v",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f48r",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f48v",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f50r",
+      "quire": "G",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f50v",
+      "quire": "G",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f55r",
+      "quire": "G",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f55v",
+      "quire": "G",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f57r",
+      "quire": "H",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f57v",
+      "quire": "H",
+      "language": "B",
+      "hand": "2",
+      "illustration": "C"
+    },
+    {
+      "folio": "f75r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f75v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f76r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "T"
+    },
+    {
+      "folio": "f76v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f77r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f77v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f78r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f78v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f79r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f79v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f80r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f80v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f81r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f81v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f82r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f82v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f83r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f83v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f84r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    },
+    {
+      "folio": "f84v",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "B"
+    }
+  ]
 }

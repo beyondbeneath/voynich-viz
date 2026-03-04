@@ -128,6 +128,8 @@ const App = (function() {
       clipSeparator: document.getElementById('clip-separator'),
       clipLines: document.getElementById('clip-lines'),
       clipChars: document.getElementById('clip-chars'),
+      pagesPanelSingle: document.getElementById('pages-panel-single'),
+      pagesPanelCompare: document.getElementById('pages-panel-compare'),
     };
     
     // Read URL state before setting up
@@ -672,6 +674,11 @@ const App = (function() {
       elements.pageCount.textContent = state.currentData.page_count;
       elements.description.textContent = state.currentData.description;
       elements.charTotal.textContent = `${charTotal.toLocaleString()} occurrences`;
+      
+      // Update pages panel for single mode
+      elements.pagesPanelSingle.style.display = '';
+      elements.pagesPanelCompare.style.display = 'none';
+      PagesPanel.updatePanel(elements.pagesPanelSingle, state.currentData);
     } else {
       elements.compareDescA.textContent = state.currentData.description;
       elements.comparePagesA.textContent = state.currentData.page_count;
@@ -680,6 +687,11 @@ const App = (function() {
         elements.compareDescB.textContent = state.currentDataB.description;
         elements.comparePagesB.textContent = state.currentDataB.page_count;
       }
+      
+      // Update pages panel for compare/diff mode
+      elements.pagesPanelSingle.style.display = 'none';
+      elements.pagesPanelCompare.style.display = '';
+      PagesPanel.updateComparePanel(elements.pagesPanelCompare, state.currentData, state.currentDataB);
     }
   }
   

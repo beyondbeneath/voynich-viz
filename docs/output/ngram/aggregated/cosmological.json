@@ -360,6 +360,78 @@
   "name": "cosmological",
   "description": "Cosmological section",
   "page_count": 10,
+  "pages": [
+    {
+      "folio": "f57v",
+      "quire": "H",
+      "language": "B",
+      "hand": "2",
+      "illustration": "C"
+    },
+    {
+      "folio": "f67v2",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "C"
+    },
+    {
+      "folio": "f68v3",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "C"
+    },
+    {
+      "folio": "f69r",
+      "quire": "J",
+      "language": "",
+      "hand": "4",
+      "illustration": "C"
+    },
+    {
+      "folio": "f69v",
+      "quire": "J",
+      "language": "",
+      "hand": "4",
+      "illustration": "C"
+    },
+    {
+      "folio": "f70r1",
+      "quire": "J",
+      "language": "",
+      "hand": "4",
+      "illustration": "C"
+    },
+    {
+      "folio": "f70r2",
+      "quire": "J",
+      "language": "",
+      "hand": "4",
+      "illustration": "C"
+    },
+    {
+      "folio": "f85r2",
+      "quire": "N",
+      "language": "B",
+      "hand": "3",
+      "illustration": "C"
+    },
+    {
+      "folio": "f86v4",
+      "quire": "N",
+      "language": "B",
+      "hand": "3",
+      "illustration": "C"
+    },
+    {
+      "folio": "f86v3",
+      "quire": "N",
+      "language": "B",
+      "hand": "3",
+      "illustration": "C"
+    }
+  ],
   "bigram_matrix": {
     "charset": [
       "1",

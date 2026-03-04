@@ -745,5 +745,231 @@
     "^^",
     "^^^",
     "^^^^"
+  ],
+  "pages": [
+    {
+      "folio": "f26r",
+      "quire": "D",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f26v",
+      "quire": "D",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f31r",
+      "quire": "D",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f31v",
+      "quire": "D",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f33r",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f33v",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f34r",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f34v",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f39r",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f39v",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f40r",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f40v",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f41r",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f41v",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f43r",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f43v",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f46r",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f46v",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f48r",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f48v",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f50r",
+      "quire": "G",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f50v",
+      "quire": "G",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f55r",
+      "quire": "G",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f55v",
+      "quire": "G",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f57r",
+      "quire": "H",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f66v",
+      "quire": "H",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    },
+    {
+      "folio": "f94r",
+      "quire": "Q",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    },
+    {
+      "folio": "f94v",
+      "quire": "Q",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    },
+    {
+      "folio": "f95r1",
+      "quire": "Q",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    },
+    {
+      "folio": "f95r2",
+      "quire": "Q",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    },
+    {
+      "folio": "f95v2",
+      "quire": "Q",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    },
+    {
+      "folio": "f95v1",
+      "quire": "Q",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    }
   ]
 }

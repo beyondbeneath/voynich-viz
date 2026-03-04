@@ -753,5 +753,56 @@
     "^^",
     "^^^",
     "^^^^"
+  ],
+  "pages": [
+    {
+      "folio": "f1r",
+      "quire": "A",
+      "language": "A",
+      "hand": "1",
+      "illustration": "T"
+    },
+    {
+      "folio": "f66r",
+      "quire": "H",
+      "language": "B",
+      "hand": "5",
+      "illustration": "T"
+    },
+    {
+      "folio": "f76r",
+      "quire": "M",
+      "language": "B",
+      "hand": "2",
+      "illustration": "T"
+    },
+    {
+      "folio": "f85r1",
+      "quire": "N",
+      "language": "B",
+      "hand": "3",
+      "illustration": "T"
+    },
+    {
+      "folio": "f86v6",
+      "quire": "N",
+      "language": "B",
+      "hand": "3",
+      "illustration": "T"
+    },
+    {
+      "folio": "f86v5",
+      "quire": "N",
+      "language": "B",
+      "hand": "3",
+      "illustration": "T"
+    },
+    {
+      "folio": "f116v",
+      "quire": "T",
+      "language": "",
+      "hand": "3",
+      "illustration": "T"
+    }
   ]
 }

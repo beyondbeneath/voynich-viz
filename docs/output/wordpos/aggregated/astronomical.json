@@ -391,5 +391,63 @@
   "name": "astronomical",
   "description": "Astronomical section",
   "page_count": 8,
-  "word_count": 279
+  "word_count": 279,
+  "pages": [
+    {
+      "folio": "f67r1",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "A"
+    },
+    {
+      "folio": "f67r2",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "A"
+    },
+    {
+      "folio": "f67v1",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "A"
+    },
+    {
+      "folio": "f68r1",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "A"
+    },
+    {
+      "folio": "f68r2",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "A"
+    },
+    {
+      "folio": "f68r3",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "A"
+    },
+    {
+      "folio": "f68v2",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "A"
+    },
+    {
+      "folio": "f68v1",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "A"
+    }
+  ]
 }

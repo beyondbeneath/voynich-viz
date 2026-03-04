@@ -26,6 +26,7 @@ class AggregationResult:
     page_count: int
     word_count: int
     counts: PositionCounts
+    pages: list  # List of page metadata dicts
     
     def to_dict(self) -> dict:
         """Convert to JSON-serializable dict."""
@@ -35,6 +36,7 @@ class AggregationResult:
             'description': self.description,
             'page_count': self.page_count,
             'word_count': self.word_count,
+            'pages': self.pages,
         })
         return base
 
@@ -118,12 +120,22 @@ def aggregate_pages(
     
     merged_counts = PositionCounts()
     total_words = 0
+    page_metadata_list = []
     
     for page in matching_pages:
         if page.folio in page_positions:
             pc = page_positions[page.folio]
             merged_counts.merge(pc.counts)
             total_words += pc.word_count
+        
+        # Store page metadata
+        page_metadata_list.append({
+            'folio': page.folio,
+            'quire': page.quire,
+            'language': page.language,
+            'hand': page.hand,
+            'illustration': page.illustration,
+        })
     
     return AggregationResult(
         name=name,
@@ -131,6 +143,7 @@ def aggregate_pages(
         page_count=len(matching_pages),
         word_count=total_words,
         counts=merged_counts,
+        pages=page_metadata_list,
     )
 
 

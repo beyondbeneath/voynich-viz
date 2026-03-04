@@ -391,5 +391,63 @@
   "name": "hand_5",
   "description": "Hand 5",
   "page_count": 8,
-  "word_count": 943
+  "word_count": 943,
+  "pages": [
+    {
+      "folio": "f66r",
+      "quire": "H",
+      "language": "B",
+      "hand": "5",
+      "illustration": "T"
+    },
+    {
+      "folio": "f66v",
+      "quire": "H",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    },
+    {
+      "folio": "f94r",
+      "quire": "Q",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    },
+    {
+      "folio": "f94v",
+      "quire": "Q",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    },
+    {
+      "folio": "f95r1",
+      "quire": "Q",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    },
+    {
+      "folio": "f95r2",
+      "quire": "Q",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    },
+    {
+      "folio": "f95v2",
+      "quire": "Q",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    },
+    {
+      "folio": "f95v1",
+      "quire": "Q",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    }
+  ]
 }

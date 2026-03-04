@@ -664,6 +664,120 @@
   "name": "pharmaceutical",
   "description": "Pharmaceutical section",
   "page_count": 16,
+  "pages": [
+    {
+      "folio": "f88r",
+      "quire": "O",
+      "language": "A",
+      "hand": "4",
+      "illustration": "P"
+    },
+    {
+      "folio": "f88v",
+      "quire": "O",
+      "language": "A",
+      "hand": "4",
+      "illustration": "P"
+    },
+    {
+      "folio": "f89r1",
+      "quire": "O",
+      "language": "A",
+      "hand": "1",
+      "illustration": "P"
+    },
+    {
+      "folio": "f89r2",
+      "quire": "O",
+      "language": "A",
+      "hand": "1",
+      "illustration": "P"
+    },
+    {
+      "folio": "f89v2",
+      "quire": "O",
+      "language": "A",
+      "hand": "1",
+      "illustration": "P"
+    },
+    {
+      "folio": "f89v1",
+      "quire": "O",
+      "language": "A",
+      "hand": "1",
+      "illustration": "P"
+    },
+    {
+      "folio": "f99r",
+      "quire": "S",
+      "language": "A",
+      "hand": "4",
+      "illustration": "P"
+    },
+    {
+      "folio": "f99v",
+      "quire": "S",
+      "language": "A",
+      "hand": "4",
+      "illustration": "P"
+    },
+    {
+      "folio": "f100r",
+      "quire": "S",
+      "language": "A",
+      "hand": "4",
+      "illustration": "P"
+    },
+    {
+      "folio": "f100v",
+      "quire": "S",
+      "language": "A",
+      "hand": "4",
+      "illustration": "P"
+    },
+    {
+      "folio": "f101r",
+      "quire": "S",
+      "language": "A",
+      "hand": "4",
+      "illustration": "P"
+    },
+    {
+      "folio": "f101v",
+      "quire": "S",
+      "language": "A",
+      "hand": "4",
+      "illustration": "P"
+    },
+    {
+      "folio": "f102r1",
+      "quire": "S",
+      "language": "A",
+      "hand": "1",
+      "illustration": "P"
+    },
+    {
+      "folio": "f102r2",
+      "quire": "S",
+      "language": "A",
+      "hand": "1",
+      "illustration": "P"
+    },
+    {
+      "folio": "f102v2",
+      "quire": "S",
+      "language": "A",
+      "hand": "1",
+      "illustration": "P"
+    },
+    {
+      "folio": "f102v1",
+      "quire": "S",
+      "language": "A",
+      "hand": "1",
+      "illustration": "P"
+    }
+  ],
   "bigram_matrix": {
     "charset": [
       "1",

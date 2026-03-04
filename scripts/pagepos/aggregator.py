@@ -35,6 +35,7 @@ class AggregationResult:
     page_positions: RawPositions  # Page-relative normalization
     manuscript_positions: RawPositions  # Manuscript-relative normalization
     absolute_positions: AbsolutePositions = field(default_factory=AbsolutePositions)  # Raw absolute positions
+    pages: list = field(default_factory=list)  # List of page metadata dicts
     
     def to_dict(self, global_stats: dict = None) -> dict:
         """Convert to JSON-serializable dict with both normalization modes."""
@@ -51,7 +52,8 @@ class AggregationResult:
             'normalization_modes': {
                 'page': page_data['grids'],
                 'manuscript': manuscript_data['grids'],
-            }
+            },
+            'pages': self.pages,
         }
         
         # Add raw/absolute grid if global_stats provided
@@ -145,6 +147,7 @@ def aggregate_pages(
     merged_manuscript = RawPositions()
     merged_absolute = AbsolutePositions()
     total_chars = 0
+    page_metadata_list = []
     
     for page in matching_pages:
         if page.folio in page_positions:
@@ -153,6 +156,15 @@ def aggregate_pages(
             merged_manuscript.merge(pp.manuscript_normalized)
             merged_absolute.merge(pp.absolute_positions)
             total_chars += pp.char_count
+        
+        # Store page metadata
+        page_metadata_list.append({
+            'folio': page.folio,
+            'quire': page.quire,
+            'language': page.language,
+            'hand': page.hand,
+            'illustration': page.illustration,
+        })
     
     return AggregationResult(
         name=name,
@@ -162,6 +174,7 @@ def aggregate_pages(
         page_positions=merged_page,
         manuscript_positions=merged_manuscript,
         absolute_positions=merged_absolute,
+        pages=page_metadata_list,
     )
 
 
