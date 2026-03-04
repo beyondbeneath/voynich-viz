@@ -64,6 +64,11 @@ The following aggregations are available:
   * Biological section, Language A
   * Biological section, Language B
 
+The [methodology](https://beyondbeneath.github.io/voynich-viz/markov/methodology.html) page also allows exploration as to exactly which Quires/Folios/Pages are included in each aggregation, as well as the overlap of any given aggregation with another (e.g., for Currier A, what is the relative distribution of Hands 1/2/3/4/5 and Illustration types?). This acts as a mini-explorer in and of itself, really just visualising the metadata from the given transcription file:
+
+| Inclusions | Overlap |
+| :---| :--- |
+| <img src="examples/methodology-pages.png" height=300px> | <img src="examples/methodology-overlap.png" height=300px>  |
 
 ## Preprocessing details
 
