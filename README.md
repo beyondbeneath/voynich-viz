@@ -107,13 +107,13 @@ To modify these rules, and view the results, requires cloning the repo and modif
 ## Credits and acknowlegements
 
 * General work inspired by writings by
- * Nick Pelling - [Cipher Mysteries](https://ciphermysteries.com/)
- * Rene Zandbergen - [Voynich.nu](https://voynich.nu/)
- * Patrick Feaster - [Ruminerations on Voynich](https://griffonagedotcom.wordpress.com/2020/08/24/ruminations-on-the-voynich-manuscript/)
- * Sean Palmer - [stacks](http://inamidst.com/voynich/stacks), [positions](http://inamidst.com/voynich/positions) & [related](http://inamidst.com/voynich/related)
- * Emma May Smith - [Agnostic Voynich](https://agnosticvoynich.wordpress.com/)
- * Marco Ponzi
- * and many others
+  * Nick Pelling - [Cipher Mysteries](https://ciphermysteries.com/)
+  * Rene Zandbergen - [Voynich.nu](https://voynich.nu/)
+  * Patrick Feaster - [Ruminerations on Voynich](https://griffonagedotcom.wordpress.com/2020/08/24/ruminations-on-the-voynich-manuscript/)
+  * Sean Palmer - [stacks](http://inamidst.com/voynich/stacks), [positions](http://inamidst.com/voynich/positions) & [related](http://inamidst.com/voynich/related)
+  * Emma May Smith - [Agnostic Voynich](https://agnosticvoynich.wordpress.com/)
+  * Marco Ponzi
+  * and many others
 * Relies on the Zandbergen-Landini transcription (described [here](https://voynich.nu/transcr.html) and [here](https://voynich.nu/extra/sp_transcr.html)), [v3.b](https://voynich.nu/data/ZL3b-n.txt) - referenced internally as `data/voynich-transcription.txt`
 * Physical page position relies on the data powering [Voynichese.com](voynichese.com), namely the [XML files](https://www.voynichese.com/1/data/folio/voynichese_data.zip) ([source](https://github.com/voynichese/voynichese/blob/wiki/About.md) on Github).
 * Code written with Claude (mostly `opus-4.5-thinking`) via Cursor AI
