@@ -52,7 +52,7 @@ Examples:
 | N-gram | Compare most common tokens (1-grams) for Hand 1 vs Hand 2 | <img src="examples/ngram-tokens-diff.png" height=200px> |
 | N-gram | Look for divergence in bigram proportions for Hand 1 vs Hand 2 | <img src="examples/ngram-bigrams-diff.png" height=200px> |
 | Word position | See overall word order preference for tokens across whole manuscript | <img src="examples/wordposition.png" height=200px> |
-| Page-Level Explorer | Scatter plot of per-page metrics, colour by language/hand/illustration/quire | — |
+| Page-Level Explorer | Scatter plot of per-page metrics, colour by language/hand/illustration/quire |  <img src="examples/page-scatter.png" height=200px> |
 
 ## Groupings
 
