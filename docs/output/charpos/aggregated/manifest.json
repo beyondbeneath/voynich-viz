@@ -1,0 +1,172 @@
+{
+  "aggregations": [
+    {
+      "name": "all",
+      "description": "All pages",
+      "page_count": 226,
+      "word_count": 35018,
+      "line_count": 4119,
+      "file": "all.json"
+    },
+    {
+      "name": "language_a",
+      "description": "Currier Language A",
+      "page_count": 114,
+      "word_count": 11329,
+      "line_count": 1557,
+      "file": "language_a.json"
+    },
+    {
+      "name": "language_b",
+      "description": "Currier Language B",
+      "page_count": 83,
+      "word_count": 23139,
+      "line_count": 2467,
+      "file": "language_b.json"
+    },
+    {
+      "name": "hand_1",
+      "description": "Hand 1",
+      "page_count": 98,
+      "word_count": 8836,
+      "line_count": 1268,
+      "file": "hand_1.json"
+    },
+    {
+      "name": "hand_2",
+      "description": "Hand 2",
+      "page_count": 46,
+      "word_count": 9640,
+      "line_count": 1095,
+      "file": "hand_2.json"
+    },
+    {
+      "name": "hand_3",
+      "description": "Hand 3",
+      "page_count": 33,
+      "word_count": 12893,
+      "line_count": 1307,
+      "file": "hand_3.json"
+    },
+    {
+      "name": "hand_4",
+      "description": "Hand 4",
+      "page_count": 40,
+      "word_count": 2245,
+      "line_count": 298,
+      "file": "hand_4.json"
+    },
+    {
+      "name": "hand_5",
+      "description": "Hand 5",
+      "page_count": 8,
+      "word_count": 943,
+      "line_count": 106,
+      "file": "hand_5.json"
+    },
+    {
+      "name": "herbal",
+      "description": "Herbal section",
+      "page_count": 129,
+      "word_count": 11537,
+      "line_count": 1608,
+      "file": "herbal.json"
+    },
+    {
+      "name": "zodiac",
+      "description": "Zodiac section",
+      "page_count": 12,
+      "word_count": 0,
+      "line_count": 0,
+      "file": "zodiac.json"
+    },
+    {
+      "name": "biological",
+      "description": "Biological section",
+      "page_count": 19,
+      "word_count": 6259,
+      "line_count": 745,
+      "file": "biological.json"
+    },
+    {
+      "name": "pharmaceutical",
+      "description": "Pharmaceutical section",
+      "page_count": 16,
+      "word_count": 2339,
+      "line_count": 224,
+      "file": "pharmaceutical.json"
+    },
+    {
+      "name": "astronomical",
+      "description": "Astronomical section",
+      "page_count": 8,
+      "word_count": 279,
+      "line_count": 56,
+      "file": "astronomical.json"
+    },
+    {
+      "name": "cosmological",
+      "description": "Cosmological section",
+      "page_count": 10,
+      "word_count": 664,
+      "line_count": 96,
+      "file": "cosmological.json"
+    },
+    {
+      "name": "text_only",
+      "description": "Text only pages",
+      "page_count": 7,
+      "word_count": 2296,
+      "line_count": 226,
+      "file": "text_only.json"
+    },
+    {
+      "name": "herbal_lang_a",
+      "description": "Herbal section, Language A",
+      "page_count": 95,
+      "word_count": 8022,
+      "line_count": 1225,
+      "file": "herbal_lang_a.json"
+    },
+    {
+      "name": "herbal_lang_b",
+      "description": "Herbal section, Language B",
+      "page_count": 32,
+      "word_count": 3470,
+      "line_count": 377,
+      "file": "herbal_lang_b.json"
+    },
+    {
+      "name": "biological_lang_a",
+      "description": "Biological section, Language A",
+      "page_count": 0,
+      "word_count": 0,
+      "line_count": 0,
+      "file": "biological_lang_a.json"
+    },
+    {
+      "name": "biological_lang_b",
+      "description": "Biological section, Language B",
+      "page_count": 19,
+      "word_count": 6259,
+      "line_count": 745,
+      "file": "biological_lang_b.json"
+    },
+    {
+      "name": "quire_13",
+      "description": "Quire 13",
+      "page_count": 20,
+      "word_count": 6819,
+      "line_count": 792,
+      "file": "quire_13.json"
+    },
+    {
+      "name": "quire_20",
+      "description": "Quire 20",
+      "page_count": 24,
+      "word_count": 10891,
+      "line_count": 1084,
+      "file": "quire_20.json"
+    }
+  ]
+}

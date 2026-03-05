@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Character position preferences within words and lines - Voynich Analysis</title>
+  <link rel="stylesheet" href="../common/css/base.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <h1>Character position preferences within words and lines</h1>
+      <p class="subtitle">Positional preferences within words and lines. This largely replicates <a href="http://inamidst.com/voynich/stacks">Sean Palmer's work</a>, with the addition of specific aggregations and equivalent plots for line-position preferences.</p>
+    </header>
+
+    <!-- Controls Panel -->
+    <div class="controls-panel">
+      <div class="control-group">
+        <label for="view-mode">Mode:</label>
+        <select id="view-mode">
+          <option value="single">Single</option>
+          <option value="compare">Compare</option>
+        </select>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <label for="position-mode">Position Type:</label>
+        <select id="position-mode">
+          <option value="word" selected>Word Position</option>
+          <option value="line">Line Position</option>
+        </select>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <label for="aggregation-select"><span id="aggregation-label">Aggregation</span>:</label>
+        <select id="aggregation-select">
+          <option value="all">Loading...</option>
+        </select>
+      </div>
+
+      <div class="control-group" id="aggregation-b-group" style="display: none;">
+        <label for="aggregation-select-b">B:</label>
+        <select id="aggregation-select-b">
+          <option value="all">Loading...</option>
+        </select>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <label for="sort-by">Sort by:</label>
+        <select id="sort-by">
+          <option value="position" selected>Position preference</option>
+          <option value="start">Start preference</option>
+          <option value="end">End preference</option>
+          <option value="total">Total count</option>
+          <option value="alpha">Alphabetical</option>
+        </select>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <label for="scaling">Scaling:</label>
+        <select id="scaling">
+          <option value="linear">Linear</option>
+          <option value="sqrt" selected>Square root</option>
+          <option value="log">Log₁₀</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label for="colormap">Color:</label>
+        <select id="colormap">
+          <option value="blue" selected>Blue</option>
+          <option value="viridis">Viridis</option>
+          <option value="magma">Magma</option>
+          <option value="plasma">Plasma</option>
+          <option value="hot">Hot</option>
+          <option value="greyscale">Greyscale</option>
+        </select>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="voynich-font" checked>
+          Voynich font
+        </label>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Glyph Selector Panel -->
+      <aside class="glyph-selector-panel" id="glyph-selector-panel">
+        <h3>Display Glyphs</h3>
+        <div class="glyph-selector-controls">
+          <button class="glyph-control-btn" id="select-all-btn">All</button>
+          <button class="glyph-control-btn" id="select-none-btn">None</button>
+        </div>
+        <div class="glyph-grid" id="glyph-grid">
+          <!-- Populated dynamically -->
+        </div>
+        <div class="glyph-selector-info">
+          <span id="glyph-count">0</span> of <span id="glyph-total">0</span> selected
+        </div>
+      </aside>
+
+      <!-- Chart Area -->
+      <div class="chart-area" id="chart-area">
+        <!-- Single mode container -->
+        <div class="chart-container" id="chart-container-a">
+          <div class="chart-label" id="chart-label-a"></div>
+          <canvas id="chart-canvas"></canvas>
+        </div>
+        <!-- Compare mode wrapper (hidden by default) -->
+        <div class="compare-wrapper" id="compare-wrapper" style="display: none;">
+          <div class="chart-container" id="chart-container-a-compare">
+            <div class="chart-label" id="chart-label-a-compare"></div>
+            <canvas id="chart-canvas-compare"></canvas>
+          </div>
+          <div class="chart-container" id="chart-container-b">
+            <div class="chart-label" id="chart-label-b"></div>
+            <canvas id="chart-canvas-b"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info Panel -->
+      <aside class="info-panel" id="info-panel">
+        <!-- Current Selection Info -->
+        <div class="info-card" id="info-card-single">
+          <h3>Current View</h3>
+          <div class="info-row">
+            <span class="label">Pages:</span>
+            <span class="value" id="page-count">-</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Words:</span>
+            <span class="value" id="word-count">-</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Lines:</span>
+            <span class="value" id="line-count">-</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Filter:</span>
+            <span class="value" id="description">-</span>
+          </div>
+        </div>
+        
+        <!-- Compare mode info -->
+        <div class="info-card" id="info-card-compare" style="display: none;">
+          <h3>Comparison</h3>
+          <div class="info-subsection">
+            <strong>A:</strong> <span id="compare-desc-a">-</span>
+            <span class="info-pages">(<span id="compare-pages-a">-</span> pages)</span>
+          </div>
+          <div class="info-subsection">
+            <strong>B:</strong> <span id="compare-desc-b">-</span>
+            <span class="info-pages">(<span id="compare-pages-b">-</span> pages)</span>
+          </div>
+        </div>
+
+        <!-- Pages Included Panel -->
+        <div class="info-card" id="info-card-pages">
+          <h3>Pages Included</h3>
+          <div class="pages-panel" id="pages-panel-single"></div>
+          <div class="pages-panel" id="pages-panel-compare" style="display: none;"></div>
+        </div>
+
+        <!-- Hover Info -->
+        <div class="info-card">
+          <h3>Character Details</h3>
+          <div id="hover-info">
+            <span class="placeholder">Hover over a cell to see details</span>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="info-card">
+          <h3>Legend</h3>
+          <div class="legend" id="legend">
+            <div class="heatmap-scale">
+              <div class="scale-label">0%</div>
+              <canvas id="legend-scale" class="scale-bar" width="200" height="16"></canvas>
+              <div class="scale-label">100%</div>
+            </div>
+            <p class="legend-note">
+              Each row shows positions for words/lines of that length.
+              Row 1: single items, Row 7: 7-character words or 7-word lines.
+            </p>
+          </div>
+        </div>
+
+        <!-- Help -->
+        <div class="info-card">
+          <h3>Reading the Heatmap</h3>
+          <p style="font-size: 12px; color: var(--text-secondary); margin: 0;">
+            <strong>Word Position:</strong> For N-character words, which position (1-N) 
+            does each character prefer?
+          </p>
+          <p style="font-size: 12px; color: var(--text-secondary); margin: 8px 0 0;">
+            <strong>Line Position:</strong> For N-word lines, in which word position 
+            does each character appear?
+          </p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- Error Message -->
+  <div class="error-message" id="error-message"></div>
+
+  <!-- Scripts -->
+  <script src="../common/js/url-state.js"></script>
+  <script src="../common/js/pages-panel.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/heatmap.js"></script>
+  <script src="js/app.js"></script>
+  <style id="pages-panel-styles"></style>
+  <script>
+    document.getElementById('pages-panel-styles').textContent = PagesPanel.getStyles();
+  </script>
+</body>
+</html>

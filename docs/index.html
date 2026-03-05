@@ -115,10 +115,11 @@
           <label for="analysis-select">Analysis:</label>
           <select id="analysis-select">
             <option value="markov/index.html" selected>Markov Transition Matrix</option>
-            <option value="wordpos/index.html">Word Position</option>
+            <option value="wordpos/index.html">Position preferences within words</option>
+            <option value="charpos/index.html">Position preferences within words and lines</option>
             <option value="ngram/index.html">N-gram Analysis</option>
-            <option value="pagepos/index.html">Page Position</option>
-            <option value="physpagepos/index.html">Page Position (Physical)</option>
+            <option value="pagepos/index.html">Position preferenfce within pages</option>
+            <option value="physpagepos/index.html">Position preferences within pages (physical)</option>
             <option value="page-level-scatter/index.html">Page-Level Explorer</option>
           </select>
         </div>
@@ -139,6 +140,7 @@
     const ANALYSIS_MAP = {
       'markov': 'markov/index.html',
       'wordpos': 'wordpos/index.html',
+      'charpos': 'charpos/index.html',
       'ngram': 'ngram/index.html',
       'pagepos': 'pagepos/index.html',
       'physpagepos': 'physpagepos/index.html',
@@ -148,6 +150,7 @@
     const PATH_TO_ANALYSIS = {
       'markov/index.html': 'markov',
       'wordpos/index.html': 'wordpos',
+      'charpos/index.html': 'charpos',
       'ngram/index.html': 'ngram',
       'pagepos/index.html': 'pagepos',
       'physpagepos/index.html': 'physpagepos',
