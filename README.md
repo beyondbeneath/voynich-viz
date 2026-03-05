@@ -16,24 +16,29 @@ To introduce your own preprocessing, would require cloning the repo, changing so
 
 ## Available visualisations
 
-There are five main analyses presented:
+There are seven main analyses presented:
 
 1. Markov transition matrix
    * exaine the probability of transition from token A -> token B
    * includes probability transitions for word, line, paragraph and page boundaries
-2. Word position preferenc
+2. Word position preference
    * which tokens appear at the begining/middle/end of words
-3. N-gram analysis
+3. Word & Line position heatmap
+   * for N-character words, which position (1-N) does each character prefer?
+   * for N-word lines, which word position does each character appear in?
+   * visualised as heatmap bands showing position preference
+   * recreation of [Sean Palmer's work](http://inamidst.com/voynich/stacks)
+4. N-gram analysis
    * what are the common n-grams (1-grams, 2-grams, or 3-grams)?
-4. Page position
+5. Page position
    * do tokens preferentially appear at certain positions on a page?
    * provided at multiple granularities to reduce noise
    * provided at both page-scaled and manuscript scaled positions
-5. Page position (physical)
+6. Page position (physical)
    * similar to above, but uses actual pixel coordinates from word bounding boxes
    * character positions are interpolated within word bounds
    * provides a more accurate spatial representation than line/char indices
-6. Page-Level Explorer
+7. Page-Level Explorer
    * scatter plots of per-page metrics (entropy, diversity, position bias, etc.)
    * colour by language, hand, illustration, or quire
    * reveals spectral patterns—e.g. pages that blend A/B characteristics, or gradual shifts across quires
@@ -46,6 +51,7 @@ Examples:
 | Markov | As above, but include word/line/paragraph/page boundaries | <img src="examples/markov2-boundaries.png" height=200px> |
 | Markov | Compare transition probabilities for Currier A vs B, side by side | <img src="examples/markov3-compare.png" height=200px> |
 | Markov | Compare transition probabilities for Currier A vs B, as a diff | <img src="examples/markov4-diff.png" height=200px> |
+| Word position preference | Compare word position for A vs B | <img src="examples/character-position-compare.png" height=200px> |
 | Page position | Compare the position preferences of a specific token on a page for A vs B | <img src="examples/pagepos-compare.png" height=200px> |
 | Page position | Use a coarser grid to examine the page position preferences | <img src="examples/pagepos-compare-lowres.png" height=200px> |
 | N-gram | Look at the most common tokens (1-grams) for Currier A | <img src="examples/ngram-tokens.png" height=200px> |
@@ -100,7 +106,14 @@ To modify these rules, and view the results, requires cloning the repo and modif
 
 ## Credits and acknowlegements
 
-* General work inspired by writings by [Nick Pelling](https://ciphermysteries.com/), [Rene Zandbergen](https://voynich.nu/), [Patrick Feaster](https://griffonagedotcom.wordpress.com/2020/08/24/ruminations-on-the-voynich-manuscript/), [Sean Palmer](http://inamidst.com/voynich/stacks), [Emma May Smith](https://agnosticvoynich.wordpress.com/), Marco Ponzi, and others
+* General work inspired by writings by
+ * Nick Pelling - [Cipher Mysteries](https://ciphermysteries.com/)
+ * Rene Zandbergen - [Voynich.nu](https://voynich.nu/)
+ * Patrick Feaster - [Ruminerations on Voynich](https://griffonagedotcom.wordpress.com/2020/08/24/ruminations-on-the-voynich-manuscript/)
+ * Sean Palmer - [stacks](http://inamidst.com/voynich/stacks), [positions](http://inamidst.com/voynich/positions) & [related](http://inamidst.com/voynich/related)
+ * Emma May Smith - [Agnostic Voynich](https://agnosticvoynich.wordpress.com/)
+ * Marco Ponzi
+ * and many others
 * Relies on the Zandbergen-Landini transcription (described [here](https://voynich.nu/transcr.html) and [here](https://voynich.nu/extra/sp_transcr.html)), [v3.b](https://voynich.nu/data/ZL3b-n.txt) - referenced internally as `data/voynich-transcription.txt`
 * Physical page position relies on the data powering [Voynichese.com](voynichese.com), namely the [XML files](https://www.voynichese.com/1/data/folio/voynichese_data.zip) ([source](https://github.com/voynichese/voynichese/blob/wiki/About.md) on Github).
 * Code written with Claude (mostly `opus-4.5-thinking`) via Cursor AI
@@ -135,6 +148,7 @@ voynich/
 │   ├── markov/                    # Markov transition pipeline
 │   ├── ngram/                     # N-gram analysis pipeline
 │   ├── wordpos/                   # Word position pipeline
+│   ├── charpos/                   # Character position heatmap pipeline
 │   ├── pagepos/                   # Page position pipeline
 │   ├── physpagepos/               # Physical page position pipeline
 │   └── requirements.txt
@@ -145,11 +159,13 @@ voynich/
     │   ├── markov/
     │   ├── ngram/
     │   ├── wordpos/
+    │   ├── charpos/
     │   ├── pagepos/
     │   └── physpagepos/
     ├── markov/                    # Transition matrix visualization
     ├── ngram/                     # N-gram frequency visualization
     ├── wordpos/                   # Word position visualization
+    ├── charpos/                   # Character position heatmap visualization
     ├── pagepos/                   # Page position visualization
     ├── physpagepos/               # Physical page position visualization
     └── page-level-scatter/         # Page-level scatter plot explorer
@@ -176,6 +192,9 @@ python -m scripts.ngram.main --input data/voynich-transcription.txt --output doc
 
 # Word-position extraction (start/middle/end preferences)
 python -m scripts.wordpos.main --input data/voynich-transcription.txt --output docs/output/wordpos/ -v
+
+# Character-position heatmap (positional preferences within words and lines)
+python -m scripts.charpos.main --input data/voynich-transcription.txt --output docs/output/charpos/ -v
 
 # Page-position extraction (spatial distribution on page)
 python -m scripts.pagepos.main --input data/voynich-transcription.txt --output docs/output/pagepos/ -v
