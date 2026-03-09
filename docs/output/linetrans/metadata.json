@@ -1,0 +1,50 @@
+{
+  "config": {
+    "collapse_mode": "distinct"
+  },
+  "total_pages": 226,
+  "aggregations": [
+    "all",
+    "language_a",
+    "language_b",
+    "hand_1",
+    "hand_2",
+    "hand_3",
+    "hand_4",
+    "hand_5",
+    "herbal",
+    "zodiac",
+    "biological",
+    "pharmaceutical",
+    "astronomical",
+    "cosmological",
+    "text_only",
+    "herbal_lang_a",
+    "herbal_lang_b",
+    "biological_lang_a",
+    "biological_lang_b",
+    "quire_13",
+    "quire_20"
+  ],
+  "languages": [
+    "A",
+    "B"
+  ],
+  "hands": [
+    "5",
+    "3",
+    "4",
+    "2",
+    "1"
+  ],
+  "illustration_types": [
+    "S",
+    "A",
+    "C",
+    "H",
+    "P",
+    "T",
+    "B",
+    "Z"
+  ]
+}

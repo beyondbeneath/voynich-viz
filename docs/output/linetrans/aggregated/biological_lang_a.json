@@ -1,0 +1,13 @@
+{
+  "name": "biological_lang_a",
+  "description": "Biological section, Language A",
+  "page_count": 0,
+  "transitions": {},
+  "probabilities": {},
+  "line_end_chars": {},
+  "line_start_chars": {},
+  "charset": [],
+  "top_transitions": [],
+  "total_transitions": 0,
+  "pages": []
+}

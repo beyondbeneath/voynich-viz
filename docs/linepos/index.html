@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Line Position Effects - Voynich Analysis</title>
+  <link rel="stylesheet" href="../common/css/base.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <h1>Line Position Effects</h1>
+      <p class="subtitle">How word-ending glyphs vary by position within lines</p>
+    </header>
+
+    <!-- Controls Panel -->
+    <div class="controls-panel">
+      <div class="control-group">
+        <label for="view-mode">Mode:</label>
+        <select id="view-mode">
+          <option value="single">Single</option>
+          <option value="compare">Compare</option>
+          <option value="diff">Diff (A − B)</option>
+        </select>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <label for="aggregation-select"><span id="aggregation-label">Aggregation</span>:</label>
+        <select id="aggregation-select">
+          <option value="all">Loading...</option>
+        </select>
+      </div>
+
+      <div class="control-group" id="aggregation-b-group" style="display: none;">
+        <label for="aggregation-select-b">B:</label>
+        <select id="aggregation-select-b">
+          <option value="all">Loading...</option>
+        </select>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <label for="chart-type">Chart:</label>
+        <select id="chart-type">
+          <option value="from_start" selected>From Line Start</option>
+          <option value="from_end">From Line End</option>
+        </select>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="voynich-font" checked>
+          Voynich font
+        </label>
+      </div>
+
+      <div class="control-separator"></div>
+
+      <div class="control-group">
+        <button class="export-btn" onclick="App.exportImage()">Export PNG</button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Character Selector Panel -->
+      <aside class="char-selector-panel" id="char-selector-panel">
+        <h3>Select Glyphs</h3>
+        <div class="char-grid" id="char-grid">
+          <!-- Populated dynamically -->
+        </div>
+        <div class="char-selector-actions">
+          <button class="small-btn" id="clear-all-btn">Clear All</button>
+          <button class="small-btn" id="top-5-btn">Top 5</button>
+        </div>
+        <div class="char-selector-info">
+          <span class="selected-char-label">Selected: </span>
+          <span class="selected-char-value" id="selected-char-display">-</span>
+        </div>
+      </aside>
+
+      <!-- Charts Area -->
+      <div class="charts-area" id="charts-area">
+        <!-- Line Chart(s) -->
+        <div class="chart-section">
+          <div class="chart-container" id="chart-container-a">
+            <div class="chart-label" id="chart-label-a"></div>
+            <canvas id="line-chart"></canvas>
+          </div>
+          <div class="chart-container" id="chart-container-b" style="display: none;">
+            <div class="chart-label" id="chart-label-b"></div>
+            <canvas id="line-chart-b"></canvas>
+          </div>
+        </div>
+        
+        <!-- Asymmetry Bar Chart -->
+        <div class="asymmetry-section">
+          <h3>First vs Last Word Asymmetry</h3>
+          <p class="asymmetry-subtitle">% point difference (negative = favors line-start, positive = favors line-end)</p>
+          <div class="asymmetry-chart-container">
+            <canvas id="asymmetry-chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info Panel -->
+      <aside class="info-panel" id="info-panel">
+        <!-- Current Selection Info -->
+        <div class="info-card" id="info-card-single">
+          <h3>Current View</h3>
+          <div class="info-row">
+            <span class="label">Pages:</span>
+            <span class="value" id="page-count">-</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Filter:</span>
+            <span class="value" id="description">-</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Words:</span>
+            <span class="value" id="word-total">-</span>
+          </div>
+        </div>
+        
+        <!-- Compare/Diff mode info -->
+        <div class="info-card" id="info-card-compare" style="display: none;">
+          <h3>Comparison</h3>
+          <div class="info-subsection">
+            <strong>A:</strong> <span id="compare-desc-a">-</span>
+            <span class="info-pages">(<span id="compare-pages-a">-</span> pages)</span>
+          </div>
+          <div class="info-subsection">
+            <strong>B:</strong> <span id="compare-desc-b">-</span>
+            <span class="info-pages">(<span id="compare-pages-b">-</span> pages)</span>
+          </div>
+        </div>
+
+        <!-- Pages Included Panel -->
+        <div class="info-card" id="info-card-pages">
+          <h3>Pages Included</h3>
+          <div class="pages-panel" id="pages-panel-single"></div>
+          <div class="pages-panel" id="pages-panel-compare" style="display: none;"></div>
+        </div>
+
+        <!-- Hover Info -->
+        <div class="info-card">
+          <h3>Point Details</h3>
+          <div id="hover-info">
+            <span class="placeholder">Hover over a point to see details</span>
+          </div>
+        </div>
+
+        <!-- Top Line-Start Glyphs -->
+        <div class="info-card">
+          <h3>Top Line-Start Glyphs</h3>
+          <div class="top-glyphs-list" id="top-start-glyphs">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Top Line-End Glyphs -->
+        <div class="info-card">
+          <h3>Top Line-End Glyphs</h3>
+          <div class="top-glyphs-list" id="top-end-glyphs">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Help -->
+        <div class="info-card">
+          <h3>Reading the Chart</h3>
+          <p style="font-size: 12px; color: var(--text-secondary); margin: 0;">
+            <strong>From Start</strong>: P(word STARTS with glyph | position k). k=0 = first word.
+            <strong>From End</strong>: P(word ENDS with glyph | position k). k=0 = last word.
+          </p>
+          <p style="font-size: 12px; color: var(--text-secondary); margin: 8px 0 0;">
+            Line-start effect: glyph prefers to BEGIN words at the start of lines.
+            Line-end effect: glyph prefers to END words at the end of lines.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- Error Message -->
+  <div class="error-message" id="error-message"></div>
+
+  <!-- Scripts -->
+  <script src="../common/js/url-state.js"></script>
+  <script src="../common/js/pages-panel.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/linechart.js"></script>
+  <script src="js/barchart.js"></script>
+  <script src="js/app.js"></script>
+  <style id="pages-panel-styles"></style>
+  <script>
+    document.getElementById('pages-panel-styles').textContent = PagesPanel.getStyles();
+  </script>
+</body>
+</html>

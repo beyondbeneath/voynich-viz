@@ -1,0 +1,151 @@
+{
+  "aggregations": [
+    {
+      "name": "all",
+      "description": "All pages",
+      "page_count": 226,
+      "total_words": 35018,
+      "file": "all.json"
+    },
+    {
+      "name": "language_a",
+      "description": "Currier Language A",
+      "page_count": 114,
+      "total_words": 11329,
+      "file": "language_a.json"
+    },
+    {
+      "name": "language_b",
+      "description": "Currier Language B",
+      "page_count": 83,
+      "total_words": 23139,
+      "file": "language_b.json"
+    },
+    {
+      "name": "hand_1",
+      "description": "Hand 1",
+      "page_count": 98,
+      "total_words": 8836,
+      "file": "hand_1.json"
+    },
+    {
+      "name": "hand_2",
+      "description": "Hand 2",
+      "page_count": 46,
+      "total_words": 9640,
+      "file": "hand_2.json"
+    },
+    {
+      "name": "hand_3",
+      "description": "Hand 3",
+      "page_count": 33,
+      "total_words": 12893,
+      "file": "hand_3.json"
+    },
+    {
+      "name": "hand_4",
+      "description": "Hand 4",
+      "page_count": 40,
+      "total_words": 2245,
+      "file": "hand_4.json"
+    },
+    {
+      "name": "hand_5",
+      "description": "Hand 5",
+      "page_count": 8,
+      "total_words": 943,
+      "file": "hand_5.json"
+    },
+    {
+      "name": "herbal",
+      "description": "Herbal section",
+      "page_count": 129,
+      "total_words": 11537,
+      "file": "herbal.json"
+    },
+    {
+      "name": "zodiac",
+      "description": "Zodiac section",
+      "page_count": 12,
+      "total_words": 0,
+      "file": "zodiac.json"
+    },
+    {
+      "name": "biological",
+      "description": "Biological section",
+      "page_count": 19,
+      "total_words": 6259,
+      "file": "biological.json"
+    },
+    {
+      "name": "pharmaceutical",
+      "description": "Pharmaceutical section",
+      "page_count": 16,
+      "total_words": 2339,
+      "file": "pharmaceutical.json"
+    },
+    {
+      "name": "astronomical",
+      "description": "Astronomical section",
+      "page_count": 8,
+      "total_words": 279,
+      "file": "astronomical.json"
+    },
+    {
+      "name": "cosmological",
+      "description": "Cosmological section",
+      "page_count": 10,
+      "total_words": 664,
+      "file": "cosmological.json"
+    },
+    {
+      "name": "text_only",
+      "description": "Text only pages",
+      "page_count": 7,
+      "total_words": 2296,
+      "file": "text_only.json"
+    },
+    {
+      "name": "herbal_lang_a",
+      "description": "Herbal section, Language A",
+      "page_count": 95,
+      "total_words": 8022,
+      "file": "herbal_lang_a.json"
+    },
+    {
+      "name": "herbal_lang_b",
+      "description": "Herbal section, Language B",
+      "page_count": 32,
+      "total_words": 3470,
+      "file": "herbal_lang_b.json"
+    },
+    {
+      "name": "biological_lang_a",
+      "description": "Biological section, Language A",
+      "page_count": 0,
+      "total_words": 0,
+      "file": "biological_lang_a.json"
+    },
+    {
+      "name": "biological_lang_b",
+      "description": "Biological section, Language B",
+      "page_count": 19,
+      "total_words": 6259,
+      "file": "biological_lang_b.json"
+    },
+    {
+      "name": "quire_13",
+      "description": "Quire 13",
+      "page_count": 20,
+      "total_words": 6819,
+      "file": "quire_13.json"
+    },
+    {
+      "name": "quire_20",
+      "description": "Quire 20",
+      "page_count": 24,
+      "total_words": 10891,
+      "file": "quire_20.json"
+    }
+  ]
+}

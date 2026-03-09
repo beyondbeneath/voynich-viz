@@ -1,0 +1,612 @@
+/* Line Position Effects Visualizer Styles */
+/* Note: base.css provides reset, variables, and common components */
+
+/* Font face for Voynich characters */
+@font-face {
+  font-family: 'Voynich';
+  src: url('../fonts/voynich.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Layout */
+.app-container {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header */
+.app-header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.app-header h1 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.app-header .subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* Controls panel */
+.controls-panel {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.control-group select {
+  padding: 6px 12px;
+  font-size: 13px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  min-width: 180px;
+  cursor: pointer;
+}
+
+.control-group select:hover {
+  border-color: var(--accent-color);
+}
+
+.control-group select:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(74, 144, 217, 0.2);
+}
+
+/* Checkbox styling */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.checkbox-label input[type="checkbox"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Separator */
+.control-separator {
+  width: 1px;
+  height: 24px;
+  background: var(--border-color);
+}
+
+/* Export button */
+.export-btn {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--bg-secondary);
+  background: var(--accent-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.export-btn:hover {
+  background: var(--accent-hover);
+}
+
+/* Main content area */
+.main-content {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Character selector panel */
+.char-selector-panel {
+  width: 180px;
+  min-width: 180px;
+  flex-shrink: 0;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+}
+
+.char-selector-panel h3 {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 600;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.char-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+}
+
+.char-btn {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-primary);
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Voynich', sans-serif;
+  transition: all 0.15s ease;
+  padding: 4px;
+  min-width: 28px;
+  min-height: 28px;
+  position: relative;
+}
+
+.char-btn:hover {
+  background: #e9ecef;
+  border-color: var(--accent-color);
+}
+
+.char-btn.selected {
+  border-width: 2px;
+  font-weight: bold;
+}
+
+.char-btn.no-voynich {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.char-selector-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.small-btn {
+  flex: 1;
+  padding: 6px 8px;
+  font-size: 11px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.small-btn:hover {
+  background: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+.char-selector-info {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.selected-char-value {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: 'Voynich', sans-serif;
+}
+
+.selected-char-value.no-voynich {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Charts area */
+.charts-area {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: auto;
+}
+
+.chart-section {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.charts-area.compare-mode .chart-section {
+  flex-wrap: wrap;
+}
+
+.chart-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  max-width: 700px;
+  min-width: 400px;
+}
+
+.chart-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  min-height: 20px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--accent-color);
+}
+
+.chart-label:empty {
+  display: none;
+}
+
+#line-chart,
+#line-chart-b {
+  display: block;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-primary);
+  width: 100%;
+  max-width: 650px;
+}
+
+/* Asymmetry section */
+.asymmetry-section {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.asymmetry-section h3 {
+  margin: 0 0 4px;
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 600;
+  text-align: center;
+}
+
+.asymmetry-subtitle {
+  margin: 0 0 16px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.asymmetry-chart-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+#asymmetry-chart {
+  display: block;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-primary);
+  max-width: 100%;
+}
+
+/* Info panel */
+.info-panel {
+  width: 280px;
+  min-width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.info-card h3 {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 600;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 13px;
+}
+
+.info-row:last-child {
+  padding-bottom: 0;
+}
+
+.info-row .label {
+  color: var(--text-secondary);
+}
+
+.info-row .value {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.info-subsection {
+  padding: 8px 0;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.info-subsection:last-child {
+  border-bottom: none;
+}
+
+.info-subsection strong {
+  color: var(--accent-color);
+}
+
+.info-pages {
+  color: var(--text-secondary);
+  font-size: 12px;
+  margin-left: 8px;
+}
+
+/* Hover info */
+#hover-info {
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+#hover-info .placeholder {
+  color: var(--text-secondary);
+  font-style: italic;
+  font-size: 13px;
+}
+
+/* Top glyphs list */
+.top-glyphs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.top-glyph-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.top-glyph-item:last-child {
+  border-bottom: none;
+}
+
+.top-glyph-char {
+  font-family: 'Voynich', sans-serif;
+  font-size: 14px;
+  width: 24px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.top-glyph-char.no-voynich {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.top-glyph-bar {
+  flex: 1;
+  height: 12px;
+  background: var(--border-color);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.top-glyph-fill {
+  height: 100%;
+  border-radius: 2px;
+}
+
+.top-glyph-fill.positive {
+  background: #3498db; /* Blue for line-end (positive after inversion) */
+}
+
+.top-glyph-fill.negative {
+  background: #e74c3c; /* Red for line-start (negative after inversion) */
+}
+
+.top-glyph-value {
+  width: 50px;
+  text-align: right;
+  font-weight: 500;
+  font-family: monospace;
+}
+
+.top-glyph-value.positive {
+  color: #2980b9; /* Blue for line-end */
+}
+
+.top-glyph-value.negative {
+  color: #c0392b; /* Red for line-start */
+}
+
+/* Character in hover info with Voynich font */
+.char-display {
+  font-family: 'Voynich', sans-serif;
+  font-weight: 600;
+}
+
+.char-display.no-voynich {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Mode selector styling */
+#view-mode {
+  font-weight: 500;
+  min-width: 120px;
+}
+
+#aggregation-select-b {
+  min-width: 160px;
+}
+
+/* Line colors for chart - will be set per glyph */
+.line-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.legend-color {
+  width: 20px;
+  height: 3px;
+  border-radius: 1px;
+}
+
+.legend-label {
+  font-family: 'Voynich', sans-serif;
+}
+
+.legend-label.no-voynich {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .main-content {
+    flex-wrap: wrap;
+  }
+  
+  .char-selector-panel {
+    width: 100%;
+    max-height: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .char-selector-panel h3 {
+    width: 100%;
+  }
+  
+  .char-grid {
+    flex: 1;
+    grid-template-columns: repeat(10, 1fr);
+  }
+  
+  .char-selector-info {
+    width: 100%;
+    margin-top: 12px;
+  }
+  
+  .charts-area {
+    width: 100%;
+  }
+  
+  .chart-section {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .chart-container {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+  }
+  
+  .info-panel {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-height: none;
+  }
+  
+  .info-card {
+    flex: 1;
+    min-width: 250px;
+  }
+}
+
+@media (max-width: 700px) {
+  .controls-panel {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .control-separator {
+    display: none;
+  }
+  
+  .char-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  
+  .info-panel {
+    flex-direction: column;
+  }
+  
+  .info-card {
+    min-width: 0;
+  }
+}

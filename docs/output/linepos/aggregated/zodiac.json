@@ -1,0 +1,103 @@
+{
+  "name": "zodiac",
+  "description": "Zodiac section",
+  "page_count": 12,
+  "charset": [],
+  "max_word_position": 10,
+  "total_words_from_start": {},
+  "total_words_from_end": {},
+  "start_glyph_totals": {},
+  "end_glyph_totals": {},
+  "prob_from_start": {},
+  "prob_from_end": {},
+  "asymmetry": {},
+  "top_line_start_glyphs": [],
+  "top_line_end_glyphs": [],
+  "asymmetry_ranking": [],
+  "pages": [
+    {
+      "folio": "f70v2",
+      "quire": "J",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f70v1",
+      "quire": "J",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f71r",
+      "quire": "K",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f71v",
+      "quire": "K",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f72r1",
+      "quire": "K",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f72r2",
+      "quire": "K",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f72r3",
+      "quire": "K",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f72v3",
+      "quire": "K",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f72v2",
+      "quire": "K",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f72v1",
+      "quire": "K",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f73r",
+      "quire": "L",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    },
+    {
+      "folio": "f73v",
+      "quire": "L",
+      "language": "",
+      "hand": "4",
+      "illustration": "Z"
+    }
+  ]
+}

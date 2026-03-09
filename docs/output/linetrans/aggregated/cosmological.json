@@ -1,0 +1,319 @@
+{
+  "name": "cosmological",
+  "description": "Cosmological section",
+  "page_count": 10,
+  "transitions": {
+    "g|d": 2,
+    "r|o": 1,
+    "l|y": 2,
+    "m|t": 4,
+    "m|s": 3,
+    "y|o": 4,
+    "m|k": 1,
+    "y|s": 2,
+    "y|S": 2,
+    "m|d": 6,
+    "y|r": 1,
+    "y|y": 8,
+    "r|d": 1,
+    "m|S": 2,
+    "m|y": 8,
+    "l|d": 2,
+    "s|q": 1,
+    "y|q": 4,
+    "m|o": 5,
+    "y|d": 4,
+    "n|o": 3,
+    "l|r": 1,
+    "r|p": 2,
+    "n|d": 3,
+    "n|l": 1,
+    "g|o": 1,
+    "y|t": 2,
+    "a|d": 1,
+    "n|r": 1,
+    "n|t": 2,
+    "n|s": 1,
+    "r|t": 3,
+    "n|a": 1,
+    "y|l": 1,
+    "n|q": 1,
+    "n|y": 1,
+    "r|y": 1
+  },
+  "probabilities": {
+    "g|d": 0.6666666666666666,
+    "r|o": 0.125,
+    "l|y": 0.4,
+    "m|t": 0.13793103448275862,
+    "m|s": 0.10344827586206896,
+    "y|o": 0.14285714285714285,
+    "m|k": 0.034482758620689655,
+    "y|s": 0.07142857142857142,
+    "y|S": 0.07142857142857142,
+    "m|d": 0.20689655172413793,
+    "y|r": 0.03571428571428571,
+    "y|y": 0.2857142857142857,
+    "r|d": 0.125,
+    "m|S": 0.06896551724137931,
+    "m|y": 0.27586206896551724,
+    "l|d": 0.4,
+    "s|q": 1.0,
+    "y|q": 0.14285714285714285,
+    "m|o": 0.1724137931034483,
+    "y|d": 0.14285714285714285,
+    "n|o": 0.21428571428571427,
+    "l|r": 0.2,
+    "r|p": 0.25,
+    "n|d": 0.21428571428571427,
+    "n|l": 0.07142857142857142,
+    "g|o": 0.3333333333333333,
+    "y|t": 0.07142857142857142,
+    "a|d": 1.0,
+    "n|r": 0.07142857142857142,
+    "n|t": 0.14285714285714285,
+    "n|s": 0.07142857142857142,
+    "r|t": 0.375,
+    "n|a": 0.07142857142857142,
+    "y|l": 0.03571428571428571,
+    "n|q": 0.07142857142857142,
+    "n|y": 0.07142857142857142,
+    "r|y": 0.125
+  },
+  "line_end_chars": {
+    "g": 3,
+    "r": 10,
+    "l": 6,
+    "m": 29,
+    "y": 32,
+    "s": 1,
+    "n": 14,
+    "a": 1
+  },
+  "line_start_chars": {
+    "t": 15,
+    "d": 19,
+    "o": 15,
+    "y": 20,
+    "s": 7,
+    "k": 1,
+    "S": 4,
+    "r": 3,
+    "q": 6,
+    "p": 3,
+    "l": 2,
+    "a": 1
+  },
+  "charset": [
+    "S",
+    "a",
+    "d",
+    "g",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "y"
+  ],
+  "top_transitions": [
+    {
+      "from": "y",
+      "to": "y",
+      "count": 8,
+      "probability": 0.2857142857142857
+    },
+    {
+      "from": "m",
+      "to": "y",
+      "count": 8,
+      "probability": 0.27586206896551724
+    },
+    {
+      "from": "m",
+      "to": "d",
+      "count": 6,
+      "probability": 0.20689655172413793
+    },
+    {
+      "from": "m",
+      "to": "o",
+      "count": 5,
+      "probability": 0.1724137931034483
+    },
+    {
+      "from": "m",
+      "to": "t",
+      "count": 4,
+      "probability": 0.13793103448275862
+    },
+    {
+      "from": "y",
+      "to": "o",
+      "count": 4,
+      "probability": 0.14285714285714285
+    },
+    {
+      "from": "y",
+      "to": "q",
+      "count": 4,
+      "probability": 0.14285714285714285
+    },
+    {
+      "from": "y",
+      "to": "d",
+      "count": 4,
+      "probability": 0.14285714285714285
+    },
+    {
+      "from": "m",
+      "to": "s",
+      "count": 3,
+      "probability": 0.10344827586206896
+    },
+    {
+      "from": "n",
+      "to": "o",
+      "count": 3,
+      "probability": 0.21428571428571427
+    },
+    {
+      "from": "n",
+      "to": "d",
+      "count": 3,
+      "probability": 0.21428571428571427
+    },
+    {
+      "from": "r",
+      "to": "t",
+      "count": 3,
+      "probability": 0.375
+    },
+    {
+      "from": "g",
+      "to": "d",
+      "count": 2,
+      "probability": 0.6666666666666666
+    },
+    {
+      "from": "l",
+      "to": "y",
+      "count": 2,
+      "probability": 0.4
+    },
+    {
+      "from": "y",
+      "to": "s",
+      "count": 2,
+      "probability": 0.07142857142857142
+    },
+    {
+      "from": "y",
+      "to": "S",
+      "count": 2,
+      "probability": 0.07142857142857142
+    },
+    {
+      "from": "m",
+      "to": "S",
+      "count": 2,
+      "probability": 0.06896551724137931
+    },
+    {
+      "from": "l",
+      "to": "d",
+      "count": 2,
+      "probability": 0.4
+    },
+    {
+      "from": "r",
+      "to": "p",
+      "count": 2,
+      "probability": 0.25
+    },
+    {
+      "from": "y",
+      "to": "t",
+      "count": 2,
+      "probability": 0.07142857142857142
+    }
+  ],
+  "total_transitions": 89,
+  "pages": [
+    {
+      "folio": "f57v",
+      "quire": "H",
+      "language": "B",
+      "hand": "2",
+      "illustration": "C"
+    },
+    {
+      "folio": "f67v2",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "C"
+    },
+    {
+      "folio": "f68v3",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "C"
+    },
+    {
+      "folio": "f69r",
+      "quire": "J",
+      "language": "",
+      "hand": "4",
+      "illustration": "C"
+    },
+    {
+      "folio": "f69v",
+      "quire": "J",
+      "language": "",
+      "hand": "4",
+      "illustration": "C"
+    },
+    {
+      "folio": "f70r1",
+      "quire": "J",
+      "language": "",
+      "hand": "4",
+      "illustration": "C"
+    },
+    {
+      "folio": "f70r2",
+      "quire": "J",
+      "language": "",
+      "hand": "4",
+      "illustration": "C"
+    },
+    {
+      "folio": "f85r2",
+      "quire": "N",
+      "language": "B",
+      "hand": "3",
+      "illustration": "C"
+    },
+    {
+      "folio": "f86v4",
+      "quire": "N",
+      "language": "B",
+      "hand": "3",
+      "illustration": "C"
+    },
+    {
+      "folio": "f86v3",
+      "quire": "N",
+      "language": "B",
+      "hand": "3",
+      "illustration": "C"
+    }
+  ]
+}

@@ -1,0 +1,565 @@
+{
+  "name": "herbal_lang_b",
+  "description": "Herbal section, Language B",
+  "page_count": 32,
+  "transitions": {
+    "y|d": 23,
+    "s|o": 2,
+    "s|q": 3,
+    "y|s": 10,
+    "y|r": 1,
+    "y|p": 10,
+    "r|d": 8,
+    "y|t": 28,
+    "y|S": 6,
+    "g|y": 3,
+    "n|d": 6,
+    "r|t": 5,
+    "y|y": 19,
+    "o|d": 1,
+    "f|q": 1,
+    "a|q": 1,
+    "l|y": 4,
+    "l|t": 5,
+    "y|o": 10,
+    "y|q": 10,
+    "r|o": 4,
+    "s|s": 2,
+    "m|o": 7,
+    "s|y": 5,
+    "n|p": 7,
+    "m|y": 16,
+    "n|s": 4,
+    "n|y": 12,
+    "m|l": 4,
+    "m|t": 16,
+    "s|p": 1,
+    "l|d": 4,
+    "s|k": 1,
+    "m|d": 14,
+    "n|t": 10,
+    "y|l": 3,
+    "n|o": 5,
+    "g|q": 2,
+    "m|C": 1,
+    "n|C": 1,
+    "m|s": 3,
+    "d|q": 1,
+    "g|d": 2,
+    "n|l": 1,
+    "g|t": 4,
+    "m|q": 6,
+    "f|s": 1,
+    "n|q": 2,
+    "s|S": 2,
+    "l|l": 3,
+    "y|k": 1,
+    "g|s": 1,
+    "n|S": 3,
+    "r|C": 1,
+    "y|C": 2,
+    "r|y": 7,
+    "m|k": 1,
+    "d|d": 2,
+    "6|S": 1,
+    "f|y": 1,
+    "m|x": 1,
+    "l|p": 1,
+    "m|a": 2,
+    "m|S": 2,
+    "d|a": 1,
+    "y|a": 3,
+    "m|p": 2,
+    "g|o": 1,
+    "d|y": 1,
+    "d|l": 1,
+    "d|o": 3,
+    "r|l": 1,
+    "l|S": 1,
+    "r|q": 1,
+    "o|s": 1,
+    "f|p": 1,
+    "d|t": 1,
+    "s|t": 1
+  },
+  "probabilities": {
+    "y|d": 0.18253968253968253,
+    "s|o": 0.11764705882352941,
+    "s|q": 0.17647058823529413,
+    "y|s": 0.07936507936507936,
+    "y|r": 0.007936507936507936,
+    "y|p": 0.07936507936507936,
+    "r|d": 0.2962962962962963,
+    "y|t": 0.2222222222222222,
+    "y|S": 0.047619047619047616,
+    "g|y": 0.23076923076923078,
+    "n|d": 0.11764705882352941,
+    "r|t": 0.18518518518518517,
+    "y|y": 0.15079365079365079,
+    "o|d": 0.5,
+    "f|q": 0.25,
+    "a|q": 1.0,
+    "l|y": 0.2222222222222222,
+    "l|t": 0.2777777777777778,
+    "y|o": 0.07936507936507936,
+    "y|q": 0.07936507936507936,
+    "r|o": 0.14814814814814814,
+    "s|s": 0.11764705882352941,
+    "m|o": 0.09333333333333334,
+    "s|y": 0.29411764705882354,
+    "n|p": 0.13725490196078433,
+    "m|y": 0.21333333333333335,
+    "n|s": 0.0784313725490196,
+    "n|y": 0.23529411764705882,
+    "m|l": 0.05333333333333334,
+    "m|t": 0.21333333333333335,
+    "s|p": 0.058823529411764705,
+    "l|d": 0.2222222222222222,
+    "s|k": 0.058823529411764705,
+    "m|d": 0.18666666666666668,
+    "n|t": 0.19607843137254902,
+    "y|l": 0.023809523809523808,
+    "n|o": 0.09803921568627451,
+    "g|q": 0.15384615384615385,
+    "m|C": 0.013333333333333334,
+    "n|C": 0.0196078431372549,
+    "m|s": 0.04,
+    "d|q": 0.1,
+    "g|d": 0.15384615384615385,
+    "n|l": 0.0196078431372549,
+    "g|t": 0.3076923076923077,
+    "m|q": 0.08,
+    "f|s": 0.25,
+    "n|q": 0.0392156862745098,
+    "s|S": 0.11764705882352941,
+    "l|l": 0.16666666666666666,
+    "y|k": 0.007936507936507936,
+    "g|s": 0.07692307692307693,
+    "n|S": 0.058823529411764705,
+    "r|C": 0.037037037037037035,
+    "y|C": 0.015873015873015872,
+    "r|y": 0.25925925925925924,
+    "m|k": 0.013333333333333334,
+    "d|d": 0.2,
+    "6|S": 1.0,
+    "f|y": 0.25,
+    "m|x": 0.013333333333333334,
+    "l|p": 0.05555555555555555,
+    "m|a": 0.02666666666666667,
+    "m|S": 0.02666666666666667,
+    "d|a": 0.1,
+    "y|a": 0.023809523809523808,
+    "m|p": 0.02666666666666667,
+    "g|o": 0.07692307692307693,
+    "d|y": 0.1,
+    "d|l": 0.1,
+    "d|o": 0.3,
+    "r|l": 0.037037037037037035,
+    "l|S": 0.05555555555555555,
+    "r|q": 0.037037037037037035,
+    "o|s": 0.5,
+    "f|p": 0.25,
+    "d|t": 0.1,
+    "s|t": 0.058823529411764705
+  },
+  "line_end_chars": {
+    "y": 145,
+    "s": 17,
+    "r": 27,
+    "l": 21,
+    "g": 13,
+    "n": 55,
+    "o": 2,
+    "f": 4,
+    "a": 1,
+    "m": 80,
+    "d": 11,
+    "6": 1
+  },
+  "line_start_chars": {
+    "p": 39,
+    "d": 60,
+    "o": 33,
+    "q": 27,
+    "s": 22,
+    "r": 1,
+    "t": 78,
+    "S": 15,
+    "y": 68,
+    "k": 8,
+    "l": 13,
+    "C": 6,
+    "x": 1,
+    "a": 6
+  },
+  "charset": [
+    "6",
+    "C",
+    "S",
+    "a",
+    "d",
+    "f",
+    "g",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "x",
+    "y"
+  ],
+  "top_transitions": [
+    {
+      "from": "y",
+      "to": "t",
+      "count": 28,
+      "probability": 0.2222222222222222
+    },
+    {
+      "from": "y",
+      "to": "d",
+      "count": 23,
+      "probability": 0.18253968253968253
+    },
+    {
+      "from": "y",
+      "to": "y",
+      "count": 19,
+      "probability": 0.15079365079365079
+    },
+    {
+      "from": "m",
+      "to": "y",
+      "count": 16,
+      "probability": 0.21333333333333335
+    },
+    {
+      "from": "m",
+      "to": "t",
+      "count": 16,
+      "probability": 0.21333333333333335
+    },
+    {
+      "from": "m",
+      "to": "d",
+      "count": 14,
+      "probability": 0.18666666666666668
+    },
+    {
+      "from": "n",
+      "to": "y",
+      "count": 12,
+      "probability": 0.23529411764705882
+    },
+    {
+      "from": "y",
+      "to": "s",
+      "count": 10,
+      "probability": 0.07936507936507936
+    },
+    {
+      "from": "y",
+      "to": "p",
+      "count": 10,
+      "probability": 0.07936507936507936
+    },
+    {
+      "from": "y",
+      "to": "o",
+      "count": 10,
+      "probability": 0.07936507936507936
+    },
+    {
+      "from": "y",
+      "to": "q",
+      "count": 10,
+      "probability": 0.07936507936507936
+    },
+    {
+      "from": "n",
+      "to": "t",
+      "count": 10,
+      "probability": 0.19607843137254902
+    },
+    {
+      "from": "r",
+      "to": "d",
+      "count": 8,
+      "probability": 0.2962962962962963
+    },
+    {
+      "from": "m",
+      "to": "o",
+      "count": 7,
+      "probability": 0.09333333333333334
+    },
+    {
+      "from": "n",
+      "to": "p",
+      "count": 7,
+      "probability": 0.13725490196078433
+    },
+    {
+      "from": "r",
+      "to": "y",
+      "count": 7,
+      "probability": 0.25925925925925924
+    },
+    {
+      "from": "y",
+      "to": "S",
+      "count": 6,
+      "probability": 0.047619047619047616
+    },
+    {
+      "from": "n",
+      "to": "d",
+      "count": 6,
+      "probability": 0.11764705882352941
+    },
+    {
+      "from": "m",
+      "to": "q",
+      "count": 6,
+      "probability": 0.08
+    },
+    {
+      "from": "r",
+      "to": "t",
+      "count": 5,
+      "probability": 0.18518518518518517
+    }
+  ],
+  "total_transitions": 345,
+  "pages": [
+    {
+      "folio": "f26r",
+      "quire": "D",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f26v",
+      "quire": "D",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f31r",
+      "quire": "D",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f31v",
+      "quire": "D",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f33r",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f33v",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f34r",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f34v",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f39r",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f39v",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f40r",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f40v",
+      "quire": "E",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f41r",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f41v",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f43r",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f43v",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f46r",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f46v",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f48r",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f48v",
+      "quire": "F",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f50r",
+      "quire": "G",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f50v",
+      "quire": "G",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f55r",
+      "quire": "G",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f55v",
+      "quire": "G",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f57r",
+      "quire": "H",
+      "language": "B",
+      "hand": "2",
+      "illustration": "H"
+    },
+    {
+      "folio": "f66v",
+      "quire": "H",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    },
+    {
+      "folio": "f94r",
+      "quire": "Q",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    },
+    {
+      "folio": "f94v",
+      "quire": "Q",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    },
+    {
+      "folio": "f95r1",
+      "quire": "Q",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    },
+    {
+      "folio": "f95r2",
+      "quire": "Q",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    },
+    {
+      "folio": "f95v2",
+      "quire": "Q",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    },
+    {
+      "folio": "f95v1",
+      "quire": "Q",
+      "language": "B",
+      "hand": "5",
+      "illustration": "H"
+    }
+  ]
+}

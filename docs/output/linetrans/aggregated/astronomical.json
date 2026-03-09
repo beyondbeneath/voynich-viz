@@ -1,0 +1,287 @@
+{
+  "name": "astronomical",
+  "description": "Astronomical section",
+  "page_count": 8,
+  "transitions": {
+    "n|d": 3,
+    "l|y": 3,
+    "m|C": 1,
+    "y|s": 4,
+    "y|o": 3,
+    "y|q": 2,
+    "y|C": 2,
+    "l|s": 1,
+    "r|o": 3,
+    "n|s": 1,
+    "r|y": 2,
+    "m|y": 2,
+    "n|o": 1,
+    "l|d": 2,
+    "l|C": 1,
+    "6|s": 1,
+    "y|y": 1,
+    "g|y": 1,
+    "y|d": 4,
+    "g|o": 1,
+    "n|y": 3,
+    "y|t": 1,
+    "n|C": 1,
+    "l|t": 1,
+    "d|y": 1,
+    "m|d": 1,
+    "m|t": 1,
+    "r|C": 1,
+    "l|k": 1,
+    "m|o": 1
+  },
+  "probabilities": {
+    "n|d": 0.3333333333333333,
+    "l|y": 0.3333333333333333,
+    "m|C": 0.16666666666666666,
+    "y|s": 0.23529411764705882,
+    "y|o": 0.17647058823529413,
+    "y|q": 0.11764705882352941,
+    "y|C": 0.11764705882352941,
+    "l|s": 0.1111111111111111,
+    "r|o": 0.5,
+    "n|s": 0.1111111111111111,
+    "r|y": 0.3333333333333333,
+    "m|y": 0.3333333333333333,
+    "n|o": 0.1111111111111111,
+    "l|d": 0.2222222222222222,
+    "l|C": 0.1111111111111111,
+    "6|s": 1.0,
+    "y|y": 0.058823529411764705,
+    "g|y": 0.5,
+    "y|d": 0.23529411764705882,
+    "g|o": 0.5,
+    "n|y": 0.3333333333333333,
+    "y|t": 0.058823529411764705,
+    "n|C": 0.1111111111111111,
+    "l|t": 0.1111111111111111,
+    "d|y": 1.0,
+    "m|d": 0.16666666666666666,
+    "m|t": 0.16666666666666666,
+    "r|C": 0.16666666666666666,
+    "l|k": 0.1111111111111111,
+    "m|o": 0.16666666666666666
+  },
+  "line_end_chars": {
+    "n": 9,
+    "l": 9,
+    "m": 7,
+    "y": 21,
+    "r": 6,
+    "6": 1,
+    "g": 2,
+    "d": 1
+  },
+  "line_start_chars": {
+    "t": 6,
+    "d": 10,
+    "y": 13,
+    "C": 6,
+    "o": 10,
+    "s": 7,
+    "q": 2,
+    "S": 1,
+    "k": 1
+  },
+  "charset": [
+    "6",
+    "C",
+    "d",
+    "g",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "q",
+    "r",
+    "s",
+    "t",
+    "y"
+  ],
+  "top_transitions": [
+    {
+      "from": "y",
+      "to": "s",
+      "count": 4,
+      "probability": 0.23529411764705882
+    },
+    {
+      "from": "y",
+      "to": "d",
+      "count": 4,
+      "probability": 0.23529411764705882
+    },
+    {
+      "from": "n",
+      "to": "d",
+      "count": 3,
+      "probability": 0.3333333333333333
+    },
+    {
+      "from": "l",
+      "to": "y",
+      "count": 3,
+      "probability": 0.3333333333333333
+    },
+    {
+      "from": "y",
+      "to": "o",
+      "count": 3,
+      "probability": 0.17647058823529413
+    },
+    {
+      "from": "r",
+      "to": "o",
+      "count": 3,
+      "probability": 0.5
+    },
+    {
+      "from": "n",
+      "to": "y",
+      "count": 3,
+      "probability": 0.3333333333333333
+    },
+    {
+      "from": "y",
+      "to": "q",
+      "count": 2,
+      "probability": 0.11764705882352941
+    },
+    {
+      "from": "y",
+      "to": "C",
+      "count": 2,
+      "probability": 0.11764705882352941
+    },
+    {
+      "from": "r",
+      "to": "y",
+      "count": 2,
+      "probability": 0.3333333333333333
+    },
+    {
+      "from": "m",
+      "to": "y",
+      "count": 2,
+      "probability": 0.3333333333333333
+    },
+    {
+      "from": "l",
+      "to": "d",
+      "count": 2,
+      "probability": 0.2222222222222222
+    },
+    {
+      "from": "m",
+      "to": "C",
+      "count": 1,
+      "probability": 0.16666666666666666
+    },
+    {
+      "from": "l",
+      "to": "s",
+      "count": 1,
+      "probability": 0.1111111111111111
+    },
+    {
+      "from": "n",
+      "to": "s",
+      "count": 1,
+      "probability": 0.1111111111111111
+    },
+    {
+      "from": "n",
+      "to": "o",
+      "count": 1,
+      "probability": 0.1111111111111111
+    },
+    {
+      "from": "l",
+      "to": "C",
+      "count": 1,
+      "probability": 0.1111111111111111
+    },
+    {
+      "from": "6",
+      "to": "s",
+      "count": 1,
+      "probability": 1.0
+    },
+    {
+      "from": "y",
+      "to": "y",
+      "count": 1,
+      "probability": 0.058823529411764705
+    },
+    {
+      "from": "g",
+      "to": "y",
+      "count": 1,
+      "probability": 0.5
+    }
+  ],
+  "total_transitions": 51,
+  "pages": [
+    {
+      "folio": "f67r1",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "A"
+    },
+    {
+      "folio": "f67r2",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "A"
+    },
+    {
+      "folio": "f67v1",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "A"
+    },
+    {
+      "folio": "f68r1",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "A"
+    },
+    {
+      "folio": "f68r2",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "A"
+    },
+    {
+      "folio": "f68r3",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "A"
+    },
+    {
+      "folio": "f68v2",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "A"
+    },
+    {
+      "folio": "f68v1",
+      "quire": "I",
+      "language": "",
+      "hand": "4",
+      "illustration": "A"
+    }
+  ]
+}

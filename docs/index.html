@@ -115,6 +115,8 @@
           <label for="analysis-select">Analysis:</label>
           <select id="analysis-select">
             <option value="markov/index.html" selected>Markov Transition Matrix</option>
+            <option value="linetrans/index.html">Line Transition Matrix</option>
+            <option value="linepos/index.html">Line Position Effects</option>
             <option value="wordpos/index.html">Position preferences within words</option>
             <option value="charpos/index.html">Position preferences within words and lines</option>
             <option value="ngram/index.html">N-gram Analysis</option>
@@ -139,6 +141,8 @@
     
     const ANALYSIS_MAP = {
       'markov': 'markov/index.html',
+      'linetrans': 'linetrans/index.html',
+      'linepos': 'linepos/index.html',
       'wordpos': 'wordpos/index.html',
       'charpos': 'charpos/index.html',
       'ngram': 'ngram/index.html',
@@ -149,6 +153,8 @@
     
     const PATH_TO_ANALYSIS = {
       'markov/index.html': 'markov',
+      'linetrans/index.html': 'linetrans',
+      'linepos/index.html': 'linepos',
       'wordpos/index.html': 'wordpos',
       'charpos/index.html': 'charpos',
       'ngram/index.html': 'ngram',
